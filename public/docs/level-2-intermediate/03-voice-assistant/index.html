@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 3. Голосовой ассистент# Зачем это нужно# Представьте: вы идёте за кофе, а ваш AI-агент работает на компьютере. Он просит разрешение отредактировать файл. Вместо того чтобы доставать телефон и печатать, вы просто говорите: «Да, разрешаю». Или диктуете новую задачу голосом.
+Голосовой ассистент HAPI — это возможность управлять AI-агентом голосом через технологию ElevenLabs Conversational AI.
+Что умеет голосовой ассистент# 🎤 Разговаривать с агентом — давать задания, задавать вопросы голосом ✅ Одобрять действия голосом — скажите «да» или «нет» вместо нажатия кнопок 📢 Сообщать о результатах — ассистент расскажет, когда задача выполнена или если произошла ошибка Что понадобится# Аккаунт на ElevenLabs с доступом к API Работающий Hub с доступом через интернет (например, с --relay) ElevenLabs — компания, которая создаёт технологии синтеза и распознавания речи. Их сервис превращает вашу речь в текст, а текст — в естественно звучащую речь.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-2-intermediate/03-voice-assistant/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 3. Голосовой ассистент">
+  <meta property="og:description" content="Урок 3. Голосовой ассистент# Зачем это нужно# Представьте: вы идёте за кофе, а ваш AI-агент работает на компьютере. Он просит разрешение отредактировать файл. Вместо того чтобы доставать телефон и печатать, вы просто говорите: «Да, разрешаю». Или диктуете новую задачу голосом.
+Голосовой ассистент HAPI — это возможность управлять AI-агентом голосом через технологию ElevenLabs Conversational AI.
+Что умеет голосовой ассистент# 🎤 Разговаривать с агентом — давать задания, задавать вопросы голосом ✅ Одобрять действия голосом — скажите «да» или «нет» вместо нажатия кнопок 📢 Сообщать о результатах — ассистент расскажет, когда задача выполнена или если произошла ошибка Что понадобится# Аккаунт на ElevenLabs с доступом к API Работающий Hub с доступом через интернет (например, с --relay) ElevenLabs — компания, которая создаёт технологии синтеза и распознавания речи. Их сервис превращает вашу речь в текст, а текст — в естественно звучащую речь.">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 3. Голосовой ассистент">
+  <meta itemprop="description" content="Урок 3. Голосовой ассистент# Зачем это нужно# Представьте: вы идёте за кофе, а ваш AI-агент работает на компьютере. Он просит разрешение отредактировать файл. Вместо того чтобы доставать телефон и печатать, вы просто говорите: «Да, разрешаю». Или диктуете новую задачу голосом.
+Голосовой ассистент HAPI — это возможность управлять AI-агентом голосом через технологию ElevenLabs Conversational AI.
+Что умеет голосовой ассистент# 🎤 Разговаривать с агентом — давать задания, задавать вопросы голосом ✅ Одобрять действия голосом — скажите «да» или «нет» вместо нажатия кнопок 📢 Сообщать о результатах — ассистент расскажет, когда задача выполнена или если произошла ошибка Что понадобится# Аккаунт на ElevenLabs с доступом к API Работающий Hub с доступом через интернет (например, с --relay) ElevenLabs — компания, которая создаёт технологии синтеза и распознавания речи. Их сервис превращает вашу речь в текст, а текст — в естественно звучащую речь.">
+  <meta itemprop="wordCount" content="688">
+
+<title>Урок 3. Голосовой ассистент | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-2-intermediate/03-voice-assistant/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-2-intermediate/03-voice-assistant/" title="Lesson 3. Voice Assistant">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-2-intermediate/03-voice-assistant/" title="第3课：语音助手">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle"  />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle" checked />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="active">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle"  />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 3. Голосовой ассистент</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#что-умеет-голосовой-ассистент">Что умеет голосовой ассистент</a></li>
+    <li><a href="#что-понадобится">Что понадобится</a></li>
+    <li><a href="#пошаговая-настройка">Пошаговая настройка</a>
+      <ul>
+        <li><a href="#шаг-1-получите-api-ключ-elevenlabs">Шаг 1. Получите API-ключ ElevenLabs</a></li>
+        <li><a href="#шаг-2-настройте-hub">Шаг 2. Настройте Hub</a></li>
+        <li><a href="#шаг-3-начните-голосовую-сессию">Шаг 3. Начните голосовую сессию</a></li>
+      </ul>
+    </li>
+    <li><a href="#голосовые-команды">Голосовые команды</a></li>
+    <li><a href="#как-это-работает-внутри">Как это работает внутри</a>
+      <ul>
+        <li><a href="#автоматическая-синхронизация-контекста">Автоматическая синхронизация контекста</a></li>
+      </ul>
+    </li>
+    <li><a href="#полезные-советы">Полезные советы</a></li>
+    <li><a href="#продвинутая-настройка-необязательно">Продвинутая настройка (необязательно)</a></li>
+    <li><a href="#решение-проблем">Решение проблем</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-3-голосовой-ассистент">Урок 3. Голосовой ассистент<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-3-%d0%b3%d0%be%d0%bb%d0%be%d1%81%d0%be%d0%b2%d0%be%d0%b9-%d0%b0%d1%81%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bd%d1%82">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>Представьте: вы идёте за кофе, а ваш AI-агент работает на компьютере. Он просит разрешение отредактировать файл. Вместо того чтобы доставать телефон и печатать, вы просто говорите: <strong>«Да, разрешаю»</strong>. Или диктуете новую задачу голосом.</p>
+<p>Голосовой ассистент HAPI — это возможность <strong>управлять AI-агентом голосом</strong> через технологию ElevenLabs Conversational AI.</p>
+<hr>
+<h2 id="что-умеет-голосовой-ассистент">Что умеет голосовой ассистент<a class="anchor" href="#%d1%87%d1%82%d0%be-%d1%83%d0%bc%d0%b5%d0%b5%d1%82-%d0%b3%d0%be%d0%bb%d0%be%d1%81%d0%be%d0%b2%d0%be%d0%b9-%d0%b0%d1%81%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bd%d1%82">#</a></h2>
+<ul>
+<li>🎤 <strong>Разговаривать с агентом</strong> — давать задания, задавать вопросы голосом</li>
+<li>✅ <strong>Одобрять действия голосом</strong> — скажите «да» или «нет» вместо нажатия кнопок</li>
+<li>📢 <strong>Сообщать о результатах</strong> — ассистент расскажет, когда задача выполнена или если произошла ошибка</li>
+</ul>
+<hr>
+<h2 id="что-понадобится">Что понадобится<a class="anchor" href="#%d1%87%d1%82%d0%be-%d0%bf%d0%be%d0%bd%d0%b0%d0%b4%d0%be%d0%b1%d0%b8%d1%82%d1%81%d1%8f">#</a></h2>
+<ul>
+<li>Аккаунт на <a href="https://elevenlabs.io">ElevenLabs</a> с доступом к API</li>
+<li>Работающий Hub с доступом через интернет (например, с <code>--relay</code>)</li>
+</ul>
+<blockquote class='book-hint '>
+<p><strong>ElevenLabs</strong> — компания, которая создаёт технологии синтеза и распознавания речи. Их сервис превращает вашу речь в текст, а текст — в естественно звучащую речь.</p></blockquote><blockquote class='book-hint '>
+<p><strong>API</strong> (<em>Application Programming Interface</em>) — способ, которым программы общаются друг с другом. API-ключ — это как пароль, который подтверждает, что у вас есть доступ к сервису.</p></blockquote><hr>
+<h2 id="пошаговая-настройка">Пошаговая настройка<a class="anchor" href="#%d0%bf%d0%be%d1%88%d0%b0%d0%b3%d0%be%d0%b2%d0%b0%d1%8f-%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0">#</a></h2>
+<h3 id="шаг-1-получите-api-ключ-elevenlabs">Шаг 1. Получите API-ключ ElevenLabs<a class="anchor" href="#%d1%88%d0%b0%d0%b3-1-%d0%bf%d0%be%d0%bb%d1%83%d1%87%d0%b8%d1%82%d0%b5-api-%d0%ba%d0%bb%d1%8e%d1%87-elevenlabs">#</a></h3>
+<ol>
+<li>Зайдите на <a href="https://elevenlabs.io">elevenlabs.io</a> и зарегистрируйтесь (или войдите)</li>
+<li>Перейдите в настройки: <a href="https://elevenlabs.io/app/settings/api-keys">API Keys</a></li>
+<li>Нажмите <strong>Create API Key</strong> (Создать API-ключ)</li>
+<li>Скопируйте ключ — он понадобится на следующем шаге</li>
+</ol>
+<blockquote class='book-hint '>
+<p>⚠️ Храните API-ключ в секрете! Это как пароль — если кто-то его узнает, он сможет использовать ваш аккаунт.</p></blockquote><h3 id="шаг-2-настройте-hub">Шаг 2. Настройте Hub<a class="anchor" href="#%d1%88%d0%b0%d0%b3-2-%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d1%82%d0%b5-hub">#</a></h3>
+<p>Перед запуском Hub задайте переменную окружения с вашим ключом:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export ELEVENLABS_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ваш-api-ключ&#34;</span>
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>Переменная окружения</strong> — это настройка, которую вы передаёте программе перед запуском. Команда <code>export</code> сохраняет её на время текущей сессии терминала.</p></blockquote><p>При первом запуске Hub <strong>автоматически создаст</strong> голосового агента «Hapi Voice Assistant» в вашем аккаунте ElevenLabs. Ничего дополнительно настраивать не нужно!</p>
+<h3 id="шаг-3-начните-голосовую-сессию">Шаг 3. Начните голосовую сессию<a class="anchor" href="#%d1%88%d0%b0%d0%b3-3-%d0%bd%d0%b0%d1%87%d0%bd%d0%b8%d1%82%d0%b5-%d0%b3%d0%be%d0%bb%d0%be%d1%81%d0%be%d0%b2%d1%83%d1%8e-%d1%81%d0%b5%d1%81%d1%81%d0%b8%d1%8e">#</a></h3>
+<ol>
+<li>Откройте сессию в Web App (в браузере телефона)</li>
+<li>Нажмите на <strong>кнопку микрофона</strong> 🎤 в нижней части экрана (в области ввода сообщений)</li>
+<li>Разрешите доступ к микрофону, когда браузер попросит</li>
+<li>Начните говорить!</li>
+</ol>
+<hr>
+<h2 id="голосовые-команды">Голосовые команды<a class="anchor" href="#%d0%b3%d0%be%d0%bb%d0%be%d1%81%d0%be%d0%b2%d1%8b%d0%b5-%d0%ba%d0%be%d0%bc%d0%b0%d0%bd%d0%b4%d1%8b">#</a></h2>
+<p>Вам не нужно запоминать специальные команды — говорите естественно:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Что сказать</th>
+          <th>Что произойдёт</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>«Попроси Claude рефакторить модуль авторизации»</td>
+          <td>Ваш запрос передаётся AI-агенту</td>
+      </tr>
+      <tr>
+          <td>«Создай новый файл для тестов»</td>
+          <td>Запрос на создание файла</td>
+      </tr>
+      <tr>
+          <td>«Да» / «Разрешаю» / «Давай»</td>
+          <td>Одобрение ожидающего разрешения</td>
+      </tr>
+      <tr>
+          <td>«Нет» / «Отклоняю» / «Отмена»</td>
+          <td>Отклонение разрешения</td>
+      </tr>
+      <tr>
+          <td>«Что сейчас делает агент?»</td>
+          <td>Ассистент ответит сам, если может</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="как-это-работает-внутри">Как это работает внутри<a class="anchor" href="#%d0%ba%d0%b0%d0%ba-%d1%8d%d1%82%d0%be-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%b0%d0%b5%d1%82-%d0%b2%d0%bd%d1%83%d1%82%d1%80%d0%b8">#</a></h2>
+<p>Голосовое общение проходит через несколько этапов:</p>
+<pre tabindex="0"><code>Ваш голос → Микрофон → Браузер → WebRTC → ElevenLabs → Текст
+                                                          │
+                                                     Hub → CLI → AI-агент
+                                                          │
+Ответ агента ← Голос ← ElevenLabs ← Текст ←──────────────┘</code></pre><blockquote class='book-hint '>
+<p><strong>WebRTC</strong> (<em>Web Real-Time Communication</em>) — технология для передачи аудио и видео в реальном времени через браузер. Это то же, что используется в видеозвонках.</p></blockquote><h3 id="автоматическая-синхронизация-контекста">Автоматическая синхронизация контекста<a class="anchor" href="#%d0%b0%d0%b2%d1%82%d0%be%d0%bc%d0%b0%d1%82%d0%b8%d1%87%d0%b5%d1%81%d0%ba%d0%b0%d1%8f-%d1%81%d0%b8%d0%bd%d1%85%d1%80%d0%be%d0%bd%d0%b8%d0%b7%d0%b0%d1%86%d0%b8%d1%8f-%d0%ba%d0%be%d0%bd%d1%82%d0%b5%d0%ba%d1%81%d1%82%d0%b0">#</a></h3>
+<p>Голосовой ассистент автоматически «знает» о том, что происходит:</p>
+<ul>
+<li>Когда вы открываете сессию — ему загружается вся история</li>
+<li>Когда агент отправляет сообщения — ассистент получает обновления</li>
+<li>Когда приходят запросы на разрешения — ассистент может рассказать о них</li>
+<li>Когда задача завершена — ассистент сообщит</li>
+</ul>
+<p>Вам не нужно спрашивать «что нового» — ассистент сам расскажет о важных изменениях.</p>
+<hr>
+<h2 id="полезные-советы">Полезные советы<a class="anchor" href="#%d0%bf%d0%be%d0%bb%d0%b5%d0%b7%d0%bd%d1%8b%d0%b5-%d1%81%d0%be%d0%b2%d0%b5%d1%82%d1%8b">#</a></h2>
+<ol>
+<li>
+<p><strong>Будьте конкретны</strong> — чем точнее запрос, тем лучше результат. Вместо «сделай что-нибудь с кодом» скажите «добавь обработку ошибок в функцию login»</p>
+</li>
+<li>
+<p><strong>Подождите завершения</strong> — пока агент работает, ассистент молчит. Когда задача выполнена, он сам расскажет о результате</p>
+</li>
+<li>
+<p><strong>Используйте наушники</strong> — это уменьшит эхо и улучшит распознавание речи</p>
+</li>
+<li>
+<p><strong>Одна сессия за раз</strong> — для самого чёткого контекста работайте с одной сессией</p>
+</li>
+</ol>
+<hr>
+<h2 id="продвинутая-настройка-необязательно">Продвинутая настройка (необязательно)<a class="anchor" href="#%d0%bf%d1%80%d0%be%d0%b4%d0%b2%d0%b8%d0%bd%d1%83%d1%82%d0%b0%d1%8f-%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-%d0%bd%d0%b5%d0%be%d0%b1%d1%8f%d0%b7%d0%b0%d1%82%d0%b5%d0%bb%d1%8c%d0%bd%d0%be">#</a></h2>
+<p>Если вы хотите использовать <strong>собственного</strong> агента ElevenLabs (например, с другим голосом или настройками):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export ELEVENLABS_AGENT_ID<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id-вашего-агента&#34;</span></span></span></code></pre></div><p>Это полезно, если вы настроили агента с особым голосом или инструкциями на сайте ElevenLabs.</p>
+<hr>
+<h2 id="решение-проблем">Решение проблем<a class="anchor" href="#%d1%80%d0%b5%d1%88%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d1%80%d0%be%d0%b1%d0%bb%d0%b5%d0%bc">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Проблема</th>
+          <th>Решение</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>«ElevenLabs API key not configured»</td>
+          <td>Убедитесь, что переменная <code>ELEVENLABS_API_KEY</code> задана и Hub перезапущен</td>
+      </tr>
+      <tr>
+          <td>Микрофон не работает</td>
+          <td>Проверьте разрешения браузера, убедитесь, что микрофон не используется другой программой</td>
+      </tr>
+      <tr>
+          <td>Ассистент не отвечает</td>
+          <td>Проверьте подключение к сессии (зелёная точка в статусной строке)</td>
+      </tr>
+      <tr>
+          <td>Плохое качество звука</td>
+          <td>Используйте наушники, уменьшите фоновый шум</td>
+      </tr>
+      <tr>
+          <td>«Failed to create ElevenLabs agent»</td>
+          <td>Проверьте API-ключ и квоту на аккаунте ElevenLabs</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li>Голосовой ассистент позволяет управлять AI-агентом <strong>голосом</strong> — без клавиатуры</li>
+<li>Для работы нужен <strong>API-ключ ElevenLabs</strong> и Hub с доступом через интернет</li>
+<li>Настройка занимает 5 минут: получить ключ → задать переменную → запустить Hub</li>
+<li>Говорите естественным языком — специальных команд нет</li>
+<li>Ассистент сам следит за обновлениями и сообщает о важных событиях</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-2-intermediate/02-installation-options/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 2. Варианты установки HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-2-intermediate/04-configuration/" class="flex align-center">
+        <span>Урок 4. Конфигурация HAPI</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#что-умеет-голосовой-ассистент">Что умеет голосовой ассистент</a></li>
+    <li><a href="#что-понадобится">Что понадобится</a></li>
+    <li><a href="#пошаговая-настройка">Пошаговая настройка</a>
+      <ul>
+        <li><a href="#шаг-1-получите-api-ключ-elevenlabs">Шаг 1. Получите API-ключ ElevenLabs</a></li>
+        <li><a href="#шаг-2-настройте-hub">Шаг 2. Настройте Hub</a></li>
+        <li><a href="#шаг-3-начните-голосовую-сессию">Шаг 3. Начните голосовую сессию</a></li>
+      </ul>
+    </li>
+    <li><a href="#голосовые-команды">Голосовые команды</a></li>
+    <li><a href="#как-это-работает-внутри">Как это работает внутри</a>
+      <ul>
+        <li><a href="#автоматическая-синхронизация-контекста">Автоматическая синхронизация контекста</a></li>
+      </ul>
+    </li>
+    <li><a href="#полезные-советы">Полезные советы</a></li>
+    <li><a href="#продвинутая-настройка-необязательно">Продвинутая настройка (необязательно)</a></li>
+    <li><a href="#решение-проблем">Решение проблем</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

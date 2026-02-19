@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 2. Безопасность в HAPI# Зачем это нужно# Когда вы управляете AI-агентом удалённо (с телефона или из браузера), ваши данные проходят через интернет. Важно понимать, как HAPI защищает эти данные, и чем его подход отличается от аналогов.
+Два режима доступа к HAPI# HAPI предлагает два способа удалённого подключения к вашему хабу. Выбор зависит от вашей ситуации:
+Режим 1: Self-hosted (самостоятельный хостинг)# Self-hosted — значит вы сами контролируете сервер и сетевой путь до него.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-3-advanced/02-security/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 2. Безопасность в HAPI">
+  <meta property="og:description" content="Урок 2. Безопасность в HAPI# Зачем это нужно# Когда вы управляете AI-агентом удалённо (с телефона или из браузера), ваши данные проходят через интернет. Важно понимать, как HAPI защищает эти данные, и чем его подход отличается от аналогов.
+Два режима доступа к HAPI# HAPI предлагает два способа удалённого подключения к вашему хабу. Выбор зависит от вашей ситуации:
+Режим 1: Self-hosted (самостоятельный хостинг)# Self-hosted — значит вы сами контролируете сервер и сетевой путь до него.">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 2. Безопасность в HAPI">
+  <meta itemprop="description" content="Урок 2. Безопасность в HAPI# Зачем это нужно# Когда вы управляете AI-агентом удалённо (с телефона или из браузера), ваши данные проходят через интернет. Важно понимать, как HAPI защищает эти данные, и чем его подход отличается от аналогов.
+Два режима доступа к HAPI# HAPI предлагает два способа удалённого подключения к вашему хабу. Выбор зависит от вашей ситуации:
+Режим 1: Self-hosted (самостоятельный хостинг)# Self-hosted — значит вы сами контролируете сервер и сетевой путь до него.">
+  <meta itemprop="wordCount" content="533">
+
+<title>Урок 2. Безопасность в HAPI | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-3-advanced/02-security/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-3-advanced/02-security/" title="Lesson 2. Security in HAPI">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-3-advanced/02-security/" title="第2课：HAPI的安全性">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-3-advanced/02-security/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-3-advanced/02-security/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle"  />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle"  />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle" checked />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="active">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 2. Безопасность в HAPI</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#два-режима-доступа-к-hapi">Два режима доступа к HAPI</a>
+      <ul>
+        <li><a href="#режим-1-self-hosted-самостоятельный-хостинг">Режим 1: Self-hosted (самостоятельный хостинг)</a></li>
+        <li><a href="#режим-2-relay-публичное-реле">Режим 2: Relay (публичное реле)</a></li>
+      </ul>
+    </li>
+    <li><a href="#что-такое-e2e-шифрование">Что такое E2E-шифрование</a></li>
+    <li><a href="#hapi-vs-happy-сравнение-безопасности">HAPI vs Happy: сравнение безопасности</a>
+      <ul>
+        <li><a href="#главное-отличие">Главное отличие</a></li>
+      </ul>
+    </li>
+    <li><a href="#где-хранятся-ваши-данные">Где хранятся ваши данные</a></li>
+    <li><a href="#рекомендации-по-безопасности">Рекомендации по безопасности</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-2-безопасность-в-hapi">Урок 2. Безопасность в HAPI<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-2-%d0%b1%d0%b5%d0%b7%d0%be%d0%bf%d0%b0%d1%81%d0%bd%d0%be%d1%81%d1%82%d1%8c-%d0%b2-hapi">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>Когда вы управляете AI-агентом удалённо (с телефона или из браузера), ваши данные проходят через интернет. Важно понимать, как HAPI защищает эти данные, и чем его подход отличается от аналогов.</p>
+<h2 id="два-режима-доступа-к-hapi">Два режима доступа к HAPI<a class="anchor" href="#%d0%b4%d0%b2%d0%b0-%d1%80%d0%b5%d0%b6%d0%b8%d0%bc%d0%b0-%d0%b4%d0%be%d1%81%d1%82%d1%83%d0%bf%d0%b0-%d0%ba-hapi">#</a></h2>
+<p>HAPI предлагает два способа удалённого подключения к вашему хабу. Выбор зависит от вашей ситуации:</p>
+<h3 id="режим-1-self-hosted-самостоятельный-хостинг">Режим 1: Self-hosted (самостоятельный хостинг)<a class="anchor" href="#%d1%80%d0%b5%d0%b6%d0%b8%d0%bc-1-self-hosted-%d1%81%d0%b0%d0%bc%d0%be%d1%81%d1%82%d0%be%d1%8f%d1%82%d0%b5%d0%bb%d1%8c%d0%bd%d1%8b%d0%b9-%d1%85%d0%be%d1%81%d1%82%d0%b8%d0%bd%d0%b3">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Self-hosted</strong> — значит вы сами контролируете сервер и сетевой путь до него.</p></blockquote><p>Вы подключаетесь через собственный сервер, Cloudflare Tunnel или Tailscale. Весь путь данных — под вашим контролем.</p>
+<pre tabindex="0"><code>Ваш телефон → HTTPS → Ваш сервер/туннель → Hub на вашем компьютере</code></pre><p><strong>Плюсы:</strong> полный контроль, никаких посредников
+<strong>Минусы:</strong> нужно настраивать сервер или туннель</p>
+<h3 id="режим-2-relay-публичное-реле">Режим 2: Relay (публичное реле)<a class="anchor" href="#%d1%80%d0%b5%d0%b6%d0%b8%d0%bc-2-relay-%d0%bf%d1%83%d0%b1%d0%bb%d0%b8%d1%87%d0%bd%d0%be%d0%b5-%d1%80%d0%b5%d0%bb%d0%b5">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Relay</strong> (реле) — промежуточный сервер, который пересылает данные между вашим телефоном и компьютером.</p></blockquote><p>Запускается одной командой:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><p>Данные шифруются с помощью <strong>WireGuard + TLS</strong> (технология под названием <strong>tunwg</strong>):</p>
+<pre tabindex="0"><code>Ваш телефон ──[зашифровано]──► Relay-сервер ──[зашифровано]──► Ваш компьютер
+                                    │
+                            Видит только «мусор»,
+                            не может прочитать данные</code></pre><p><strong>Плюсы:</strong> одна команда, ничего настраивать не нужно
+<strong>Минусы:</strong> трафик идёт через чужой сервер (но он зашифрован)</p>
+<h2 id="что-такое-e2e-шифрование">Что такое E2E-шифрование<a class="anchor" href="#%d1%87%d1%82%d0%be-%d1%82%d0%b0%d0%ba%d0%be%d0%b5-e2e-%d1%88%d0%b8%d1%84%d1%80%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5">#</a></h2>
+<blockquote class='book-hint '>
+<p><strong>E2E (End-to-End)</strong> — сквозное шифрование. Данные шифруются на вашем устройстве и расшифровываются только на другом вашем устройстве. Никто посередине не может их прочитать.</p></blockquote><p>В HAPI relay-режиме используются две технологии:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Технология</th>
+          <th>Что делает</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>WireGuard</strong></td>
+          <td>Создаёт зашифрованный «туннель» между устройствами (как VPN)</td>
+      </tr>
+      <tr>
+          <td><strong>TLS</strong></td>
+          <td>Дополнительный слой шифрования (то же, что защищает банковские сайты)</td>
+      </tr>
+  </tbody>
+</table>
+<p>Вместе они гарантируют: relay-сервер пересылает пакеты, но <strong>не может</strong> прочитать их содержимое.</p>
+<h2 id="hapi-vs-happy-сравнение-безопасности">HAPI vs Happy: сравнение безопасности<a class="anchor" href="#hapi-vs-happy-%d1%81%d1%80%d0%b0%d0%b2%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5-%d0%b1%d0%b5%d0%b7%d0%be%d0%bf%d0%b0%d1%81%d0%bd%d0%be%d1%81%d1%82%d0%b8">#</a></h2>
+<p><strong>Happy</strong> — это проект, на основе которого создан HAPI. У них принципиально разные подходы:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Аспект</th>
+          <th>Happy</th>
+          <th>HAPI</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Где хранятся данные</strong></td>
+          <td>На облачном сервере (зашифрованы)</td>
+          <td>На вашем компьютере</td>
+      </tr>
+      <tr>
+          <td><strong>Кто хранит данные</strong></td>
+          <td>Центральный сервер</td>
+          <td>Только вы</td>
+      </tr>
+      <tr>
+          <td><strong>Шифрование</strong></td>
+          <td>Прикладное E2EE (клиент шифрует перед отправкой)</td>
+          <td>WireGuard+TLS (relay) или HTTPS (self-hosted)</td>
+      </tr>
+      <tr>
+          <td><strong>Что видит сервер</strong></td>
+          <td>Зашифрованные «блобы» — прочитать не может, но хранит</td>
+          <td>Relay: ничего не хранит, только пересылает</td>
+      </tr>
+      <tr>
+          <td><strong>Архитектура</strong></td>
+          <td>Централизованная (все на одном облаке)</td>
+          <td>Децентрализованная (каждый запускает свой hub)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="главное-отличие">Главное отличие<a class="anchor" href="#%d0%b3%d0%bb%d0%b0%d0%b2%d0%bd%d0%be%d0%b5-%d0%be%d1%82%d0%bb%d0%b8%d1%87%d0%b8%d0%b5">#</a></h3>
+<ul>
+<li>
+<p><strong>Happy</strong> решает проблему «ненадёжного сервера» с помощью сложного шифрования. Сервер хранит ваши данные, но не может их прочитать.</p>
+</li>
+<li>
+<p><strong>HAPI</strong> вообще избегает этой проблемы: данные никогда не покидают ваш компьютер. Relay-сервер просто пересылает зашифрованные пакеты, ничего не сохраняя.</p>
+</li>
+</ul>
+<h2 id="где-хранятся-ваши-данные">Где хранятся ваши данные<a class="anchor" href="#%d0%b3%d0%b4%d0%b5-%d1%85%d1%80%d0%b0%d0%bd%d1%8f%d1%82%d1%81%d1%8f-%d0%b2%d0%b0%d1%88%d0%b8-%d0%b4%d0%b0%d0%bd%d0%bd%d1%8b%d0%b5">#</a></h2>
+<pre tabindex="0"><code>Happy:
+  Ваш компьютер → [шифрование] → Облачный сервер (хранит зашифрованные данные)
+
+HAPI:
+  Ваш компьютер (данные остаются здесь) → [шифрованный туннель] → Ваш телефон</code></pre><p>В HAPI данные хранятся в локальной базе SQLite на вашем компьютере в открытом виде. Безопасность обеспечивается тем, что:</p>
+<ul>
+<li>Физический доступ к данным имеете только вы</li>
+<li>Удалённый доступ защищён шифрованием (WireGuard+TLS или HTTPS)</li>
+</ul>
+<h2 id="рекомендации-по-безопасности">Рекомендации по безопасности<a class="anchor" href="#%d1%80%d0%b5%d0%ba%d0%be%d0%bc%d0%b5%d0%bd%d0%b4%d0%b0%d1%86%d0%b8%d0%b8-%d0%bf%d0%be-%d0%b1%d0%b5%d0%b7%d0%be%d0%bf%d0%b0%d1%81%d0%bd%d0%be%d1%81%d1%82%d0%b8">#</a></h2>
+<ol>
+<li>
+<p><strong>Храните токен в секрете.</strong> <code>CLI_API_TOKEN</code> — это ваш ключ доступа. Не публикуйте его и не отправляйте в чатах.</p>
+</li>
+<li>
+<p><strong>Используйте relay для быстрого старта</strong> — шифрование настраивается автоматически.</p>
+</li>
+<li>
+<p><strong>Используйте self-hosted для максимального контроля</strong> — ваш трафик вообще не проходит через чужие серверы.</p>
+</li>
+<li>
+<p><strong>Защищайте свой компьютер.</strong> Поскольку данные хранятся локально в открытом виде, важно иметь пароль на компьютере и шифрование диска.</p>
+</li>
+</ol>
+<h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li>HAPI предлагает два режима: <strong>self-hosted</strong> (полный контроль) и <strong>relay</strong> (простота настройки)</li>
+<li>В relay-режиме данные защищены сквозным шифрованием <strong>WireGuard + TLS</strong></li>
+<li>Relay-сервер <strong>не хранит</strong> и <strong>не может прочитать</strong> ваши данные</li>
+<li>В отличие от Happy, HAPI хранит данные только на вашем компьютере — это проще и безопаснее</li>
+<li>Главный принцип HAPI: <strong>ваши данные остаются у вас</strong></li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-3-advanced/01-namespace/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 1. Namespace и командная работа</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-3-advanced/03-build-from-source/" class="flex align-center">
+        <span>Урок 3. Сборка HAPI из исходников</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#два-режима-доступа-к-hapi">Два режима доступа к HAPI</a>
+      <ul>
+        <li><a href="#режим-1-self-hosted-самостоятельный-хостинг">Режим 1: Self-hosted (самостоятельный хостинг)</a></li>
+        <li><a href="#режим-2-relay-публичное-реле">Режим 2: Relay (публичное реле)</a></li>
+      </ul>
+    </li>
+    <li><a href="#что-такое-e2e-шифрование">Что такое E2E-шифрование</a></li>
+    <li><a href="#hapi-vs-happy-сравнение-безопасности">HAPI vs Happy: сравнение безопасности</a>
+      <ul>
+        <li><a href="#главное-отличие">Главное отличие</a></li>
+      </ul>
+    </li>
+    <li><a href="#где-хранятся-ваши-данные">Где хранятся ваши данные</a></li>
+    <li><a href="#рекомендации-по-безопасности">Рекомендации по безопасности</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

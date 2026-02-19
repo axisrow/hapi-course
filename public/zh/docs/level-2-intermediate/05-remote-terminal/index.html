@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第5课：远程终端操作# 为什么需要这个# 你在工作电脑上开始了一个任务，但需要离开。有了HAPI，你可以从手机继续控制AI代理——发送命令、审批操作并跟踪进度。就像你终端的遥控器。
+两种工作模式# HAPI支持两种模式，可以在它们之间即时切换：
+本地模式（在终端中）# 你坐在电脑前，像平常一样工作 完整的终端界面，带语法高亮 按键即时响应 AI代理直接在你的机器上运行 远程模式（从手机/浏览器）# 通过Web App从世界任何地方控制 一键审批权限 实时监控进度 会话继续在你的电脑上运行 如何切换模式# 从终端 → 切换到手机# 只需从手机（通过Web App）发送消息。终端会自动进入等待模式并显示：
+Remote mode - waiting for input就这样！现在控制权在手机端。
+从手机 → 切换到终端# 在终端中按双空格。立即恢复本地控制——就像你从未离开过。
+💡 这是同一个会话——切换不会丢失上下文、历史和状态。
+从手机运行命令# 第1步：确保Hub和Runner正在运行# hapi hub --relay # Hub可通过互联网访问 hapi runner start # 远程启动的后台服务第2步：在手机上打开Web App# 扫描Hub显示的QR码，或通过URL访问。
+第3步：管理会话# 在Web App中你可以：
+打开现有会话 ——在列表中点击它 创建新会话 ——点击&#34;New Session&#34;按钮并选择机器 向代理发送消息 ——在输入框中打字，就像普通的即时通讯一样 浏览文件 ——打开会话的文件浏览器 查看代码更改 ——直接在界面中查看git diff AFK模式：“离开键盘”# AFK（Away From Keyboard——离开键盘）是HAPI专门为之设计的场景：
+典型场景# 09:00 你在电脑前。启动：hapi 分配任务：&#34;重构支付模块&#34; 09:10 你去喝咖啡 ☕ 09:12 代理想修改文件payment.ts → 手机收到通知！ → 打开Web App → 点击&#34;批准&#34; ✅ 09:15 代理想运行测试 → 手机收到通知 → &#34;批准&#34; ✅ 09:20 回到电脑前 → 双空格 → 回到终端 → 代理已经全部完成！ 🎉 操作审批# 当AI代理想执行潜在危险的操作（修改文件、运行命令）时，会请求你的许可。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/zh/docs/level-2-intermediate/05-remote-terminal/">
+  <meta property="og:site_name" content="HAPI — 远程AI代理控制">
+  <meta property="og:title" content="第5课：远程终端操作">
+  <meta property="og:description" content="第5课：远程终端操作# 为什么需要这个# 你在工作电脑上开始了一个任务，但需要离开。有了HAPI，你可以从手机继续控制AI代理——发送命令、审批操作并跟踪进度。就像你终端的遥控器。
+两种工作模式# HAPI支持两种模式，可以在它们之间即时切换：
+本地模式（在终端中）# 你坐在电脑前，像平常一样工作 完整的终端界面，带语法高亮 按键即时响应 AI代理直接在你的机器上运行 远程模式（从手机/浏览器）# 通过Web App从世界任何地方控制 一键审批权限 实时监控进度 会话继续在你的电脑上运行 如何切换模式# 从终端 → 切换到手机# 只需从手机（通过Web App）发送消息。终端会自动进入等待模式并显示：
+Remote mode - waiting for input就这样！现在控制权在手机端。
+从手机 → 切换到终端# 在终端中按双空格。立即恢复本地控制——就像你从未离开过。
+💡 这是同一个会话——切换不会丢失上下文、历史和状态。
+从手机运行命令# 第1步：确保Hub和Runner正在运行# hapi hub --relay # Hub可通过互联网访问 hapi runner start # 远程启动的后台服务第2步：在手机上打开Web App# 扫描Hub显示的QR码，或通过URL访问。
+第3步：管理会话# 在Web App中你可以：
+打开现有会话 ——在列表中点击它 创建新会话 ——点击&#34;New Session&#34;按钮并选择机器 向代理发送消息 ——在输入框中打字，就像普通的即时通讯一样 浏览文件 ——打开会话的文件浏览器 查看代码更改 ——直接在界面中查看git diff AFK模式：“离开键盘”# AFK（Away From Keyboard——离开键盘）是HAPI专门为之设计的场景：
+典型场景# 09:00 你在电脑前。启动：hapi 分配任务：&#34;重构支付模块&#34; 09:10 你去喝咖啡 ☕ 09:12 代理想修改文件payment.ts → 手机收到通知！ → 打开Web App → 点击&#34;批准&#34; ✅ 09:15 代理想运行测试 → 手机收到通知 → &#34;批准&#34; ✅ 09:20 回到电脑前 → 双空格 → 回到终端 → 代理已经全部完成！ 🎉 操作审批# 当AI代理想执行潜在危险的操作（修改文件、运行命令）时，会请求你的许可。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="第5课：远程终端操作">
+  <meta itemprop="description" content="第5课：远程终端操作# 为什么需要这个# 你在工作电脑上开始了一个任务，但需要离开。有了HAPI，你可以从手机继续控制AI代理——发送命令、审批操作并跟踪进度。就像你终端的遥控器。
+两种工作模式# HAPI支持两种模式，可以在它们之间即时切换：
+本地模式（在终端中）# 你坐在电脑前，像平常一样工作 完整的终端界面，带语法高亮 按键即时响应 AI代理直接在你的机器上运行 远程模式（从手机/浏览器）# 通过Web App从世界任何地方控制 一键审批权限 实时监控进度 会话继续在你的电脑上运行 如何切换模式# 从终端 → 切换到手机# 只需从手机（通过Web App）发送消息。终端会自动进入等待模式并显示：
+Remote mode - waiting for input就这样！现在控制权在手机端。
+从手机 → 切换到终端# 在终端中按双空格。立即恢复本地控制——就像你从未离开过。
+💡 这是同一个会话——切换不会丢失上下文、历史和状态。
+从手机运行命令# 第1步：确保Hub和Runner正在运行# hapi hub --relay # Hub可通过互联网访问 hapi runner start # 远程启动的后台服务第2步：在手机上打开Web App# 扫描Hub显示的QR码，或通过URL访问。
+第3步：管理会话# 在Web App中你可以：
+打开现有会话 ——在列表中点击它 创建新会话 ——点击&#34;New Session&#34;按钮并选择机器 向代理发送消息 ——在输入框中打字，就像普通的即时通讯一样 浏览文件 ——打开会话的文件浏览器 查看代码更改 ——直接在界面中查看git diff AFK模式：“离开键盘”# AFK（Away From Keyboard——离开键盘）是HAPI专门为之设计的场景：
+典型场景# 09:00 你在电脑前。启动：hapi 分配任务：&#34;重构支付模块&#34; 09:10 你去喝咖啡 ☕ 09:12 代理想修改文件payment.ts → 手机收到通知！ → 打开Web App → 点击&#34;批准&#34; ✅ 09:15 代理想运行测试 → 手机收到通知 → &#34;批准&#34; ✅ 09:20 回到电脑前 → 双空格 → 回到终端 → 代理已经全部完成！ 🎉 操作审批# 当AI代理想执行潜在危险的操作（修改文件、运行命令）时，会请求你的许可。">
+  <meta itemprop="wordCount" content="197">
+
+<title>第5课：远程终端操作 | HAPI — 远程AI代理控制</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/zh/docs/level-2-intermediate/05-remote-terminal/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-2-intermediate/05-remote-terminal/" title="Урок 5. Работа с терминалом удалённо">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-2-intermediate/05-remote-terminal/" title="Lesson 5. Working with the Terminal Remotely">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/zh.search.min.02cccb22f1b23afb6e2618bf247800abf4ca2d9e37f139c8c3c3c2e7e42fe09c.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — 远程AI代理控制</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="搜索"
+    aria-label="搜索"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        中文
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-2-intermediate/05-remote-terminal/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="toggle"  />
+    <label for="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="flex">
+      <a href="/zh/docs/level-1-beginner/" class="">
+        第1级：初学者</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/01-what-is-hapi/" class="">
+      第1课：什么是HAPI，为什么需要它</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/02-installation/" class="">
+      第2课：安装HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/03-quick-start/" class="">
+      第3课：快速开始</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      第4课：Web界面与PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      第5课：使用AI代理</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cec75285e88ca15cadb08d32c22729d1" class="toggle" checked />
+    <label for="section-cec75285e88ca15cadb08d32c22729d1" class="flex">
+      <a href="/zh/docs/level-2-intermediate/" class="">
+        第2级：中级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/01-architecture/" class="">
+      第1课：HAPI的架构</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="">
+      第2课：HAPI安装选项</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="">
+      第3课：语音助手</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/04-configuration/" class="">
+      第4课：HAPI配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="active">
+      第5课：远程终端操作</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41edaa233d27cc3f35a439f1b4daaaa1" class="toggle"  />
+    <label for="section-41edaa233d27cc3f35a439f1b4daaaa1" class="flex">
+      <a href="/zh/docs/level-3-advanced/" class="">
+        第3级：高级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/01-namespace/" class="">
+      第1课：Namespace与团队协作</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/02-security/" class="">
+      第2课：HAPI的安全性</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="">
+      第3课：从源码构建HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="">
+      第4课：CI/CD与HAPI自动化</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/05-contributing/" class="">
+      第5课：参与HAPI项目</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>第5课：远程终端操作</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#两种工作模式">两种工作模式</a>
+      <ul>
+        <li><a href="#本地模式在终端中">本地模式（在终端中）</a></li>
+        <li><a href="#远程模式从手机浏览器">远程模式（从手机/浏览器）</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何切换模式">如何切换模式</a>
+      <ul>
+        <li><a href="#从终端--切换到手机">从终端 → 切换到手机</a></li>
+        <li><a href="#从手机--切换到终端">从手机 → 切换到终端</a></li>
+      </ul>
+    </li>
+    <li><a href="#从手机运行命令">从手机运行命令</a>
+      <ul>
+        <li><a href="#第1步确保hub和runner正在运行">第1步：确保Hub和Runner正在运行</a></li>
+        <li><a href="#第2步在手机上打开web-app">第2步：在手机上打开Web App</a></li>
+        <li><a href="#第3步管理会话">第3步：管理会话</a></li>
+      </ul>
+    </li>
+    <li><a href="#afk模式离开键盘">AFK模式：&ldquo;离开键盘&rdquo;</a>
+      <ul>
+        <li><a href="#典型场景">典型场景</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作审批">操作审批</a>
+      <ul>
+        <li><a href="#权限请求的样子">权限请求的样子</a></li>
+        <li><a href="#审批方式">审批方式</a></li>
+      </ul>
+    </li>
+    <li><a href="#远程启动会话">远程启动会话</a>
+      <ul>
+        <li><a href="#工作原理">工作原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#实用建议">实用建议</a>
+      <ul>
+        <li><a href="#1-配置通知">1. 配置通知</a></li>
+        <li><a href="#2-安装pwa">2. 安装PWA</a></li>
+        <li><a href="#3-使用pm2确保可靠性">3. 使用pm2确保可靠性</a></li>
+        <li><a href="#4-多台机器">4. 多台机器</a></li>
+      </ul>
+    </li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="第5课远程终端操作">第5课：远程终端操作<a class="anchor" href="#%e7%ac%ac5%e8%af%be%e8%bf%9c%e7%a8%8b%e7%bb%88%e7%ab%af%e6%93%8d%e4%bd%9c">#</a></h1>
+<h2 id="为什么需要这个">为什么需要这个<a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e8%bf%99%e4%b8%aa">#</a></h2>
+<p>你在工作电脑上开始了一个任务，但需要离开。有了HAPI，你可以<strong>从手机继续控制AI代理</strong>——发送命令、审批操作并跟踪进度。就像你终端的遥控器。</p>
+<hr>
+<h2 id="两种工作模式">两种工作模式<a class="anchor" href="#%e4%b8%a4%e7%a7%8d%e5%b7%a5%e4%bd%9c%e6%a8%a1%e5%bc%8f">#</a></h2>
+<p>HAPI支持两种模式，可以在它们之间即时切换：</p>
+<h3 id="本地模式在终端中">本地模式（在终端中）<a class="anchor" href="#%e6%9c%ac%e5%9c%b0%e6%a8%a1%e5%bc%8f%e5%9c%a8%e7%bb%88%e7%ab%af%e4%b8%ad">#</a></h3>
+<ul>
+<li>你坐在电脑前，像平常一样工作</li>
+<li>完整的终端界面，带语法高亮</li>
+<li>按键即时响应</li>
+<li>AI代理直接在你的机器上运行</li>
+</ul>
+<h3 id="远程模式从手机浏览器">远程模式（从手机/浏览器）<a class="anchor" href="#%e8%bf%9c%e7%a8%8b%e6%a8%a1%e5%bc%8f%e4%bb%8e%e6%89%8b%e6%9c%ba%e6%b5%8f%e8%a7%88%e5%99%a8">#</a></h3>
+<ul>
+<li>通过Web App从世界任何地方控制</li>
+<li>一键审批权限</li>
+<li>实时监控进度</li>
+<li>会话继续在你的电脑上运行</li>
+</ul>
+<hr>
+<h2 id="如何切换模式">如何切换模式<a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%88%87%e6%8d%a2%e6%a8%a1%e5%bc%8f">#</a></h2>
+<h3 id="从终端--切换到手机">从终端 → 切换到手机<a class="anchor" href="#%e4%bb%8e%e7%bb%88%e7%ab%af--%e5%88%87%e6%8d%a2%e5%88%b0%e6%89%8b%e6%9c%ba">#</a></h3>
+<p>只需从手机（通过Web App）发送消息。终端会自动进入等待模式并显示：</p>
+<pre tabindex="0"><code>Remote mode - waiting for input</code></pre><p>就这样！现在控制权在手机端。</p>
+<h3 id="从手机--切换到终端">从手机 → 切换到终端<a class="anchor" href="#%e4%bb%8e%e6%89%8b%e6%9c%ba--%e5%88%87%e6%8d%a2%e5%88%b0%e7%bb%88%e7%ab%af">#</a></h3>
+<p>在终端中按<strong>双空格</strong>。立即恢复本地控制——就像你从未离开过。</p>
+<blockquote class='book-hint '>
+<p>💡 这是同一个会话——切换不会丢失上下文、历史和状态。</p></blockquote><hr>
+<h2 id="从手机运行命令">从手机运行命令<a class="anchor" href="#%e4%bb%8e%e6%89%8b%e6%9c%ba%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4">#</a></h2>
+<h3 id="第1步确保hub和runner正在运行">第1步：确保Hub和Runner正在运行<a class="anchor" href="#%e7%ac%ac1%e6%ad%a5%e7%a1%ae%e4%bf%9dhub%e5%92%8crunner%e6%ad%a3%e5%9c%a8%e8%bf%90%e8%a1%8c">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay           <span style="color:#75715e"># Hub可通过互联网访问</span>
+</span></span><span style="display:flex;"><span>hapi runner start          <span style="color:#75715e"># 远程启动的后台服务</span></span></span></code></pre></div><h3 id="第2步在手机上打开web-app">第2步：在手机上打开Web App<a class="anchor" href="#%e7%ac%ac2%e6%ad%a5%e5%9c%a8%e6%89%8b%e6%9c%ba%e4%b8%8a%e6%89%93%e5%bc%80web-app">#</a></h3>
+<p>扫描Hub显示的QR码，或通过URL访问。</p>
+<h3 id="第3步管理会话">第3步：管理会话<a class="anchor" href="#%e7%ac%ac3%e6%ad%a5%e7%ae%a1%e7%90%86%e4%bc%9a%e8%af%9d">#</a></h3>
+<p>在Web App中你可以：</p>
+<ul>
+<li><strong>打开现有会话</strong> ——在列表中点击它</li>
+<li><strong>创建新会话</strong> ——点击&quot;New Session&quot;按钮并选择机器</li>
+<li><strong>向代理发送消息</strong> ——在输入框中打字，就像普通的即时通讯一样</li>
+<li><strong>浏览文件</strong> ——打开会话的文件浏览器</li>
+<li><strong>查看代码更改</strong> ——直接在界面中查看git diff</li>
+</ul>
+<hr>
+<h2 id="afk模式离开键盘">AFK模式：&ldquo;离开键盘&rdquo;<a class="anchor" href="#afk%e6%a8%a1%e5%bc%8f%e7%a6%bb%e5%bc%80%e9%94%ae%e7%9b%98">#</a></h2>
+<p><strong>AFK</strong>（Away From Keyboard——离开键盘）是HAPI专门为之设计的场景：</p>
+<h3 id="典型场景">典型场景<a class="anchor" href="#%e5%85%b8%e5%9e%8b%e5%9c%ba%e6%99%af">#</a></h3>
+<pre tabindex="0"><code>09:00  你在电脑前。启动：hapi
+       分配任务：&#34;重构支付模块&#34;
+       
+09:10  你去喝咖啡 ☕
+       
+09:12  代理想修改文件payment.ts
+       → 手机收到通知！
+       → 打开Web App → 点击&#34;批准&#34; ✅
+       
+09:15  代理想运行测试
+       → 手机收到通知
+       → &#34;批准&#34; ✅
+       
+09:20  回到电脑前
+       → 双空格 → 回到终端
+       → 代理已经全部完成！ 🎉</code></pre><hr>
+<h2 id="操作审批">操作审批<a class="anchor" href="#%e6%93%8d%e4%bd%9c%e5%ae%a1%e6%89%b9">#</a></h2>
+<p>当AI代理想执行潜在危险的操作（修改文件、运行命令）时，会请求你的许可。</p>
+<h3 id="权限请求的样子">权限请求的样子<a class="anchor" href="#%e6%9d%83%e9%99%90%e8%af%b7%e6%b1%82%e7%9a%84%e6%a0%b7%e5%ad%90">#</a></h3>
+<p>在Web App中你会看到：</p>
+<ul>
+<li>代理<strong>想做什么</strong>（例如&quot;Edit file: src/payment.ts&quot;）</li>
+<li><strong>详情</strong> ——具体提议了哪些更改</li>
+<li><strong>Approve</strong>（批准）和 <strong>Deny</strong>（拒绝）按钮</li>
+</ul>
+<h3 id="审批方式">审批方式<a class="anchor" href="#%e5%ae%a1%e6%89%b9%e6%96%b9%e5%bc%8f">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>方式</th>
+          <th>如何操作</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Web App</td>
+          <td>点击&quot;Approve&quot;或&quot;Deny&quot;按钮</td>
+      </tr>
+      <tr>
+          <td>Telegram</td>
+          <td>收到机器人通知，回复</td>
+      </tr>
+      <tr>
+          <td>语音</td>
+          <td>对语音助手说&quot;是&quot;或&quot;否&quot;</td>
+      </tr>
+      <tr>
+          <td>终端</td>
+          <td>如果你在电脑前——像平常一样确认</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="远程启动会话">远程启动会话<a class="anchor" href="#%e8%bf%9c%e7%a8%8b%e5%90%af%e5%8a%a8%e4%bc%9a%e8%af%9d">#</a></h2>
+<p>有了Runner，你可以<strong>直接从手机创建新会话</strong>，即使电脑上没有打开终端。</p>
+<h3 id="工作原理">工作原理<a class="anchor" href="#%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86">#</a></h3>
+<ol>
+<li>Runner在你的电脑后台运行</li>
+<li>在Web App中点击 <strong>&quot;+&quot;</strong>（新会话）</li>
+<li>从列表中选择机器</li>
+<li>选择AI代理（Claude、Codex、Gemini）</li>
+<li>可选：指定工作目录</li>
+<li>会话将在你的电脑上启动——从手机控制！</li>
+</ol>
+<pre tabindex="0"><code>手机 → Web App → Hub → Runner → 新CLI会话
+                                         │
+                                    AI代理在你的
+                                    电脑上运行</code></pre><hr>
+<h2 id="实用建议">实用建议<a class="anchor" href="#%e5%ae%9e%e7%94%a8%e5%bb%ba%e8%ae%ae">#</a></h2>
+<h3 id="1-配置通知">1. 配置通知<a class="anchor" href="#1-%e9%85%8d%e7%bd%ae%e9%80%9a%e7%9f%a5">#</a></h3>
+<p>连接Telegram机器人以接收推送通知：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export TELEGRAM_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;你的令牌&#34;</span>
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><p>现在权限请求会直接发送到Telegram——无需一直打开Web App。</p>
+<h3 id="2-安装pwa">2. 安装PWA<a class="anchor" href="#2-%e5%ae%89%e8%a3%85pwa">#</a></h3>
+<p>在手机浏览器中打开Web App并&quot;添加到主屏幕&quot;。应用将像普通应用一样工作——有图标、全屏模式和快速访问。</p>
+<h3 id="3-使用pm2确保可靠性">3. 使用pm2确保可靠性<a class="anchor" href="#3-%e4%bd%bf%e7%94%a8pm2%e7%a1%ae%e4%bf%9d%e5%8f%af%e9%9d%a0%e6%80%a7">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi hub --relay&#34;</span> --name hapi-hub
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi runner start --foreground&#34;</span> --name hapi-runner
+</span></span><span style="display:flex;"><span>pm2 save</span></span></code></pre></div><p>这样Hub和Runner将持续运行，即使电脑重启后也是如此。</p>
+<h3 id="4-多台机器">4. 多台机器<a class="anchor" href="#4-%e5%a4%9a%e5%8f%b0%e6%9c%ba%e5%99%a8">#</a></h3>
+<p>如果你有多台电脑（工作+家用），在每台上安装CLI和Runner并连接到同一个Hub。在Web App中你会看到所有机器，可以在任何一台上启动会话。</p>
+<hr>
+<h2 id="课程总结">课程总结<a class="anchor" href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93">#</a></h2>
+<ul>
+<li>HAPI允许从<strong>手机</strong>控制AI代理——发送任务和审批操作</li>
+<li>终端和手机之间的切换是<strong>即时的</strong>（双空格）</li>
+<li><strong>AFK模式</strong> ——离开电脑，代理继续工作；你从手机审批操作</li>
+<li><strong>Runner</strong> 允许远程启动新会话</li>
+<li>通知可以通过 <strong>Telegram</strong>、<strong>Web App</strong> 或<strong>语音助手</strong>接收</li>
+<li>安装PWA和pm2以获得最佳使用体验</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/zh/docs/level-2-intermediate/04-configuration/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>第4课：HAPI配置</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/zh/docs/level-3-advanced/" class="flex align-center">
+        <span>第3级：高级</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#两种工作模式">两种工作模式</a>
+      <ul>
+        <li><a href="#本地模式在终端中">本地模式（在终端中）</a></li>
+        <li><a href="#远程模式从手机浏览器">远程模式（从手机/浏览器）</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何切换模式">如何切换模式</a>
+      <ul>
+        <li><a href="#从终端--切换到手机">从终端 → 切换到手机</a></li>
+        <li><a href="#从手机--切换到终端">从手机 → 切换到终端</a></li>
+      </ul>
+    </li>
+    <li><a href="#从手机运行命令">从手机运行命令</a>
+      <ul>
+        <li><a href="#第1步确保hub和runner正在运行">第1步：确保Hub和Runner正在运行</a></li>
+        <li><a href="#第2步在手机上打开web-app">第2步：在手机上打开Web App</a></li>
+        <li><a href="#第3步管理会话">第3步：管理会话</a></li>
+      </ul>
+    </li>
+    <li><a href="#afk模式离开键盘">AFK模式：&ldquo;离开键盘&rdquo;</a>
+      <ul>
+        <li><a href="#典型场景">典型场景</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作审批">操作审批</a>
+      <ul>
+        <li><a href="#权限请求的样子">权限请求的样子</a></li>
+        <li><a href="#审批方式">审批方式</a></li>
+      </ul>
+    </li>
+    <li><a href="#远程启动会话">远程启动会话</a>
+      <ul>
+        <li><a href="#工作原理">工作原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#实用建议">实用建议</a>
+      <ul>
+        <li><a href="#1-配置通知">1. 配置通知</a></li>
+        <li><a href="#2-安装pwa">2. 安装PWA</a></li>
+        <li><a href="#3-使用pm2确保可靠性">3. 使用pm2确保可靠性</a></li>
+        <li><a href="#4-多台机器">4. 多台机器</a></li>
+      </ul>
+    </li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 5. Работа с AI-агентами# Зачем это нужно# HAPI поддерживает несколько AI-агентов — не только Claude Code. В этом уроке вы узнаете, как запускать разных агентов, переключаться между ними и одобрять их запросы прямо с телефона.
+Какие AI-агенты поддерживаются# Агент Компания Команда запуска Claude Code Anthropic hapi Codex OpenAI hapi codex Gemini CLI Google hapi gemini OpenCode Open source hapi opencode 💡 По умолчанию (просто hapi) запускается Claude Code. Это самый популярный вариант.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-1-beginner/05-working-with-ai-agents/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 5. Работа с AI-агентами">
+  <meta property="og:description" content="Урок 5. Работа с AI-агентами# Зачем это нужно# HAPI поддерживает несколько AI-агентов — не только Claude Code. В этом уроке вы узнаете, как запускать разных агентов, переключаться между ними и одобрять их запросы прямо с телефона.
+Какие AI-агенты поддерживаются# Агент Компания Команда запуска Claude Code Anthropic hapi Codex OpenAI hapi codex Gemini CLI Google hapi gemini OpenCode Open source hapi opencode 💡 По умолчанию (просто hapi) запускается Claude Code. Это самый популярный вариант.">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 5. Работа с AI-агентами">
+  <meta itemprop="description" content="Урок 5. Работа с AI-агентами# Зачем это нужно# HAPI поддерживает несколько AI-агентов — не только Claude Code. В этом уроке вы узнаете, как запускать разных агентов, переключаться между ними и одобрять их запросы прямо с телефона.
+Какие AI-агенты поддерживаются# Агент Компания Команда запуска Claude Code Anthropic hapi Codex OpenAI hapi codex Gemini CLI Google hapi gemini OpenCode Open source hapi opencode 💡 По умолчанию (просто hapi) запускается Claude Code. Это самый популярный вариант.">
+  <meta itemprop="wordCount" content="643">
+
+<title>Урок 5. Работа с AI-агентами | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-1-beginner/05-working-with-ai-agents/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-1-beginner/05-working-with-ai-agents/" title="Lesson 5. Working with AI Agents">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" title="第5课：使用AI代理">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle" checked />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="active">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle"  />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle"  />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 5. Работа с AI-агентами</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#какие-ai-агенты-поддерживаются">Какие AI-агенты поддерживаются</a></li>
+    <li><a href="#запуск-разных-агентов">Запуск разных агентов</a>
+      <ul>
+        <li><a href="#подготовка">Подготовка</a></li>
+        <li><a href="#запуск-claude-code">Запуск Claude Code</a></li>
+        <li><a href="#запуск-codex">Запуск Codex</a></li>
+        <li><a href="#запуск-gemini">Запуск Gemini</a></li>
+        <li><a href="#запуск-opencode">Запуск OpenCode</a></li>
+      </ul>
+    </li>
+    <li><a href="#несколько-сессий-одновременно">Несколько сессий одновременно</a></li>
+    <li><a href="#одобрение-запросов-с-телефона">Одобрение запросов с телефона</a>
+      <ul>
+        <li><a href="#как-это-выглядит">Как это выглядит</a></li>
+        <li><a href="#зачем-нужно-одобрение">Зачем нужно одобрение</a></li>
+        <li><a href="#одобрение-через-telegram">Одобрение через Telegram</a></li>
+      </ul>
+    </li>
+    <li><a href="#seamless-handoff-в-действии">Seamless Handoff в действии</a>
+      <ul>
+        <li><a href="#утро-работа-за-компьютером">Утро: работа за компьютером</a></li>
+        <li><a href="#обед-переключение-на-телефон">Обед: переключение на телефон</a></li>
+        <li><a href="#после-обеда-возвращение-к-компьютеру">После обеда: возвращение к компьютеру</a></li>
+      </ul>
+    </li>
+    <li><a href="#удалённый-запуск-сессий">Удалённый запуск сессий</a></li>
+    <li><a href="#диагностика">Диагностика</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+    <li><a href="#что-дальше">Что дальше</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-5-работа-с-ai-агентами">Урок 5. Работа с AI-агентами<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-5-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%b0-%d1%81-ai-%d0%b0%d0%b3%d0%b5%d0%bd%d1%82%d0%b0%d0%bc%d0%b8">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>HAPI поддерживает несколько AI-агентов — не только Claude Code. В этом уроке вы узнаете, как запускать разных агентов, переключаться между ними и одобрять их запросы прямо с телефона.</p>
+<h2 id="какие-ai-агенты-поддерживаются">Какие AI-агенты поддерживаются<a class="anchor" href="#%d0%ba%d0%b0%d0%ba%d0%b8%d0%b5-ai-%d0%b0%d0%b3%d0%b5%d0%bd%d1%82%d1%8b-%d0%bf%d0%be%d0%b4%d0%b4%d0%b5%d1%80%d0%b6%d0%b8%d0%b2%d0%b0%d1%8e%d1%82%d1%81%d1%8f">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Агент</th>
+          <th>Компания</th>
+          <th>Команда запуска</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Claude Code</strong></td>
+          <td>Anthropic</td>
+          <td><code>hapi</code></td>
+      </tr>
+      <tr>
+          <td><strong>Codex</strong></td>
+          <td>OpenAI</td>
+          <td><code>hapi codex</code></td>
+      </tr>
+      <tr>
+          <td><strong>Gemini CLI</strong></td>
+          <td>Google</td>
+          <td><code>hapi gemini</code></td>
+      </tr>
+      <tr>
+          <td><strong>OpenCode</strong></td>
+          <td>Open source</td>
+          <td><code>hapi opencode</code></td>
+      </tr>
+  </tbody>
+</table>
+<blockquote class='book-hint '>
+<p>💡 По умолчанию (просто <code>hapi</code>) запускается Claude Code. Это самый популярный вариант.</p></blockquote><h2 id="запуск-разных-агентов">Запуск разных агентов<a class="anchor" href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-%d1%80%d0%b0%d0%b7%d0%bd%d1%8b%d1%85-%d0%b0%d0%b3%d0%b5%d0%bd%d1%82%d0%be%d0%b2">#</a></h2>
+<h3 id="подготовка">Подготовка<a class="anchor" href="#%d0%bf%d0%be%d0%b4%d0%b3%d0%be%d1%82%d0%be%d0%b2%d0%ba%d0%b0">#</a></h3>
+<p>Убедитесь, что hub уже запущен (из урока 3):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><h3 id="запуск-claude-code">Запуск Claude Code<a class="anchor" href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-claude-code">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>Это запустит Claude Code в обёртке HAPI. Вы работаете с ним как обычно в терминале, но теперь сессия видна и с телефона.</p>
+<h3 id="запуск-codex">Запуск Codex<a class="anchor" href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-codex">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi codex</span></span></code></pre></div><h3 id="запуск-gemini">Запуск Gemini<a class="anchor" href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-gemini">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi gemini</span></span></code></pre></div><h3 id="запуск-opencode">Запуск OpenCode<a class="anchor" href="#%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-opencode">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi opencode</span></span></code></pre></div><blockquote class='book-hint '>
+<p>⚠️ Перед запуском убедитесь, что нужный агент установлен. Например, для Claude Code: <code>claude --version</code>. Если команда не найдена — установите агент отдельно.</p></blockquote><h2 id="несколько-сессий-одновременно">Несколько сессий одновременно<a class="anchor" href="#%d0%bd%d0%b5%d1%81%d0%ba%d0%be%d0%bb%d1%8c%d0%ba%d0%be-%d1%81%d0%b5%d1%81%d1%81%d0%b8%d0%b9-%d0%be%d0%b4%d0%bd%d0%be%d0%b2%d1%80%d0%b5%d0%bc%d0%b5%d0%bd%d0%bd%d0%be">#</a></h2>
+<p>Вы можете запустить <strong>несколько агентов</strong> одновременно! Каждый — в отдельном терминале:</p>
+<pre tabindex="0"><code>Терминал 1: hapi hub --relay     ← hub (всегда один)
+Терминал 2: hapi                 ← Claude Code (сессия 1)
+Терминал 3: hapi codex           ← Codex (сессия 2)
+Терминал 4: hapi gemini          ← Gemini (сессия 3)</code></pre><p>Все сессии появятся в списке в веб-интерфейсе. Вы можете переключаться между ними на телефоне.</p>
+<h2 id="одобрение-запросов-с-телефона">Одобрение запросов с телефона<a class="anchor" href="#%d0%be%d0%b4%d0%be%d0%b1%d1%80%d0%b5%d0%bd%d0%b8%d0%b5-%d0%b7%d0%b0%d0%bf%d1%80%d0%be%d1%81%d0%be%d0%b2-%d1%81-%d1%82%d0%b5%d0%bb%d0%b5%d1%84%d0%be%d0%bd%d0%b0">#</a></h2>
+<p>Это одна из главных функций HAPI. Вот как это работает:</p>
+<h3 id="как-это-выглядит">Как это выглядит<a class="anchor" href="#%d0%ba%d0%b0%d0%ba-%d1%8d%d1%82%d0%be-%d0%b2%d1%8b%d0%b3%d0%bb%d1%8f%d0%b4%d0%b8%d1%82">#</a></h3>
+<ol>
+<li>AI-агент хочет выполнить действие (например, отредактировать файл)</li>
+<li>Он отправляет <strong>запрос на разрешение</strong></li>
+<li>Вы получаете <strong>уведомление на телефон</strong> 🔔</li>
+<li>Открываете HAPI и видите запрос:</li>
+</ol>
+<pre tabindex="0"><code>Claude Code хочет:
+📝 Отредактировать файл src/app.js
+
+[✅ Одобрить]  [❌ Отклонить]</code></pre><ol start="5">
+<li>Нажимаете <strong>«Одобрить»</strong> — агент продолжает работу</li>
+<li>Или <strong>«Отклонить»</strong> — агент не выполнит действие</li>
+</ol>
+<h3 id="зачем-нужно-одобрение">Зачем нужно одобрение<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d0%bd%d1%83%d0%b6%d0%bd%d0%be-%d0%be%d0%b4%d0%be%d0%b1%d1%80%d0%b5%d0%bd%d0%b8%d0%b5">#</a></h3>
+<p>AI-агенты мощные, но иногда ошибаются. Система одобрений — это ваш <strong>контроль</strong>:</p>
+<ul>
+<li>Вы видите, что именно хочет сделать агент, прежде чем он это сделает</li>
+<li>Вы можете остановить нежелательные изменения</li>
+<li>Вы всегда в курсе, что происходит с вашим кодом</li>
+</ul>
+<h3 id="одобрение-через-telegram">Одобрение через Telegram<a class="anchor" href="#%d0%be%d0%b4%d0%be%d0%b1%d1%80%d0%b5%d0%bd%d0%b8%d0%b5-%d1%87%d0%b5%d1%80%d0%b5%d0%b7-telegram">#</a></h3>
+<p>Если вы настроили Telegram-бот (это тема для продвинутого курса), уведомления приходят прямо в Telegram. Одобрять можно не выходя из мессенджера.</p>
+<h2 id="seamless-handoff-в-действии">Seamless Handoff в действии<a class="anchor" href="#seamless-handoff-%d0%b2-%d0%b4%d0%b5%d0%b9%d1%81%d1%82%d0%b2%d0%b8%d0%b8">#</a></h2>
+<p>Вот типичный сценарий рабочего дня с HAPI:</p>
+<h3 id="утро-работа-за-компьютером">Утро: работа за компьютером<a class="anchor" href="#%d1%83%d1%82%d1%80%d0%be-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%b0-%d0%b7%d0%b0-%d0%ba%d0%be%d0%bc%d0%bf%d1%8c%d1%8e%d1%82%d0%b5%d1%80%d0%be%d0%bc">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay    <span style="color:#75715e"># в первом терминале</span>
+</span></span><span style="display:flex;"><span>hapi                <span style="color:#75715e"># во втором терминале</span></span></span></code></pre></div><p>Вы работаете с Claude Code в терминале как обычно. Даёте задания, обсуждаете код.</p>
+<h3 id="обед-переключение-на-телефон">Обед: переключение на телефон<a class="anchor" href="#%d0%be%d0%b1%d0%b5%d0%b4-%d0%bf%d0%b5%d1%80%d0%b5%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bd%d0%b0-%d1%82%d0%b5%d0%bb%d0%b5%d1%84%d0%be%d0%bd">#</a></h3>
+<p>Вы уходите от компьютера. Но Claude Code продолжает работать! С телефона вы:</p>
+<ul>
+<li>Следите за прогрессом в чате</li>
+<li>Одобряете запросы одним нажатием</li>
+<li>Отправляете дополнительные инструкции</li>
+</ul>
+<p>В терминале на компьютере отображается: <strong>«Remote mode — waiting for input»</strong>.</p>
+<h3 id="после-обеда-возвращение-к-компьютеру">После обеда: возвращение к компьютеру<a class="anchor" href="#%d0%bf%d0%be%d1%81%d0%bb%d0%b5-%d0%be%d0%b1%d0%b5%d0%b4%d0%b0-%d0%b2%d0%be%d0%b7%d0%b2%d1%80%d0%b0%d1%89%d0%b5%d0%bd%d0%b8%d0%b5-%d0%ba-%d0%ba%d0%be%d0%bc%d0%bf%d1%8c%d1%8e%d1%82%d0%b5%d1%80%d1%83">#</a></h3>
+<p>Садитесь за компьютер и нажимаете <strong>двойной пробел</strong> в терминале. Мгновенно возвращается локальное управление. Продолжаете работу как ни в чём не бывало.</p>
+<h2 id="удалённый-запуск-сессий">Удалённый запуск сессий<a class="anchor" href="#%d1%83%d0%b4%d0%b0%d0%bb%d1%91%d0%bd%d0%bd%d1%8b%d0%b9-%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba-%d1%81%d0%b5%d1%81%d1%81%d0%b8%d0%b9">#</a></h2>
+<p>Ещё одна полезная функция: можно <strong>запускать новые сессии</strong> прямо с телефона, даже если вы далеко от компьютера.</p>
+<p>Для этого нужен <strong>Runner</strong> — фоновый сервис:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi runner start</span></span></code></pre></div><p>После этого:</p>
+<ol>
+<li>Откройте HAPI на телефоне</li>
+<li>В списке «Machines» (Машины) вы увидите свой компьютер</li>
+<li>Нажмите, чтобы создать новую сессию</li>
+<li>Выберите AI-агента и начните работу</li>
+</ol>
+<blockquote class='book-hint '>
+<p>💡 Runner полезен, когда вы хотите запустить задачу на домашнем компьютере, находясь в другом месте.</p></blockquote><h2 id="диагностика">Диагностика<a class="anchor" href="#%d0%b4%d0%b8%d0%b0%d0%b3%d0%bd%d0%be%d1%81%d1%82%d0%b8%d0%ba%d0%b0">#</a></h2>
+<p>Если что-то не работает, HAPI имеет встроенную диагностику:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi doctor</span></span></code></pre></div><p>Эта команда проверит:</p>
+<ul>
+<li>Подключение к hub</li>
+<li>Правильность токена</li>
+<li>Наличие AI-агентов</li>
+<li>Общее состояние системы</li>
+</ul>
+<h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li>HAPI поддерживает <strong>4 AI-агента</strong>: Claude Code, Codex, Gemini, OpenCode</li>
+<li>Можно запускать <strong>несколько сессий</strong> одновременно в разных терминалах</li>
+<li><strong>Одобрение запросов</strong> с телефона — ваш контроль над действиями AI</li>
+<li><strong>Seamless Handoff</strong> позволяет плавно переключаться между компьютером и телефоном</li>
+<li><strong>Runner</strong> позволяет запускать сессии удалённо</li>
+<li>Команда <code>hapi doctor</code> поможет найти проблемы</li>
+</ul>
+<h2 id="что-дальше">Что дальше<a class="anchor" href="#%d1%87%d1%82%d0%be-%d0%b4%d0%b0%d0%bb%d1%8c%d1%88%d0%b5">#</a></h2>
+<p>Поздравляем! 🎉 Вы прошли все 5 уроков для начинающих. Теперь вы умеете:</p>
+<ol>
+<li>✅ Понимать, что такое HAPI и чем он отличается от Happy</li>
+<li>✅ Устанавливать HAPI на компьютер</li>
+<li>✅ Запускать hub и подключаться с телефона</li>
+<li>✅ Использовать веб-интерфейс и PWA</li>
+<li>✅ Работать с разными AI-агентами и одобрять запросы удалённо</li>
+</ol>
+<p>В следующем уровне курса мы рассмотрим продвинутые темы: настройку Telegram-бота, самостоятельный хостинг, голосовое управление и многое другое.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 4. Веб-интерфейс и PWA</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-2-intermediate/" class="flex align-center">
+        <span>Уровень 2: Средний</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#какие-ai-агенты-поддерживаются">Какие AI-агенты поддерживаются</a></li>
+    <li><a href="#запуск-разных-агентов">Запуск разных агентов</a>
+      <ul>
+        <li><a href="#подготовка">Подготовка</a></li>
+        <li><a href="#запуск-claude-code">Запуск Claude Code</a></li>
+        <li><a href="#запуск-codex">Запуск Codex</a></li>
+        <li><a href="#запуск-gemini">Запуск Gemini</a></li>
+        <li><a href="#запуск-opencode">Запуск OpenCode</a></li>
+      </ul>
+    </li>
+    <li><a href="#несколько-сессий-одновременно">Несколько сессий одновременно</a></li>
+    <li><a href="#одобрение-запросов-с-телефона">Одобрение запросов с телефона</a>
+      <ul>
+        <li><a href="#как-это-выглядит">Как это выглядит</a></li>
+        <li><a href="#зачем-нужно-одобрение">Зачем нужно одобрение</a></li>
+        <li><a href="#одобрение-через-telegram">Одобрение через Telegram</a></li>
+      </ul>
+    </li>
+    <li><a href="#seamless-handoff-в-действии">Seamless Handoff в действии</a>
+      <ul>
+        <li><a href="#утро-работа-за-компьютером">Утро: работа за компьютером</a></li>
+        <li><a href="#обед-переключение-на-телефон">Обед: переключение на телефон</a></li>
+        <li><a href="#после-обеда-возвращение-к-компьютеру">После обеда: возвращение к компьютеру</a></li>
+      </ul>
+    </li>
+    <li><a href="#удалённый-запуск-сессий">Удалённый запуск сессий</a></li>
+    <li><a href="#диагностика">Диагностика</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+    <li><a href="#что-дальше">Что дальше</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

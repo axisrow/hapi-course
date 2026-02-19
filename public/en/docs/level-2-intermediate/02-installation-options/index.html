@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 2. HAPI Installation Options# Why This Matters# In the first course level, you probably installed HAPI the simplest way. But HAPI supports several connection options — from “everything works out of the box” to fully self-managed deployment. In this lesson, we’ll cover each option so you can choose the right one.
+Reminder: Three HAPI Components# Before choosing an installation option, let’s recall the structure:
+Component What it does Required? CLI Launches the AI agent Yes Hub Central server, stores data Yes Runner Background service for remote session launching Optional Installing the CLI# There are several ways to install the CLI:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-2-intermediate/02-installation-options/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 2. HAPI Installation Options">
+  <meta property="og:description" content="Lesson 2. HAPI Installation Options# Why This Matters# In the first course level, you probably installed HAPI the simplest way. But HAPI supports several connection options — from “everything works out of the box” to fully self-managed deployment. In this lesson, we’ll cover each option so you can choose the right one.
+Reminder: Three HAPI Components# Before choosing an installation option, let’s recall the structure:
+Component What it does Required? CLI Launches the AI agent Yes Hub Central server, stores data Yes Runner Background service for remote session launching Optional Installing the CLI# There are several ways to install the CLI:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 2. HAPI Installation Options">
+  <meta itemprop="description" content="Lesson 2. HAPI Installation Options# Why This Matters# In the first course level, you probably installed HAPI the simplest way. But HAPI supports several connection options — from “everything works out of the box” to fully self-managed deployment. In this lesson, we’ll cover each option so you can choose the right one.
+Reminder: Three HAPI Components# Before choosing an installation option, let’s recall the structure:
+Component What it does Required? CLI Launches the AI agent Yes Hub Central server, stores data Yes Runner Background service for remote session launching Optional Installing the CLI# There are several ways to install the CLI:">
+  <meta itemprop="wordCount" content="999">
+
+<title>Lesson 2. HAPI Installation Options | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-2-intermediate/02-installation-options/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-2-intermediate/02-installation-options/" title="Урок 2. Варианты установки HAPI">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-2-intermediate/02-installation-options/" title="第2课：HAPI安装选项">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-2-intermediate/02-installation-options/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle"  />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle" checked />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="active">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle"  />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 2. HAPI Installation Options</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#reminder-three-hapi-components">Reminder: Three HAPI Components</a></li>
+    <li><a href="#installing-the-cli">Installing the CLI</a>
+      <ul>
+        <li><a href="#method-1-npm-recommended">Method 1: npm (recommended)</a></li>
+        <li><a href="#method-2-homebrew-for-macos">Method 2: Homebrew (for macOS)</a></li>
+        <li><a href="#method-3-without-installation-npx">Method 3: Without installation (npx)</a></li>
+        <li><a href="#method-4-pre-built-binary">Method 4: Pre-built binary</a></li>
+      </ul>
+    </li>
+    <li><a href="#four-hub-connection-options">Four Hub Connection Options</a>
+      <ul>
+        <li><a href="#option-1-relay-default-">Option 1: Relay (default) ⭐</a></li>
+        <li><a href="#option-2-cloudflare-tunnel">Option 2: Cloudflare Tunnel</a></li>
+        <li><a href="#option-3-tailscale">Option 3: Tailscale</a></li>
+        <li><a href="#option-4-self-hosted">Option 4: Self-hosted</a></li>
+      </ul>
+    </li>
+    <li><a href="#comparison-table">Comparison Table</a></li>
+    <li><a href="#setting-up-runner-background-service">Setting Up Runner (Background Service)</a></li>
+    <li><a href="#keeping-hapi-running-permanently">Keeping HAPI Running Permanently</a>
+      <ul>
+        <li><a href="#quick-method-nohup">Quick method (nohup):</a></li>
+        <li><a href="#reliable-method-pm2">Reliable method (pm2):</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-2-hapi-installation-options">Lesson 2. HAPI Installation Options<a class="anchor" href="#lesson-2-hapi-installation-options">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>In the first course level, you probably installed HAPI the simplest way. But HAPI supports several connection options — from &ldquo;everything works out of the box&rdquo; to fully self-managed deployment. In this lesson, we&rsquo;ll cover each option so you can choose the right one.</p>
+<h2 id="reminder-three-hapi-components">Reminder: Three HAPI Components<a class="anchor" href="#reminder-three-hapi-components">#</a></h2>
+<p>Before choosing an installation option, let&rsquo;s recall the structure:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>What it does</th>
+          <th>Required?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>CLI</strong></td>
+          <td>Launches the AI agent</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td><strong>Hub</strong></td>
+          <td>Central server, stores data</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td><strong>Runner</strong></td>
+          <td>Background service for remote session launching</td>
+          <td>Optional</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="installing-the-cli">Installing the CLI<a class="anchor" href="#installing-the-cli">#</a></h2>
+<p>There are several ways to install the CLI:</p>
+<h3 id="method-1-npm-recommended">Method 1: npm (recommended)<a class="anchor" href="#method-1-npm-recommended">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g @twsxtd/hapi</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>npm</strong> is a package manager for JavaScript. If you have Node.js installed, npm is already on your computer.</p></blockquote><h3 id="method-2-homebrew-for-macos">Method 2: Homebrew (for macOS)<a class="anchor" href="#method-2-homebrew-for-macos">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install tiann/tap/hapi</span></span></code></pre></div><h3 id="method-3-without-installation-npx">Method 3: Without installation (npx)<a class="anchor" href="#method-3-without-installation-npx">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx @twsxtd/hapi</span></span></code></pre></div><p>This method downloads and runs HAPI on the fly — convenient for a quick check.</p>
+<h3 id="method-4-pre-built-binary">Method 4: Pre-built binary<a class="anchor" href="#method-4-pre-built-binary">#</a></h3>
+<p>Download the file from <a href="https://github.com/tiann/hapi/releases">GitHub Releases</a> and run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x ./hapi              <span style="color:#75715e"># Allow execution</span>
+</span></span><span style="display:flex;"><span>sudo mv ./hapi /usr/local/bin/  <span style="color:#75715e"># Move to system directory</span></span></span></code></pre></div><hr>
+<h2 id="four-hub-connection-options">Four Hub Connection Options<a class="anchor" href="#four-hub-connection-options">#</a></h2>
+<p>The main question: <strong>how will you connect to the Hub from your phone?</strong> Here are four options:</p>
+<hr>
+<h3 id="option-1-relay-default-">Option 1: Relay (default) ⭐<a class="anchor" href="#option-1-relay-default-">#</a></h3>
+<p><strong>What it is:</strong> A built-in service that automatically creates a secure tunnel to your Hub over the internet.</p>
+<p><strong>For whom:</strong> Most users. Works out of the box.</p>
+<p><strong>How to launch:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><p>After launch, the terminal will show:</p>
+<ul>
+<li>A URL for access</li>
+<li>A QR code — scan with your phone</li>
+</ul>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>✅ Zero configuration — just works</li>
+<li>✅ Works behind NAT and firewalls (even if your provider &ldquo;hides&rdquo; your computer)</li>
+<li>✅ WireGuard + TLS encryption</li>
+<li>✅ Free</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>UDP protocol is used by default. If you have connection issues, enable TCP mode:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_RELAY_FORCE_TCP<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>UDP and TCP</strong> are two ways of transmitting data over the internet. UDP is faster but may be blocked by some networks. TCP is more reliable and works virtually everywhere.</p></blockquote><hr>
+<h3 id="option-2-cloudflare-tunnel">Option 2: Cloudflare Tunnel<a class="anchor" href="#option-2-cloudflare-tunnel">#</a></h3>
+<p><strong>What it is:</strong> A free service from Cloudflare that creates a secure tunnel to your server.</p>
+<p><strong>For whom:</strong> Those who want their own domain (e.g., <code>hapi.yoursite.com</code>) and more control.</p>
+<p><strong>How to set up:</strong></p>
+<ol>
+<li>
+<p>Install <code>cloudflared</code> from the <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/">Cloudflare website</a></p>
+</li>
+<li>
+<p>Create a named tunnel:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cloudflared tunnel create hapi
+</span></span><span style="display:flex;"><span>cloudflared tunnel route dns hapi hapi.yourdomain.com</span></span></code></pre></div><ol start="3">
+<li>Start the tunnel:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cloudflared tunnel --protocol http2 run hapi</span></span></code></pre></div><ol start="4">
+<li>Start the Hub (without &ndash;relay):</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p><strong>Pros:</strong></p>
+<ul>
+<li>✅ Your own custom domain</li>
+<li>✅ Free</li>
+<li>✅ Reliable Cloudflare infrastructure</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>⚠️ <strong>Quick tunnels (TryCloudflare) are not supported</strong> — they don&rsquo;t work with SSE, which HAPI uses for real-time updates. You need a &ldquo;named&rdquo; tunnel.</li>
+<li>⚠️ Use the <code>--protocol http2</code> flag — the QUIC protocol (default) may cause issues with long-lived connections.</li>
+</ul>
+<hr>
+<h3 id="option-3-tailscale">Option 3: Tailscale<a class="anchor" href="#option-3-tailscale">#</a></h3>
+<p><strong>What it is:</strong> A VPN service that joins your devices into a private network. All your devices get special IP addresses and &ldquo;see&rdquo; each other as if they were on the same local network.</p>
+<p><strong>For whom:</strong> Those with multiple devices who want a simple private network.</p>
+<p><strong>How to set up:</strong></p>
+<ol>
+<li>Install Tailscale: <a href="https://tailscale.com/download">tailscale.com/download</a></li>
+<li>Connect:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo tailscale up</span></span></code></pre></div><ol start="3">
+<li>Start the Hub:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><ol start="4">
+<li>Open in your phone&rsquo;s browser (Tailscale must also be installed on the phone):</li>
+</ol>
+<pre tabindex="0"><code>http://100.x.x.x:3006</code></pre><blockquote class='book-hint '>
+<p>The <code>100.x.x.x</code> address is your Tailscale IP. Find it with the <code>tailscale ip</code> command.</p></blockquote><p><strong>Pros:</strong></p>
+<ul>
+<li>✅ Completely private network — traffic doesn&rsquo;t pass through third-party servers</li>
+<li>✅ Simple setup</li>
+<li>✅ Free for personal use (up to 100 devices)</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>⚠️ Tailscale needs to be installed on <strong>all</strong> devices (computer + phone)</li>
+</ul>
+<hr>
+<h3 id="option-4-self-hosted">Option 4: Self-hosted<a class="anchor" href="#option-4-self-hosted">#</a></h3>
+<p><strong>What it is:</strong> You deploy the Hub on a server with a public IP address (VPS, cloud server).</p>
+<p><strong>For whom:</strong> Experienced users who want full control.</p>
+<p><strong>How to set up:</strong></p>
+<ol>
+<li>On the server (VPS), start the Hub:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><ol start="2">
+<li>Set up a reverse proxy (Nginx, Caddy) for HTTPS:</li>
+</ol>
+<blockquote class='book-hint '>
+<p>A <strong>reverse proxy</strong> is a program that accepts requests from the internet and forwards them to your Hub. It can also add HTTPS encryption.</p></blockquote><ol start="3">
+<li>On your workstation, configure the CLI connection to the server:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://your-server.com&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-token&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>Or use interactive authentication:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi auth login</span></span></code></pre></div><p><strong>Pros:</strong></p>
+<ul>
+<li>✅ Full control over everything</li>
+<li>✅ Minimal latency (if the server is nearby)</li>
+<li>✅ No dependency on third-party services</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>⚠️ Requires a server (VPS) — from ~$5/month</li>
+<li>⚠️ Need to set up HTTPS (Let&rsquo;s Encrypt — free)</li>
+<li>⚠️ Need to monitor security</li>
+</ul>
+<hr>
+<h2 id="comparison-table">Comparison Table<a class="anchor" href="#comparison-table">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Criteria</th>
+          <th>Relay</th>
+          <th>Cloudflare</th>
+          <th>Tailscale</th>
+          <th>Self-hosted</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Difficulty</td>
+          <td>⭐ Easy</td>
+          <td>⭐⭐ Medium</td>
+          <td>⭐⭐ Medium</td>
+          <td>⭐⭐⭐ Hard</td>
+      </tr>
+      <tr>
+          <td>Cost</td>
+          <td>Free</td>
+          <td>Free</td>
+          <td>Free</td>
+          <td>VPS ~$5/mo</td>
+      </tr>
+      <tr>
+          <td>Custom domain</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+      </tr>
+      <tr>
+          <td>Encryption</td>
+          <td>WireGuard+TLS</td>
+          <td>TLS</td>
+          <td>WireGuard</td>
+          <td>Configure yourself</td>
+      </tr>
+      <tr>
+          <td>Privacy</td>
+          <td>Via Relay server</td>
+          <td>Via Cloudflare</td>
+          <td>Full</td>
+          <td>Full</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="setting-up-runner-background-service">Setting Up Runner (Background Service)<a class="anchor" href="#setting-up-runner-background-service">#</a></h2>
+<p>Regardless of the connection option, you can set up the <strong>Runner</strong> — a background service that lets you launch sessions from your phone:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi runner start      <span style="color:#75715e"># Start</span>
+</span></span><span style="display:flex;"><span>hapi runner status     <span style="color:#75715e"># Check status</span>
+</span></span><span style="display:flex;"><span>hapi runner logs       <span style="color:#75715e"># View logs</span>
+</span></span><span style="display:flex;"><span>hapi runner stop       <span style="color:#75715e"># Stop</span></span></span></code></pre></div><p>With Runner running:</p>
+<ul>
+<li>Your computer will appear in the &ldquo;Machines&rdquo; list in the Web App</li>
+<li>You can launch new sessions remotely</li>
+<li>Sessions continue running even after closing the terminal</li>
+</ul>
+<hr>
+<h2 id="keeping-hapi-running-permanently">Keeping HAPI Running Permanently<a class="anchor" href="#keeping-hapi-running-permanently">#</a></h2>
+<p>To prevent the Hub and Runner from stopping when you close the terminal:</p>
+<h3 id="quick-method-nohup">Quick method (nohup):<a class="anchor" href="#quick-method-nohup">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nohup hapi hub --relay &gt; ~/.hapi/logs/hub.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+</span></span><span style="display:flex;"><span>nohup hapi runner start --foreground &gt; ~/.hapi/logs/runner.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;</span></span></code></pre></div><h3 id="reliable-method-pm2">Reliable method (pm2):<a class="anchor" href="#reliable-method-pm2">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g pm2
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi hub --relay&#34;</span> --name hapi-hub
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi runner start --foreground&#34;</span> --name hapi-runner
+</span></span><span style="display:flex;"><span>pm2 startup   <span style="color:#75715e"># Auto-start on reboot</span>
+</span></span><span style="display:flex;"><span>pm2 save</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>pm2</strong> is a process manager that automatically restarts programs on crashes and system reboots.</p></blockquote><hr>
+<h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li><strong>Relay</strong> — the simplest option, works out of the box, suitable for most users</li>
+<li><strong>Cloudflare Tunnel</strong> — if you want your own domain and reliable infrastructure</li>
+<li><strong>Tailscale</strong> — if you want a completely private network between devices</li>
+<li><strong>Self-hosted</strong> — if you want full control and have your own server</li>
+<li><strong>Runner</strong> lets you launch sessions remotely from your phone</li>
+<li>Use <strong>pm2</strong> or <strong>systemd</strong> to keep HAPI running permanently</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-2-intermediate/01-architecture/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 1. How HAPI Works</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="flex align-center">
+        <span>Lesson 3. Voice Assistant</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#reminder-three-hapi-components">Reminder: Three HAPI Components</a></li>
+    <li><a href="#installing-the-cli">Installing the CLI</a>
+      <ul>
+        <li><a href="#method-1-npm-recommended">Method 1: npm (recommended)</a></li>
+        <li><a href="#method-2-homebrew-for-macos">Method 2: Homebrew (for macOS)</a></li>
+        <li><a href="#method-3-without-installation-npx">Method 3: Without installation (npx)</a></li>
+        <li><a href="#method-4-pre-built-binary">Method 4: Pre-built binary</a></li>
+      </ul>
+    </li>
+    <li><a href="#four-hub-connection-options">Four Hub Connection Options</a>
+      <ul>
+        <li><a href="#option-1-relay-default-">Option 1: Relay (default) ⭐</a></li>
+        <li><a href="#option-2-cloudflare-tunnel">Option 2: Cloudflare Tunnel</a></li>
+        <li><a href="#option-3-tailscale">Option 3: Tailscale</a></li>
+        <li><a href="#option-4-self-hosted">Option 4: Self-hosted</a></li>
+      </ul>
+    </li>
+    <li><a href="#comparison-table">Comparison Table</a></li>
+    <li><a href="#setting-up-runner-background-service">Setting Up Runner (Background Service)</a></li>
+    <li><a href="#keeping-hapi-running-permanently">Keeping HAPI Running Permanently</a>
+      <ul>
+        <li><a href="#quick-method-nohup">Quick method (nohup):</a></li>
+        <li><a href="#reliable-method-pm2">Reliable method (pm2):</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

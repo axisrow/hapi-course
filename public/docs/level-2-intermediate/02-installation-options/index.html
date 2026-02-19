@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 2. Варианты установки HAPI# Зачем это нужно# В первом уровне курса вы, скорее всего, установили HAPI самым простым способом. Но HAPI поддерживает несколько вариантов подключения — от «всё работает из коробки» до полностью самостоятельного развёртывания. В этом уроке мы разберём каждый вариант, чтобы вы могли выбрать подходящий.
+Напоминание: три компонента HAPI# Прежде чем выбирать вариант установки, вспомним структуру:
+Компонент Что делает Обязателен? CLI Запускает AI-агента Да Hub Центральный сервер, хранит данные Да Runner Фоновый сервис для удалённого запуска сессий По желанию Установка CLI# Есть несколько способов установить CLI:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-2-intermediate/02-installation-options/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 2. Варианты установки HAPI">
+  <meta property="og:description" content="Урок 2. Варианты установки HAPI# Зачем это нужно# В первом уровне курса вы, скорее всего, установили HAPI самым простым способом. Но HAPI поддерживает несколько вариантов подключения — от «всё работает из коробки» до полностью самостоятельного развёртывания. В этом уроке мы разберём каждый вариант, чтобы вы могли выбрать подходящий.
+Напоминание: три компонента HAPI# Прежде чем выбирать вариант установки, вспомним структуру:
+Компонент Что делает Обязателен? CLI Запускает AI-агента Да Hub Центральный сервер, хранит данные Да Runner Фоновый сервис для удалённого запуска сессий По желанию Установка CLI# Есть несколько способов установить CLI:">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 2. Варианты установки HAPI">
+  <meta itemprop="description" content="Урок 2. Варианты установки HAPI# Зачем это нужно# В первом уровне курса вы, скорее всего, установили HAPI самым простым способом. Но HAPI поддерживает несколько вариантов подключения — от «всё работает из коробки» до полностью самостоятельного развёртывания. В этом уроке мы разберём каждый вариант, чтобы вы могли выбрать подходящий.
+Напоминание: три компонента HAPI# Прежде чем выбирать вариант установки, вспомним структуру:
+Компонент Что делает Обязателен? CLI Запускает AI-агента Да Hub Центральный сервер, хранит данные Да Runner Фоновый сервис для удалённого запуска сессий По желанию Установка CLI# Есть несколько способов установить CLI:">
+  <meta itemprop="wordCount" content="895">
+
+<title>Урок 2. Варианты установки HAPI | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-2-intermediate/02-installation-options/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-2-intermediate/02-installation-options/" title="Lesson 2. HAPI Installation Options">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-2-intermediate/02-installation-options/" title="第2课：HAPI安装选项">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-2-intermediate/02-installation-options/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle"  />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle" checked />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="active">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle"  />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 2. Варианты установки HAPI</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#напоминание-три-компонента-hapi">Напоминание: три компонента HAPI</a></li>
+    <li><a href="#установка-cli">Установка CLI</a>
+      <ul>
+        <li><a href="#способ-1-npm-рекомендуется">Способ 1: npm (рекомендуется)</a></li>
+        <li><a href="#способ-2-homebrew-для-macos">Способ 2: Homebrew (для macOS)</a></li>
+        <li><a href="#способ-3-без-установки-npx">Способ 3: Без установки (npx)</a></li>
+        <li><a href="#способ-4-готовый-файл-binary">Способ 4: Готовый файл (binary)</a></li>
+      </ul>
+    </li>
+    <li><a href="#четыре-варианта-подключения-hub">Четыре варианта подключения Hub</a>
+      <ul>
+        <li><a href="#вариант-1-relay-по-умолчанию-">Вариант 1: Relay (по умолчанию) ⭐</a></li>
+        <li><a href="#вариант-2-cloudflare-tunnel">Вариант 2: Cloudflare Tunnel</a></li>
+        <li><a href="#вариант-3-tailscale">Вариант 3: Tailscale</a></li>
+        <li><a href="#вариант-4-самостоятельный-хостинг-self-hosted">Вариант 4: Самостоятельный хостинг (Self-hosted)</a></li>
+      </ul>
+    </li>
+    <li><a href="#сравнительная-таблица">Сравнительная таблица</a></li>
+    <li><a href="#настройка-runner-фоновый-сервис">Настройка Runner (фоновый сервис)</a></li>
+    <li><a href="#как-сделать-чтобы-hapi-работал-постоянно">Как сделать, чтобы HAPI работал постоянно</a>
+      <ul>
+        <li><a href="#быстрый-способ-nohup">Быстрый способ (nohup):</a></li>
+        <li><a href="#надёжный-способ-pm2">Надёжный способ (pm2):</a></li>
+      </ul>
+    </li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-2-варианты-установки-hapi">Урок 2. Варианты установки HAPI<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-2-%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82%d1%8b-%d1%83%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b8-hapi">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>В первом уровне курса вы, скорее всего, установили HAPI самым простым способом. Но HAPI поддерживает несколько вариантов подключения — от «всё работает из коробки» до полностью самостоятельного развёртывания. В этом уроке мы разберём каждый вариант, чтобы вы могли выбрать подходящий.</p>
+<h2 id="напоминание-три-компонента-hapi">Напоминание: три компонента HAPI<a class="anchor" href="#%d0%bd%d0%b0%d0%bf%d0%be%d0%bc%d0%b8%d0%bd%d0%b0%d0%bd%d0%b8%d0%b5-%d1%82%d1%80%d0%b8-%d0%ba%d0%be%d0%bc%d0%bf%d0%be%d0%bd%d0%b5%d0%bd%d1%82%d0%b0-hapi">#</a></h2>
+<p>Прежде чем выбирать вариант установки, вспомним структуру:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Компонент</th>
+          <th>Что делает</th>
+          <th>Обязателен?</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>CLI</strong></td>
+          <td>Запускает AI-агента</td>
+          <td>Да</td>
+      </tr>
+      <tr>
+          <td><strong>Hub</strong></td>
+          <td>Центральный сервер, хранит данные</td>
+          <td>Да</td>
+      </tr>
+      <tr>
+          <td><strong>Runner</strong></td>
+          <td>Фоновый сервис для удалённого запуска сессий</td>
+          <td>По желанию</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="установка-cli">Установка CLI<a class="anchor" href="#%d1%83%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0-cli">#</a></h2>
+<p>Есть несколько способов установить CLI:</p>
+<h3 id="способ-1-npm-рекомендуется">Способ 1: npm (рекомендуется)<a class="anchor" href="#%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-1-npm-%d1%80%d0%b5%d0%ba%d0%be%d0%bc%d0%b5%d0%bd%d0%b4%d1%83%d0%b5%d1%82%d1%81%d1%8f">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g @twsxtd/hapi</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>npm</strong> — менеджер пакетов для JavaScript. Если у вас установлен Node.js, npm уже есть на вашем компьютере.</p></blockquote><h3 id="способ-2-homebrew-для-macos">Способ 2: Homebrew (для macOS)<a class="anchor" href="#%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-2-homebrew-%d0%b4%d0%bb%d1%8f-macos">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install tiann/tap/hapi</span></span></code></pre></div><h3 id="способ-3-без-установки-npx">Способ 3: Без установки (npx)<a class="anchor" href="#%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-3-%d0%b1%d0%b5%d0%b7-%d1%83%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b8-npx">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx @twsxtd/hapi</span></span></code></pre></div><p>Этот способ скачивает и запускает HAPI «на лету» — удобно для быстрой проверки.</p>
+<h3 id="способ-4-готовый-файл-binary">Способ 4: Готовый файл (binary)<a class="anchor" href="#%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-4-%d0%b3%d0%be%d1%82%d0%be%d0%b2%d1%8b%d0%b9-%d1%84%d0%b0%d0%b9%d0%bb-binary">#</a></h3>
+<p>Скачайте файл с <a href="https://github.com/tiann/hapi/releases">GitHub Releases</a> и выполните:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x ./hapi              <span style="color:#75715e"># Разрешить запуск</span>
+</span></span><span style="display:flex;"><span>sudo mv ./hapi /usr/local/bin/  <span style="color:#75715e"># Переместить в системную папку</span></span></span></code></pre></div><hr>
+<h2 id="четыре-варианта-подключения-hub">Четыре варианта подключения Hub<a class="anchor" href="#%d1%87%d0%b5%d1%82%d1%8b%d1%80%d0%b5-%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82%d0%b0-%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d1%8f-hub">#</a></h2>
+<p>Главный вопрос: <strong>как вы будете подключаться к Hub с телефона?</strong> Вот четыре варианта:</p>
+<hr>
+<h3 id="вариант-1-relay-по-умолчанию-">Вариант 1: Relay (по умолчанию) ⭐<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-1-relay-%d0%bf%d0%be-%d1%83%d0%bc%d0%be%d0%bb%d1%87%d0%b0%d0%bd%d0%b8%d1%8e-">#</a></h3>
+<p><strong>Что это:</strong> Встроенный сервис, который автоматически создаёт безопасный туннель к вашему Hub через интернет.</p>
+<p><strong>Для кого:</strong> Для большинства пользователей. Работает «из коробки».</p>
+<p><strong>Как запустить:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><p>После запуска в терминале появится:</p>
+<ul>
+<li>URL-адрес для доступа</li>
+<li>QR-код — отсканируйте телефоном</li>
+</ul>
+<p><strong>Плюсы:</strong></p>
+<ul>
+<li>✅ Никакой настройки — просто работает</li>
+<li>✅ Работает за NAT и файрволом (даже если провайдер «прячет» ваш компьютер)</li>
+<li>✅ Шифрование WireGuard + TLS</li>
+<li>✅ Бесплатно</li>
+</ul>
+<p><strong>Нюансы:</strong></p>
+<ul>
+<li>По умолчанию используется UDP-протокол. Если возникают проблемы с подключением, включите TCP-режим:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_RELAY_FORCE_TCP<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>UDP и TCP</strong> — два способа передачи данных в интернете. UDP — быстрее, но может блокироваться некоторыми сетями. TCP — надёжнее, работает практически везде.</p></blockquote><hr>
+<h3 id="вариант-2-cloudflare-tunnel">Вариант 2: Cloudflare Tunnel<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-2-cloudflare-tunnel">#</a></h3>
+<p><strong>Что это:</strong> Бесплатный сервис от компании Cloudflare, который создаёт безопасный туннель к вашему серверу.</p>
+<p><strong>Для кого:</strong> Для тех, кто хочет свой домен (например, <code>hapi.вашсайт.com</code>) и больше контроля.</p>
+<p><strong>Как настроить:</strong></p>
+<ol>
+<li>
+<p>Установите <code>cloudflared</code> с <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/">сайта Cloudflare</a></p>
+</li>
+<li>
+<p>Создайте именованный туннель:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cloudflared tunnel create hapi
+</span></span><span style="display:flex;"><span>cloudflared tunnel route dns hapi hapi.yourdomain.com</span></span></code></pre></div><ol start="3">
+<li>Запустите туннель:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cloudflared tunnel --protocol http2 run hapi</span></span></code></pre></div><ol start="4">
+<li>Запустите Hub (без &ndash;relay):</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p><strong>Плюсы:</strong></p>
+<ul>
+<li>✅ Свой красивый домен</li>
+<li>✅ Бесплатно</li>
+<li>✅ Надёжная инфраструктура Cloudflare</li>
+</ul>
+<p><strong>Нюансы:</strong></p>
+<ul>
+<li>⚠️ <strong>Быстрые туннели (TryCloudflare) не поддерживаются</strong> — они не работают с SSE, который HAPI использует для обновлений в реальном времени. Нужен именно «именованный» (named) туннель.</li>
+<li>⚠️ Используйте флаг <code>--protocol http2</code> — протокол QUIC (по умолчанию) может вызывать проблемы с длительными соединениями.</li>
+</ul>
+<hr>
+<h3 id="вариант-3-tailscale">Вариант 3: Tailscale<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-3-tailscale">#</a></h3>
+<p><strong>Что это:</strong> VPN-сервис, который объединяет ваши устройства в частную сеть. Все ваши устройства получают специальные IP-адреса и «видят» друг друга, как будто находятся в одной локальной сети.</p>
+<p><strong>Для кого:</strong> Для тех, у кого несколько устройств и кто хочет простую частную сеть.</p>
+<p><strong>Как настроить:</strong></p>
+<ol>
+<li>Установите Tailscale: <a href="https://tailscale.com/download">tailscale.com/download</a></li>
+<li>Подключитесь:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo tailscale up</span></span></code></pre></div><ol start="3">
+<li>Запустите Hub:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><ol start="4">
+<li>Откройте в браузере телефона (Tailscale должен быть установлен и на телефоне):</li>
+</ol>
+<pre tabindex="0"><code>http://100.x.x.x:3006</code></pre><blockquote class='book-hint '>
+<p>Адрес <code>100.x.x.x</code> — это ваш Tailscale IP. Узнать его можно командой <code>tailscale ip</code>.</p></blockquote><p><strong>Плюсы:</strong></p>
+<ul>
+<li>✅ Полностью частная сеть — трафик не проходит через чужие серверы</li>
+<li>✅ Простая настройка</li>
+<li>✅ Бесплатно для личного использования (до 100 устройств)</li>
+</ul>
+<p><strong>Нюансы:</strong></p>
+<ul>
+<li>⚠️ Tailscale нужно установить на <strong>все</strong> устройства (компьютер + телефон)</li>
+</ul>
+<hr>
+<h3 id="вариант-4-самостоятельный-хостинг-self-hosted">Вариант 4: Самостоятельный хостинг (Self-hosted)<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-4-%d1%81%d0%b0%d0%bc%d0%be%d1%81%d1%82%d0%be%d1%8f%d1%82%d0%b5%d0%bb%d1%8c%d0%bd%d1%8b%d0%b9-%d1%85%d0%be%d1%81%d1%82%d0%b8%d0%bd%d0%b3-self-hosted">#</a></h3>
+<p><strong>Что это:</strong> Вы разворачиваете Hub на сервере с публичным IP-адресом (VPS, облачный сервер).</p>
+<p><strong>Для кого:</strong> Для опытных пользователей, которые хотят полный контроль.</p>
+<p><strong>Как настроить:</strong></p>
+<ol>
+<li>На сервере (VPS) запустите Hub:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><ol start="2">
+<li>Настройте обратный прокси (Nginx, Caddy) для HTTPS:</li>
+</ol>
+<blockquote class='book-hint '>
+<p><strong>Обратный прокси</strong> (<em>reverse proxy</em>) — программа, которая принимает запросы из интернета и перенаправляет их на ваш Hub. Она также может добавить шифрование HTTPS.</p></blockquote><ol start="3">
+<li>На вашем рабочем компьютере настройте подключение CLI к серверу:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://ваш-сервер.com&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ваш-токен&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>Или используйте интерактивную авторизацию:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi auth login</span></span></code></pre></div><p><strong>Плюсы:</strong></p>
+<ul>
+<li>✅ Полный контроль над всем</li>
+<li>✅ Минимальная задержка (если сервер близко)</li>
+<li>✅ Не зависите от сторонних сервисов</li>
+</ul>
+<p><strong>Нюансы:</strong></p>
+<ul>
+<li>⚠️ Нужен сервер (VPS) — от ~$5/мес</li>
+<li>⚠️ Нужно настроить HTTPS (Let&rsquo;s Encrypt — бесплатно)</li>
+<li>⚠️ Нужно следить за безопасностью</li>
+</ul>
+<hr>
+<h2 id="сравнительная-таблица">Сравнительная таблица<a class="anchor" href="#%d1%81%d1%80%d0%b0%d0%b2%d0%bd%d0%b8%d1%82%d0%b5%d0%bb%d1%8c%d0%bd%d0%b0%d1%8f-%d1%82%d0%b0%d0%b1%d0%bb%d0%b8%d1%86%d0%b0">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Критерий</th>
+          <th>Relay</th>
+          <th>Cloudflare</th>
+          <th>Tailscale</th>
+          <th>Self-hosted</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Сложность</td>
+          <td>⭐ Легко</td>
+          <td>⭐⭐ Средне</td>
+          <td>⭐⭐ Средне</td>
+          <td>⭐⭐⭐ Сложно</td>
+      </tr>
+      <tr>
+          <td>Стоимость</td>
+          <td>Бесплатно</td>
+          <td>Бесплатно</td>
+          <td>Бесплатно</td>
+          <td>VPS ~$5/мес</td>
+      </tr>
+      <tr>
+          <td>Свой домен</td>
+          <td>Нет</td>
+          <td>Да</td>
+          <td>Нет</td>
+          <td>Да</td>
+      </tr>
+      <tr>
+          <td>Шифрование</td>
+          <td>WireGuard+TLS</td>
+          <td>TLS</td>
+          <td>WireGuard</td>
+          <td>Настраиваете сами</td>
+      </tr>
+      <tr>
+          <td>Приватность</td>
+          <td>Через Relay-сервер</td>
+          <td>Через Cloudflare</td>
+          <td>Полная</td>
+          <td>Полная</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="настройка-runner-фоновый-сервис">Настройка Runner (фоновый сервис)<a class="anchor" href="#%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-runner-%d1%84%d0%be%d0%bd%d0%be%d0%b2%d1%8b%d0%b9-%d1%81%d0%b5%d1%80%d0%b2%d0%b8%d1%81">#</a></h2>
+<p>Независимо от варианта подключения, вы можете настроить <strong>Runner</strong> — фоновый сервис, который позволяет запускать сессии с телефона:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi runner start      <span style="color:#75715e"># Запустить</span>
+</span></span><span style="display:flex;"><span>hapi runner status     <span style="color:#75715e"># Проверить статус</span>
+</span></span><span style="display:flex;"><span>hapi runner logs       <span style="color:#75715e"># Посмотреть логи</span>
+</span></span><span style="display:flex;"><span>hapi runner stop       <span style="color:#75715e"># Остановить</span></span></span></code></pre></div><p>С запущенным Runner:</p>
+<ul>
+<li>Ваш компьютер появится в списке «Машины» в Web App</li>
+<li>Вы сможете запускать новые сессии удалённо</li>
+<li>Сессии работают даже после закрытия терминала</li>
+</ul>
+<hr>
+<h2 id="как-сделать-чтобы-hapi-работал-постоянно">Как сделать, чтобы HAPI работал постоянно<a class="anchor" href="#%d0%ba%d0%b0%d0%ba-%d1%81%d0%b4%d0%b5%d0%bb%d0%b0%d1%82%d1%8c-%d1%87%d1%82%d0%be%d0%b1%d1%8b-hapi-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%b0%d0%bb-%d0%bf%d0%be%d1%81%d1%82%d0%be%d1%8f%d0%bd%d0%bd%d0%be">#</a></h2>
+<p>Чтобы Hub и Runner не останавливались при закрытии терминала:</p>
+<h3 id="быстрый-способ-nohup">Быстрый способ (nohup):<a class="anchor" href="#%d0%b1%d1%8b%d1%81%d1%82%d1%80%d1%8b%d0%b9-%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-nohup">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nohup hapi hub --relay &gt; ~/.hapi/logs/hub.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+</span></span><span style="display:flex;"><span>nohup hapi runner start --foreground &gt; ~/.hapi/logs/runner.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;</span></span></code></pre></div><h3 id="надёжный-способ-pm2">Надёжный способ (pm2):<a class="anchor" href="#%d0%bd%d0%b0%d0%b4%d1%91%d0%b6%d0%bd%d1%8b%d0%b9-%d1%81%d0%bf%d0%be%d1%81%d0%be%d0%b1-pm2">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm install -g pm2
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi hub --relay&#34;</span> --name hapi-hub
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi runner start --foreground&#34;</span> --name hapi-runner
+</span></span><span style="display:flex;"><span>pm2 startup   <span style="color:#75715e"># Автозапуск при перезагрузке</span>
+</span></span><span style="display:flex;"><span>pm2 save</span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>pm2</strong> — менеджер процессов, который автоматически перезапускает программы при сбоях и при перезагрузке компьютера.</p></blockquote><hr>
+<h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li><strong>Relay</strong> — самый простой вариант, работает из коробки, подходит большинству</li>
+<li><strong>Cloudflare Tunnel</strong> — если хотите свой домен и надёжную инфраструктуру</li>
+<li><strong>Tailscale</strong> — если хотите полностью частную сеть между устройствами</li>
+<li><strong>Self-hosted</strong> — если хотите полный контроль и у вас есть свой сервер</li>
+<li><strong>Runner</strong> позволяет запускать сессии удалённо с телефона</li>
+<li>Используйте <strong>pm2</strong> или <strong>systemd</strong> для постоянной работы HAPI</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-2-intermediate/01-architecture/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 1. Как устроен HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-2-intermediate/03-voice-assistant/" class="flex align-center">
+        <span>Урок 3. Голосовой ассистент</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#напоминание-три-компонента-hapi">Напоминание: три компонента HAPI</a></li>
+    <li><a href="#установка-cli">Установка CLI</a>
+      <ul>
+        <li><a href="#способ-1-npm-рекомендуется">Способ 1: npm (рекомендуется)</a></li>
+        <li><a href="#способ-2-homebrew-для-macos">Способ 2: Homebrew (для macOS)</a></li>
+        <li><a href="#способ-3-без-установки-npx">Способ 3: Без установки (npx)</a></li>
+        <li><a href="#способ-4-готовый-файл-binary">Способ 4: Готовый файл (binary)</a></li>
+      </ul>
+    </li>
+    <li><a href="#четыре-варианта-подключения-hub">Четыре варианта подключения Hub</a>
+      <ul>
+        <li><a href="#вариант-1-relay-по-умолчанию-">Вариант 1: Relay (по умолчанию) ⭐</a></li>
+        <li><a href="#вариант-2-cloudflare-tunnel">Вариант 2: Cloudflare Tunnel</a></li>
+        <li><a href="#вариант-3-tailscale">Вариант 3: Tailscale</a></li>
+        <li><a href="#вариант-4-самостоятельный-хостинг-self-hosted">Вариант 4: Самостоятельный хостинг (Self-hosted)</a></li>
+      </ul>
+    </li>
+    <li><a href="#сравнительная-таблица">Сравнительная таблица</a></li>
+    <li><a href="#настройка-runner-фоновый-сервис">Настройка Runner (фоновый сервис)</a></li>
+    <li><a href="#как-сделать-чтобы-hapi-работал-постоянно">Как сделать, чтобы HAPI работал постоянно</a>
+      <ul>
+        <li><a href="#быстрый-способ-nohup">Быстрый способ (nohup):</a></li>
+        <li><a href="#надёжный-способ-pm2">Надёжный способ (pm2):</a></li>
+      </ul>
+    </li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

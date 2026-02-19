@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 5. Working with the Terminal Remotely# Why This Matters# You started a task on your work computer, but need to leave. With HAPI, you can continue controlling the AI agent from your phone — send commands, approve actions, and monitor progress. It’s like a remote control for your terminal.
+Two Operating Modes# HAPI supports two modes that you can switch between instantly:
+Local Mode (in the terminal)# You’re sitting at the computer and working as usual Full terminal interface with syntax highlighting Instant response to key presses The AI agent runs directly on your machine Remote Mode (from phone/browser)# Control via the Web App from anywhere in the world Approve permissions with one tap Monitor progress in real time The session continues running on your computer How to Switch Between Modes# From Terminal → to Phone# Simply send a message from your phone (via the Web App). The terminal will automatically enter standby mode and show:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-2-intermediate/05-remote-terminal/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 5. Working with the Terminal Remotely">
+  <meta property="og:description" content="Lesson 5. Working with the Terminal Remotely# Why This Matters# You started a task on your work computer, but need to leave. With HAPI, you can continue controlling the AI agent from your phone — send commands, approve actions, and monitor progress. It’s like a remote control for your terminal.
+Two Operating Modes# HAPI supports two modes that you can switch between instantly:
+Local Mode (in the terminal)# You’re sitting at the computer and working as usual Full terminal interface with syntax highlighting Instant response to key presses The AI agent runs directly on your machine Remote Mode (from phone/browser)# Control via the Web App from anywhere in the world Approve permissions with one tap Monitor progress in real time The session continues running on your computer How to Switch Between Modes# From Terminal → to Phone# Simply send a message from your phone (via the Web App). The terminal will automatically enter standby mode and show:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 5. Working with the Terminal Remotely">
+  <meta itemprop="description" content="Lesson 5. Working with the Terminal Remotely# Why This Matters# You started a task on your work computer, but need to leave. With HAPI, you can continue controlling the AI agent from your phone — send commands, approve actions, and monitor progress. It’s like a remote control for your terminal.
+Two Operating Modes# HAPI supports two modes that you can switch between instantly:
+Local Mode (in the terminal)# You’re sitting at the computer and working as usual Full terminal interface with syntax highlighting Instant response to key presses The AI agent runs directly on your machine Remote Mode (from phone/browser)# Control via the Web App from anywhere in the world Approve permissions with one tap Monitor progress in real time The session continues running on your computer How to Switch Between Modes# From Terminal → to Phone# Simply send a message from your phone (via the Web App). The terminal will automatically enter standby mode and show:">
+  <meta itemprop="wordCount" content="820">
+
+<title>Lesson 5. Working with the Terminal Remotely | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-2-intermediate/05-remote-terminal/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-2-intermediate/05-remote-terminal/" title="Урок 5. Работа с терминалом удалённо">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-2-intermediate/05-remote-terminal/" title="第5课：远程终端操作">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-2-intermediate/05-remote-terminal/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle"  />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle" checked />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="active">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle"  />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 5. Working with the Terminal Remotely</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#two-operating-modes">Two Operating Modes</a>
+      <ul>
+        <li><a href="#local-mode-in-the-terminal">Local Mode (in the terminal)</a></li>
+        <li><a href="#remote-mode-from-phonebrowser">Remote Mode (from phone/browser)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-switch-between-modes">How to Switch Between Modes</a>
+      <ul>
+        <li><a href="#from-terminal--to-phone">From Terminal → to Phone</a></li>
+        <li><a href="#from-phone--to-terminal">From Phone → to Terminal</a></li>
+      </ul>
+    </li>
+    <li><a href="#running-commands-from-your-phone">Running Commands from Your Phone</a>
+      <ul>
+        <li><a href="#step-1-make-sure-hub-and-runner-are-running">Step 1: Make sure Hub and Runner are running</a></li>
+        <li><a href="#step-2-open-the-web-app-on-your-phone">Step 2: Open the Web App on your phone</a></li>
+        <li><a href="#step-3-manage-sessions">Step 3: Manage sessions</a></li>
+      </ul>
+    </li>
+    <li><a href="#afk-mode-away-from-keyboard">AFK Mode: &ldquo;Away From Keyboard&rdquo;</a>
+      <ul>
+        <li><a href="#typical-scenario">Typical Scenario</a></li>
+      </ul>
+    </li>
+    <li><a href="#approving-actions">Approving Actions</a>
+      <ul>
+        <li><a href="#what-a-permission-request-looks-like">What a Permission Request Looks Like</a></li>
+        <li><a href="#approval-methods">Approval Methods</a></li>
+      </ul>
+    </li>
+    <li><a href="#remote-session-launch">Remote Session Launch</a>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+      </ul>
+    </li>
+    <li><a href="#practical-tips">Practical Tips</a>
+      <ul>
+        <li><a href="#1-set-up-notifications">1. Set Up Notifications</a></li>
+        <li><a href="#2-install-the-pwa">2. Install the PWA</a></li>
+        <li><a href="#3-use-pm2-for-reliability">3. Use pm2 for Reliability</a></li>
+        <li><a href="#4-multiple-machines">4. Multiple Machines</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-5-working-with-the-terminal-remotely">Lesson 5. Working with the Terminal Remotely<a class="anchor" href="#lesson-5-working-with-the-terminal-remotely">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>You started a task on your work computer, but need to leave. With HAPI, you can <strong>continue controlling the AI agent from your phone</strong> — send commands, approve actions, and monitor progress. It&rsquo;s like a remote control for your terminal.</p>
+<hr>
+<h2 id="two-operating-modes">Two Operating Modes<a class="anchor" href="#two-operating-modes">#</a></h2>
+<p>HAPI supports two modes that you can switch between instantly:</p>
+<h3 id="local-mode-in-the-terminal">Local Mode (in the terminal)<a class="anchor" href="#local-mode-in-the-terminal">#</a></h3>
+<ul>
+<li>You&rsquo;re sitting at the computer and working as usual</li>
+<li>Full terminal interface with syntax highlighting</li>
+<li>Instant response to key presses</li>
+<li>The AI agent runs directly on your machine</li>
+</ul>
+<h3 id="remote-mode-from-phonebrowser">Remote Mode (from phone/browser)<a class="anchor" href="#remote-mode-from-phonebrowser">#</a></h3>
+<ul>
+<li>Control via the Web App from anywhere in the world</li>
+<li>Approve permissions with one tap</li>
+<li>Monitor progress in real time</li>
+<li>The session continues running on your computer</li>
+</ul>
+<hr>
+<h2 id="how-to-switch-between-modes">How to Switch Between Modes<a class="anchor" href="#how-to-switch-between-modes">#</a></h2>
+<h3 id="from-terminal--to-phone">From Terminal → to Phone<a class="anchor" href="#from-terminal--to-phone">#</a></h3>
+<p>Simply send a message from your phone (via the Web App). The terminal will automatically enter standby mode and show:</p>
+<pre tabindex="0"><code>Remote mode - waiting for input</code></pre><p>That&rsquo;s it! Control is now on the phone side.</p>
+<h3 id="from-phone--to-terminal">From Phone → to Terminal<a class="anchor" href="#from-phone--to-terminal">#</a></h3>
+<p>Press <strong>double space</strong> in the terminal. You&rsquo;ll instantly regain local control — as if you never left.</p>
+<blockquote class='book-hint '>
+<p>💡 It&rsquo;s the same session — switching doesn&rsquo;t lose context, history, or state.</p></blockquote><hr>
+<h2 id="running-commands-from-your-phone">Running Commands from Your Phone<a class="anchor" href="#running-commands-from-your-phone">#</a></h2>
+<h3 id="step-1-make-sure-hub-and-runner-are-running">Step 1: Make sure Hub and Runner are running<a class="anchor" href="#step-1-make-sure-hub-and-runner-are-running">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay           <span style="color:#75715e"># Hub with internet access</span>
+</span></span><span style="display:flex;"><span>hapi runner start          <span style="color:#75715e"># Background service for remote launching</span></span></span></code></pre></div><h3 id="step-2-open-the-web-app-on-your-phone">Step 2: Open the Web App on your phone<a class="anchor" href="#step-2-open-the-web-app-on-your-phone">#</a></h3>
+<p>Scan the QR code shown by the Hub, or navigate to the URL.</p>
+<h3 id="step-3-manage-sessions">Step 3: Manage sessions<a class="anchor" href="#step-3-manage-sessions">#</a></h3>
+<p>In the Web App you can:</p>
+<ul>
+<li><strong>Open an existing session</strong> — tap on it in the list</li>
+<li><strong>Create a new session</strong> — tap the &ldquo;New Session&rdquo; button and select a machine</li>
+<li><strong>Send a message to the agent</strong> — type in the input field, like in a regular messenger</li>
+<li><strong>Browse files</strong> — open the session&rsquo;s file browser</li>
+<li><strong>View code changes</strong> — git diffs right in the interface</li>
+</ul>
+<hr>
+<h2 id="afk-mode-away-from-keyboard">AFK Mode: &ldquo;Away From Keyboard&rdquo;<a class="anchor" href="#afk-mode-away-from-keyboard">#</a></h2>
+<p><strong>AFK</strong> (<em>Away From Keyboard</em>) is the scenario HAPI was built for:</p>
+<h3 id="typical-scenario">Typical Scenario<a class="anchor" href="#typical-scenario">#</a></h3>
+<pre tabindex="0"><code>09:00  You&#39;re at the computer. Run: hapi
+       Give a task: &#34;Refactor the payment module&#34;
+       
+09:10  You go for coffee ☕
+       
+09:12  Agent wants to modify payment.ts
+       → Notification on your phone!
+       → Open Web App → Press &#34;Approve&#34; ✅
+       
+09:15  Agent wants to run tests
+       → Notification on your phone
+       → &#34;Approve&#34; ✅
+       
+09:20  You return to the computer
+       → Double space → back in the terminal
+       → Agent already finished! 🎉</code></pre><hr>
+<h2 id="approving-actions">Approving Actions<a class="anchor" href="#approving-actions">#</a></h2>
+<p>When an AI agent wants to perform a potentially dangerous action (modify a file, run a command), it requests your permission.</p>
+<h3 id="what-a-permission-request-looks-like">What a Permission Request Looks Like<a class="anchor" href="#what-a-permission-request-looks-like">#</a></h3>
+<p>In the Web App you&rsquo;ll see:</p>
+<ul>
+<li><strong>What</strong> the agent wants to do (e.g., &ldquo;Edit file: src/payment.ts&rdquo;)</li>
+<li><strong>Details</strong> — exactly what changes are proposed</li>
+<li><strong>Approve</strong> and <strong>Deny</strong> buttons</li>
+</ul>
+<h3 id="approval-methods">Approval Methods<a class="anchor" href="#approval-methods">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Method</th>
+          <th>How</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Web App</td>
+          <td>Press the &ldquo;Approve&rdquo; or &ldquo;Deny&rdquo; button</td>
+      </tr>
+      <tr>
+          <td>Telegram</td>
+          <td>Receive a notification from the bot, respond</td>
+      </tr>
+      <tr>
+          <td>Voice</td>
+          <td>Say &ldquo;yes&rdquo; or &ldquo;no&rdquo; to the voice assistant</td>
+      </tr>
+      <tr>
+          <td>Terminal</td>
+          <td>If you&rsquo;re at the computer — confirm as usual</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="remote-session-launch">Remote Session Launch<a class="anchor" href="#remote-session-launch">#</a></h2>
+<p>With Runner, you can <strong>create new sessions right from your phone</strong>, even if no terminal is open on the computer.</p>
+<h3 id="how-it-works">How It Works<a class="anchor" href="#how-it-works">#</a></h3>
+<ol>
+<li>Runner runs in the background on your computer</li>
+<li>In the Web App, press <strong>&quot;+&quot;</strong> (new session)</li>
+<li>Select a machine from the list</li>
+<li>Choose an AI agent (Claude, Codex, Gemini)</li>
+<li>Optionally: specify a working directory</li>
+<li>The session starts on your computer — control it from your phone!</li>
+</ol>
+<pre tabindex="0"><code>Phone → Web App → Hub → Runner → New CLI session
+                                         │
+                                    AI agent is working
+                                    on your computer</code></pre><hr>
+<h2 id="practical-tips">Practical Tips<a class="anchor" href="#practical-tips">#</a></h2>
+<h3 id="1-set-up-notifications">1. Set Up Notifications<a class="anchor" href="#1-set-up-notifications">#</a></h3>
+<p>Connect a Telegram bot to receive push notifications:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export TELEGRAM_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-token&#34;</span>
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><p>Now permission requests will come directly to Telegram — no need to keep the Web App open.</p>
+<h3 id="2-install-the-pwa">2. Install the PWA<a class="anchor" href="#2-install-the-pwa">#</a></h3>
+<p>Open the Web App in your mobile browser and &ldquo;Add to Home Screen.&rdquo; The app will work like a regular app — with an icon, full-screen mode, and quick access.</p>
+<h3 id="3-use-pm2-for-reliability">3. Use pm2 for Reliability<a class="anchor" href="#3-use-pm2-for-reliability">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi hub --relay&#34;</span> --name hapi-hub
+</span></span><span style="display:flex;"><span>pm2 start <span style="color:#e6db74">&#34;hapi runner start --foreground&#34;</span> --name hapi-runner
+</span></span><span style="display:flex;"><span>pm2 save</span></span></code></pre></div><p>This way the Hub and Runner will run permanently, even after a computer reboot.</p>
+<h3 id="4-multiple-machines">4. Multiple Machines<a class="anchor" href="#4-multiple-machines">#</a></h3>
+<p>If you have multiple computers (work + home), install CLI and Runner on each and connect them to a single Hub. In the Web App, you&rsquo;ll see all machines and can launch sessions on any of them.</p>
+<hr>
+<h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li>HAPI lets you control the AI agent <strong>from your phone</strong> — send tasks and approve actions</li>
+<li>Switching between terminal and phone is <strong>instant</strong> (double space)</li>
+<li><strong>AFK mode</strong> — leave the computer and the agent keeps working; you approve actions from your phone</li>
+<li><strong>Runner</strong> lets you launch new sessions remotely</li>
+<li>Notifications can be received via <strong>Telegram</strong>, <strong>Web App</strong>, or <strong>voice assistant</strong></li>
+<li>Install PWA and pm2 for the most convenient workflow</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-2-intermediate/04-configuration/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 4. HAPI Configuration</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-3-advanced/" class="flex align-center">
+        <span>Level 3: Advanced</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#two-operating-modes">Two Operating Modes</a>
+      <ul>
+        <li><a href="#local-mode-in-the-terminal">Local Mode (in the terminal)</a></li>
+        <li><a href="#remote-mode-from-phonebrowser">Remote Mode (from phone/browser)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-switch-between-modes">How to Switch Between Modes</a>
+      <ul>
+        <li><a href="#from-terminal--to-phone">From Terminal → to Phone</a></li>
+        <li><a href="#from-phone--to-terminal">From Phone → to Terminal</a></li>
+      </ul>
+    </li>
+    <li><a href="#running-commands-from-your-phone">Running Commands from Your Phone</a>
+      <ul>
+        <li><a href="#step-1-make-sure-hub-and-runner-are-running">Step 1: Make sure Hub and Runner are running</a></li>
+        <li><a href="#step-2-open-the-web-app-on-your-phone">Step 2: Open the Web App on your phone</a></li>
+        <li><a href="#step-3-manage-sessions">Step 3: Manage sessions</a></li>
+      </ul>
+    </li>
+    <li><a href="#afk-mode-away-from-keyboard">AFK Mode: &ldquo;Away From Keyboard&rdquo;</a>
+      <ul>
+        <li><a href="#typical-scenario">Typical Scenario</a></li>
+      </ul>
+    </li>
+    <li><a href="#approving-actions">Approving Actions</a>
+      <ul>
+        <li><a href="#what-a-permission-request-looks-like">What a Permission Request Looks Like</a></li>
+        <li><a href="#approval-methods">Approval Methods</a></li>
+      </ul>
+    </li>
+    <li><a href="#remote-session-launch">Remote Session Launch</a>
+      <ul>
+        <li><a href="#how-it-works">How It Works</a></li>
+      </ul>
+    </li>
+    <li><a href="#practical-tips">Practical Tips</a>
+      <ul>
+        <li><a href="#1-set-up-notifications">1. Set Up Notifications</a></li>
+        <li><a href="#2-install-the-pwa">2. Install the PWA</a></li>
+        <li><a href="#3-use-pm2-for-reliability">3. Use pm2 for Reliability</a></li>
+        <li><a href="#4-multiple-machines">4. Multiple Machines</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 4. Web Interface and PWA# Why This Matters# In the last lesson, you opened HAPI in your phone’s browser. But opening the browser and entering the address every time is inconvenient. In this lesson, we’ll install HAPI as an app on your phone — with an icon on the home screen, just like a regular program.
+What is PWA# PWA (Progressive Web App) is a website that can be installed on your phone like a regular app. After installation:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-1-beginner/04-web-interface-and-pwa/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 4. Web Interface and PWA">
+  <meta property="og:description" content="Lesson 4. Web Interface and PWA# Why This Matters# In the last lesson, you opened HAPI in your phone’s browser. But opening the browser and entering the address every time is inconvenient. In this lesson, we’ll install HAPI as an app on your phone — with an icon on the home screen, just like a regular program.
+What is PWA# PWA (Progressive Web App) is a website that can be installed on your phone like a regular app. After installation:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 4. Web Interface and PWA">
+  <meta itemprop="description" content="Lesson 4. Web Interface and PWA# Why This Matters# In the last lesson, you opened HAPI in your phone’s browser. But opening the browser and entering the address every time is inconvenient. In this lesson, we’ll install HAPI as an app on your phone — with an icon on the home screen, just like a regular program.
+What is PWA# PWA (Progressive Web App) is a website that can be installed on your phone like a regular app. After installation:">
+  <meta itemprop="wordCount" content="686">
+
+<title>Lesson 4. Web Interface and PWA | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-1-beginner/04-web-interface-and-pwa/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-1-beginner/04-web-interface-and-pwa/" title="Урок 4. Веб-интерфейс и PWA">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" title="第4课：Web界面与PWA">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle" checked />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="active">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle"  />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle"  />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 4. Web Interface and PWA</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#what-is-pwa">What is PWA</a></li>
+    <li><a href="#installation-on-android">Installation on Android</a></li>
+    <li><a href="#installation-on-iphone-ios">Installation on iPhone (iOS)</a></li>
+    <li><a href="#installation-on-desktop">Installation on Desktop</a></li>
+    <li><a href="#main-interface-features">Main Interface Features</a>
+      <ul>
+        <li><a href="#session-list">Session List</a></li>
+        <li><a href="#chat-with-ai-agent">Chat with AI Agent</a></li>
+        <li><a href="#request-approval">Request Approval</a></li>
+        <li><a href="#file-viewer">File Viewer</a></li>
+        <li><a href="#terminal">Terminal</a></li>
+      </ul>
+    </li>
+    <li><a href="#notifications">Notifications</a></li>
+    <li><a href="#offline-mode">Offline Mode</a></li>
+    <li><a href="#multiple-devices">Multiple Devices</a></li>
+    <li><a href="#removing-the-app">Removing the App</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-4-web-interface-and-pwa">Lesson 4. Web Interface and PWA<a class="anchor" href="#lesson-4-web-interface-and-pwa">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>In the last lesson, you opened HAPI in your phone&rsquo;s browser. But opening the browser and entering the address every time is inconvenient. In this lesson, we&rsquo;ll install HAPI as an <strong>app</strong> on your phone — with an icon on the home screen, just like a regular program.</p>
+<h2 id="what-is-pwa">What is PWA<a class="anchor" href="#what-is-pwa">#</a></h2>
+<p><strong>PWA</strong> (Progressive Web App) is a website that can be installed on your phone like a regular app. After installation:</p>
+<ul>
+<li>📱 An HAPI <strong>icon</strong> appears on your home screen</li>
+<li>🖥️ The app opens <strong>full screen</strong> (without the browser address bar)</li>
+<li>🔔 You&rsquo;ll receive <strong>notifications</strong> (when the AI agent is waiting for your response)</li>
+<li>🔄 The app <strong>updates itself</strong> — always the latest version</li>
+</ul>
+<blockquote class='book-hint '>
+<p>💡 PWA doesn&rsquo;t need to be downloaded from the App Store or Google Play. It&rsquo;s installed directly from the browser.</p></blockquote><h2 id="installation-on-android">Installation on Android<a class="anchor" href="#installation-on-android">#</a></h2>
+<ol>
+<li>Open HAPI in <strong>Chrome</strong> or <strong>Edge</strong></li>
+<li>A banner <strong>&ldquo;Install HAPI&rdquo;</strong> will appear at the bottom — tap it</li>
+<li>Confirm the installation</li>
+<li>Done! The HAPI icon will appear on your home screen</li>
+</ol>
+<blockquote class='book-hint '>
+<p>💡 If the banner didn&rsquo;t appear: tap the <strong>three dots</strong> (⋮) in the top-right corner of Chrome → <strong>&ldquo;Install app&rdquo;</strong> or <strong>&ldquo;Add to Home screen&rdquo;</strong>.</p></blockquote><h2 id="installation-on-iphone-ios">Installation on iPhone (iOS)<a class="anchor" href="#installation-on-iphone-ios">#</a></h2>
+<p>On iPhone, installation works <strong>only through Safari</strong> (not Chrome, not Firefox):</p>
+<ol>
+<li>Open HAPI in <strong>Safari</strong></li>
+<li>Tap the <strong>Share</strong> button (square with an upward arrow ↑)</li>
+<li>Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong></li>
+<li>Tap <strong>&ldquo;Add&rdquo;</strong> in the top-right corner</li>
+<li>Done!</li>
+</ol>
+<blockquote class='book-hint '>
+<p>⚠️ On iOS, you must use Safari. Other browsers on iPhone don&rsquo;t support PWA installation.</p></blockquote><h2 id="installation-on-desktop">Installation on Desktop<a class="anchor" href="#installation-on-desktop">#</a></h2>
+<p>HAPI can also be installed on a computer as a standalone app:</p>
+<ol>
+<li>Open HAPI in <strong>Chrome</strong> or <strong>Edge</strong></li>
+<li>Click the install icon (⊕) on the right side of the address bar</li>
+<li>Or in the menu: <strong>&ldquo;Install HAPI&hellip;&rdquo;</strong></li>
+<li>HAPI will open in a separate window</li>
+</ol>
+<h2 id="main-interface-features">Main Interface Features<a class="anchor" href="#main-interface-features">#</a></h2>
+<h3 id="session-list">Session List<a class="anchor" href="#session-list">#</a></h3>
+<p>The main screen shows all your AI agent sessions:</p>
+<ul>
+<li><strong>Active</strong> — marked in green, currently running</li>
+<li><strong>Completed</strong> — gray, you can view the history</li>
+</ul>
+<h3 id="chat-with-ai-agent">Chat with AI Agent<a class="anchor" href="#chat-with-ai-agent">#</a></h3>
+<p>Tap any session to open the chat:</p>
+<ul>
+<li>You see the entire conversation (your messages and AI responses)</li>
+<li>You can send a new message</li>
+<li>The AI agent responds in real time</li>
+</ul>
+<h3 id="request-approval">Request Approval<a class="anchor" href="#request-approval">#</a></h3>
+<p>When an AI agent wants to do something (edit a file, run a command), it asks for permission. You&rsquo;ll see a notification and can:</p>
+<ul>
+<li>✅ <strong>Approve</strong> — the agent continues working</li>
+<li>❌ <strong>Deny</strong> — the agent won&rsquo;t perform the action</li>
+</ul>
+<h3 id="file-viewer">File Viewer<a class="anchor" href="#file-viewer">#</a></h3>
+<p>In the &ldquo;Files&rdquo; tab you can:</p>
+<ul>
+<li>Browse project files</li>
+<li>See what the AI agent changed</li>
+<li>View the diff between old and new file versions</li>
+</ul>
+<h3 id="terminal">Terminal<a class="anchor" href="#terminal">#</a></h3>
+<p>The &ldquo;Terminal&rdquo; tab is a remote terminal connected to your computer. You can run commands right from your phone.</p>
+<h2 id="notifications">Notifications<a class="anchor" href="#notifications">#</a></h2>
+<p>HAPI can send push notifications to your phone:</p>
+<ol>
+<li>On first launch, the app will ask for <strong>notification permission</strong> — tap &ldquo;Allow&rdquo;</li>
+<li>Now you&rsquo;ll receive notifications when:
+<ul>
+<li>The AI agent asks to approve an action</li>
+<li>The AI agent has finished and is waiting for input</li>
+</ul>
+</li>
+</ol>
+<blockquote class='book-hint '>
+<p>💡 If push notifications don&rsquo;t work (for example, in China where Firebase is blocked), use a <strong>Telegram bot</strong> as an alternative.</p></blockquote><h2 id="offline-mode">Offline Mode<a class="anchor" href="#offline-mode">#</a></h2>
+<p>PWA can work offline (without internet) in a limited mode:</p>
+<ul>
+<li>Shows cached session list</li>
+<li>Shows previously loaded messages</li>
+<li>Actions taken offline will be sent when internet returns</li>
+</ul>
+<h2 id="multiple-devices">Multiple Devices<a class="anchor" href="#multiple-devices">#</a></h2>
+<p>HAPI can be installed on <strong>multiple devices</strong> simultaneously:</p>
+<ul>
+<li>Phone, tablet, second computer — all connect to the same hub</li>
+<li>Use the same access token</li>
+<li>Sessions sync between devices</li>
+</ul>
+<h2 id="removing-the-app">Removing the App<a class="anchor" href="#removing-the-app">#</a></h2>
+<p>If you need to remove HAPI:</p>
+<ul>
+<li><strong>Android</strong>: long-press the icon → &ldquo;Uninstall&rdquo;</li>
+<li><strong>iPhone</strong>: long-press the icon → &ldquo;Delete App&rdquo;</li>
+<li><strong>Desktop</strong>: open HAPI → menu (three dots) → &ldquo;Uninstall HAPI&rdquo;</li>
+</ul>
+<h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li><strong>PWA</strong> is a web application that installs like a regular program</li>
+<li>On <strong>Android</strong> it&rsquo;s installed through Chrome, on <strong>iPhone</strong> — only through Safari</li>
+<li>The interface includes: session list, chat, request approval, file viewer, terminal</li>
+<li><strong>Push notifications</strong> let you know when the AI agent needs your attention</li>
+<li>You can install on <strong>multiple devices</strong> simultaneously</li>
+</ul>
+<p>In the next lesson, we&rsquo;ll learn how to work with different AI agents through HAPI.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-1-beginner/03-quick-start/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 3. Quick Start</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="flex align-center">
+        <span>Lesson 5. Working with AI Agents</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#what-is-pwa">What is PWA</a></li>
+    <li><a href="#installation-on-android">Installation on Android</a></li>
+    <li><a href="#installation-on-iphone-ios">Installation on iPhone (iOS)</a></li>
+    <li><a href="#installation-on-desktop">Installation on Desktop</a></li>
+    <li><a href="#main-interface-features">Main Interface Features</a>
+      <ul>
+        <li><a href="#session-list">Session List</a></li>
+        <li><a href="#chat-with-ai-agent">Chat with AI Agent</a></li>
+        <li><a href="#request-approval">Request Approval</a></li>
+        <li><a href="#file-viewer">File Viewer</a></li>
+        <li><a href="#terminal">Terminal</a></li>
+      </ul>
+    </li>
+    <li><a href="#notifications">Notifications</a></li>
+    <li><a href="#offline-mode">Offline Mode</a></li>
+    <li><a href="#multiple-devices">Multiple Devices</a></li>
+    <li><a href="#removing-the-app">Removing the App</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

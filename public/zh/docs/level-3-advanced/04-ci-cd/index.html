@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第4课：CI/CD与HAPI自动化# 为什么需要这个# 当团队共同开发项目时，自动化日常任务很重要：代码检查、构建、发布。HAPI使用 GitHub Actions ——GitHub内置的自动化系统来完成这些工作。
+CI/CD（Continuous Integration / Continuous Delivery）——持续集成和持续交付。这是一种在每次代码更改时自动检查和构建的实践。
+GitHub Actions 是GitHub的服务，在特定事件（例如有人推送代码或创建pull request）时自动运行任务。
+HAPI有哪些自动化# 在 .github/workflows/ 文件夹中有6个文件——每个描述一种自动化：
+1. 🧪 测试（test.yml）# 触发时机： 每次push和pull request时。
+执行内容：
+下载代码 安装Bun 安装依赖（bun install） 类型检查（bun typecheck） 运行测试（bun run test） 目的： 确保新代码没有破坏任何东西。
+2. 🤖 AI审查PR（codex-pr-review.yml）# PR（Pull Request） ——请求将更改合并到项目中。其他参与者在接受前审查代码。
+触发时机： 当打开新PR或PR从草稿转为就绪状态时。
+执行内容：
+AI模型 Codex（GPT-5.2）自动审查PR中的代码 留下评论，包含建议和推荐 不审查来自机器人的PR和带有 bot-skip 标签的PR 不重复审查——如果机器人已留过评论，不会再次触发 目的： 加速代码审查并捕获常见错误。
+3. 💬 自动回复issues（issue-auto-response.yml）# Issue ——仓库中的工单/任务：Bug报告、功能请求、问题。
+触发时机： 当创建新issue或添加标签时。
+执行内容：
+Codex分析issue并自动回复 跳过重复（duplicate）、垃圾邮件（spam）和带有 bot-skip 标签的issues 只回复一次 目的： 用户更快获得首次回复，开发者无需回答典型问题。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/zh/docs/level-3-advanced/04-ci-cd/">
+  <meta property="og:site_name" content="HAPI — 远程AI代理控制">
+  <meta property="og:title" content="第4课：CI/CD与HAPI自动化">
+  <meta property="og:description" content="第4课：CI/CD与HAPI自动化# 为什么需要这个# 当团队共同开发项目时，自动化日常任务很重要：代码检查、构建、发布。HAPI使用 GitHub Actions ——GitHub内置的自动化系统来完成这些工作。
+CI/CD（Continuous Integration / Continuous Delivery）——持续集成和持续交付。这是一种在每次代码更改时自动检查和构建的实践。
+GitHub Actions 是GitHub的服务，在特定事件（例如有人推送代码或创建pull request）时自动运行任务。
+HAPI有哪些自动化# 在 .github/workflows/ 文件夹中有6个文件——每个描述一种自动化：
+1. 🧪 测试（test.yml）# 触发时机： 每次push和pull request时。
+执行内容：
+下载代码 安装Bun 安装依赖（bun install） 类型检查（bun typecheck） 运行测试（bun run test） 目的： 确保新代码没有破坏任何东西。
+2. 🤖 AI审查PR（codex-pr-review.yml）# PR（Pull Request） ——请求将更改合并到项目中。其他参与者在接受前审查代码。
+触发时机： 当打开新PR或PR从草稿转为就绪状态时。
+执行内容：
+AI模型 Codex（GPT-5.2）自动审查PR中的代码 留下评论，包含建议和推荐 不审查来自机器人的PR和带有 bot-skip 标签的PR 不重复审查——如果机器人已留过评论，不会再次触发 目的： 加速代码审查并捕获常见错误。
+3. 💬 自动回复issues（issue-auto-response.yml）# Issue ——仓库中的工单/任务：Bug报告、功能请求、问题。
+触发时机： 当创建新issue或添加标签时。
+执行内容：
+Codex分析issue并自动回复 跳过重复（duplicate）、垃圾邮件（spam）和带有 bot-skip 标签的issues 只回复一次 目的： 用户更快获得首次回复，开发者无需回答典型问题。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="第4课：CI/CD与HAPI自动化">
+  <meta itemprop="description" content="第4课：CI/CD与HAPI自动化# 为什么需要这个# 当团队共同开发项目时，自动化日常任务很重要：代码检查、构建、发布。HAPI使用 GitHub Actions ——GitHub内置的自动化系统来完成这些工作。
+CI/CD（Continuous Integration / Continuous Delivery）——持续集成和持续交付。这是一种在每次代码更改时自动检查和构建的实践。
+GitHub Actions 是GitHub的服务，在特定事件（例如有人推送代码或创建pull request）时自动运行任务。
+HAPI有哪些自动化# 在 .github/workflows/ 文件夹中有6个文件——每个描述一种自动化：
+1. 🧪 测试（test.yml）# 触发时机： 每次push和pull request时。
+执行内容：
+下载代码 安装Bun 安装依赖（bun install） 类型检查（bun typecheck） 运行测试（bun run test） 目的： 确保新代码没有破坏任何东西。
+2. 🤖 AI审查PR（codex-pr-review.yml）# PR（Pull Request） ——请求将更改合并到项目中。其他参与者在接受前审查代码。
+触发时机： 当打开新PR或PR从草稿转为就绪状态时。
+执行内容：
+AI模型 Codex（GPT-5.2）自动审查PR中的代码 留下评论，包含建议和推荐 不审查来自机器人的PR和带有 bot-skip 标签的PR 不重复审查——如果机器人已留过评论，不会再次触发 目的： 加速代码审查并捕获常见错误。
+3. 💬 自动回复issues（issue-auto-response.yml）# Issue ——仓库中的工单/任务：Bug报告、功能请求、问题。
+触发时机： 当创建新issue或添加标签时。
+执行内容：
+Codex分析issue并自动回复 跳过重复（duplicate）、垃圾邮件（spam）和带有 bot-skip 标签的issues 只回复一次 目的： 用户更快获得首次回复，开发者无需回答典型问题。">
+  <meta itemprop="wordCount" content="173">
+
+<title>第4课：CI/CD与HAPI自动化 | HAPI — 远程AI代理控制</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/zh/docs/level-3-advanced/04-ci-cd/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-3-advanced/04-ci-cd/" title="Урок 4. CI/CD и автоматизация в HAPI">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-3-advanced/04-ci-cd/" title="Lesson 4. CI/CD and Automation in HAPI">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/zh.search.min.02cccb22f1b23afb6e2618bf247800abf4ca2d9e37f139c8c3c3c2e7e42fe09c.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — 远程AI代理控制</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="搜索"
+    aria-label="搜索"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        中文
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-3-advanced/04-ci-cd/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/en/docs/level-3-advanced/04-ci-cd/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="toggle"  />
+    <label for="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="flex">
+      <a href="/zh/docs/level-1-beginner/" class="">
+        第1级：初学者</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/01-what-is-hapi/" class="">
+      第1课：什么是HAPI，为什么需要它</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/02-installation/" class="">
+      第2课：安装HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/03-quick-start/" class="">
+      第3课：快速开始</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      第4课：Web界面与PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      第5课：使用AI代理</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cec75285e88ca15cadb08d32c22729d1" class="toggle"  />
+    <label for="section-cec75285e88ca15cadb08d32c22729d1" class="flex">
+      <a href="/zh/docs/level-2-intermediate/" class="">
+        第2级：中级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/01-architecture/" class="">
+      第1课：HAPI的架构</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="">
+      第2课：HAPI安装选项</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="">
+      第3课：语音助手</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/04-configuration/" class="">
+      第4课：HAPI配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="">
+      第5课：远程终端操作</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41edaa233d27cc3f35a439f1b4daaaa1" class="toggle" checked />
+    <label for="section-41edaa233d27cc3f35a439f1b4daaaa1" class="flex">
+      <a href="/zh/docs/level-3-advanced/" class="">
+        第3级：高级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/01-namespace/" class="">
+      第1课：Namespace与团队协作</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/02-security/" class="">
+      第2课：HAPI的安全性</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="">
+      第3课：从源码构建HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="active">
+      第4课：CI/CD与HAPI自动化</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/05-contributing/" class="">
+      第5课：参与HAPI项目</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>第4课：CI/CD与HAPI自动化</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#hapi有哪些自动化">HAPI有哪些自动化</a>
+      <ul>
+        <li><a href="#1--测试testyml">1. 🧪 测试（<code>test.yml</code>）</a></li>
+        <li><a href="#2--ai审查prcodex-pr-reviewyml">2. 🤖 AI审查PR（<code>codex-pr-review.yml</code>）</a></li>
+        <li><a href="#3--自动回复issuesissue-auto-responseyml">3. 💬 自动回复issues（<code>issue-auto-response.yml</code>）</a></li>
+        <li><a href="#4--回复提及codex-mention-responseyml">4. 🗣️ 回复提及（<code>codex-mention-response.yml</code>）</a></li>
+        <li><a href="#5--发布releaseyml">5. 📦 发布（<code>release.yml</code>）</a></li>
+        <li><a href="#6--部署web应用webappyml">6. 🌐 部署Web应用（<code>webapp.yml</code>）</a></li>
+      </ul>
+    </li>
+    <li><a href="#所有这些如何关联">所有这些如何关联</a></li>
+    <li><a href="#bot-skip-标签"><code>bot-skip</code> 标签</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="第4课cicd与hapi自动化">第4课：CI/CD与HAPI自动化<a class="anchor" href="#%e7%ac%ac4%e8%af%becicd%e4%b8%8ehapi%e8%87%aa%e5%8a%a8%e5%8c%96">#</a></h1>
+<h2 id="为什么需要这个">为什么需要这个<a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e8%bf%99%e4%b8%aa">#</a></h2>
+<p>当团队共同开发项目时，自动化日常任务很重要：代码检查、构建、发布。HAPI使用 <strong>GitHub Actions</strong> ——GitHub内置的自动化系统来完成这些工作。</p>
+<blockquote class='book-hint '>
+<p><strong>CI/CD</strong>（Continuous Integration / Continuous Delivery）——持续集成和持续交付。这是一种在每次代码更改时自动检查和构建的实践。</p></blockquote><blockquote class='book-hint '>
+<p><strong>GitHub Actions</strong> 是GitHub的服务，在特定事件（例如有人推送代码或创建pull request）时自动运行任务。</p></blockquote><h2 id="hapi有哪些自动化">HAPI有哪些自动化<a class="anchor" href="#hapi%e6%9c%89%e5%93%aa%e4%ba%9b%e8%87%aa%e5%8a%a8%e5%8c%96">#</a></h2>
+<p>在 <code>.github/workflows/</code> 文件夹中有6个文件——每个描述一种自动化：</p>
+<h3 id="1--测试testyml">1. 🧪 测试（<code>test.yml</code>）<a class="anchor" href="#1--%e6%b5%8b%e8%af%95testyml">#</a></h3>
+<p><strong>触发时机：</strong> 每次push和pull request时。</p>
+<p><strong>执行内容：</strong></p>
+<ol>
+<li>下载代码</li>
+<li>安装Bun</li>
+<li>安装依赖（<code>bun install</code>）</li>
+<li>类型检查（<code>bun typecheck</code>）</li>
+<li>运行测试（<code>bun run test</code>）</li>
+</ol>
+<p><strong>目的：</strong> 确保新代码没有破坏任何东西。</p>
+<h3 id="2--ai审查prcodex-pr-reviewyml">2. 🤖 AI审查PR（<code>codex-pr-review.yml</code>）<a class="anchor" href="#2--ai%e5%ae%a1%e6%9f%a5prcodex-pr-reviewyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>PR（Pull Request）</strong> ——请求将更改合并到项目中。其他参与者在接受前审查代码。</p></blockquote><p><strong>触发时机：</strong> 当打开新PR或PR从草稿转为就绪状态时。</p>
+<p><strong>执行内容：</strong></p>
+<ul>
+<li>AI模型 <strong>Codex</strong>（GPT-5.2）自动审查PR中的代码</li>
+<li>留下评论，包含建议和推荐</li>
+<li>不审查来自机器人的PR和带有 <code>bot-skip</code> 标签的PR</li>
+<li>不重复审查——如果机器人已留过评论，不会再次触发</li>
+</ul>
+<p><strong>目的：</strong> 加速代码审查并捕获常见错误。</p>
+<h3 id="3--自动回复issuesissue-auto-responseyml">3. 💬 自动回复issues（<code>issue-auto-response.yml</code>）<a class="anchor" href="#3--%e8%87%aa%e5%8a%a8%e5%9b%9e%e5%a4%8dissuesissue-auto-responseyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Issue</strong> ——仓库中的工单/任务：Bug报告、功能请求、问题。</p></blockquote><p><strong>触发时机：</strong> 当创建新issue或添加标签时。</p>
+<p><strong>执行内容：</strong></p>
+<ul>
+<li>Codex分析issue并自动回复</li>
+<li>跳过重复（<code>duplicate</code>）、垃圾邮件（<code>spam</code>）和带有 <code>bot-skip</code> 标签的issues</li>
+<li>只回复一次</li>
+</ul>
+<p><strong>目的：</strong> 用户更快获得首次回复，开发者无需回答典型问题。</p>
+<h3 id="4--回复提及codex-mention-responseyml">4. 🗣️ 回复提及（<code>codex-mention-response.yml</code>）<a class="anchor" href="#4--%e5%9b%9e%e5%a4%8d%e6%8f%90%e5%8f%8acodex-mention-responseyml">#</a></h3>
+<p><strong>触发时机：</strong> 当有人在评论中提及 <code>@tiann</code> 时。</p>
+<p><strong>执行内容：</strong></p>
+<ul>
+<li>Codex回答问题或评论</li>
+<li>仅对具有写入权限（write access）的用户有效</li>
+<li>不回复自己的评论和带有 <code>bot-skip</code> 标签的issues</li>
+</ul>
+<p><strong>目的：</strong> 在讨论中直接为开发者提供快速帮助。</p>
+<h3 id="5--发布releaseyml">5. 📦 发布（<code>release.yml</code>）<a class="anchor" href="#5--%e5%8f%91%e5%b8%83releaseyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>发布（Release）</strong> ——发布程序的新版本。</p></blockquote><p><strong>触发时机：</strong> 当创建新版本标签时（例如 <code>v1.2.3</code>）。</p>
+<p><strong>执行内容：</strong></p>
+<ol>
+<li>为所有平台构建二进制文件</li>
+<li>打包为归档文件（macOS/Linux用<code>.tar.gz</code>，Windows用<code>.zip</code>）</li>
+<li>计算校验和（checksums）</li>
+<li>在GitHub上创建包含下载文件的发布</li>
+<li>更新Homebrew formula（macOS包管理器）</li>
+</ol>
+<h3 id="6--部署web应用webappyml">6. 🌐 部署Web应用（<code>webapp.yml</code>）<a class="anchor" href="#6--%e9%83%a8%e7%bd%b2web%e5%ba%94%e7%94%a8webappyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>部署（deploy）</strong> ——将应用放到服务器上使其可供用户访问。</p></blockquote><p><strong>触发时机：</strong> 当 <code>main</code> 分支中 <code>web/</code> 文件夹有更改时。</p>
+<p><strong>执行内容：</strong></p>
+<ol>
+<li>构建Web应用</li>
+<li>发布到GitHub Pages（GitHub的免费托管）</li>
+<li>通过 <code>app.hapi.run</code> 地址访问</li>
+</ol>
+<h2 id="所有这些如何关联">所有这些如何关联<a class="anchor" href="#%e6%89%80%e6%9c%89%e8%bf%99%e4%ba%9b%e5%a6%82%e4%bd%95%e5%85%b3%e8%81%94">#</a></h2>
+<pre tabindex="0"><code>开发者提交更改
+         │
+         ├─► 推送到任何分支
+         │       └─► test.yml：代码检查和测试
+         │
+         ├─► 打开PR
+         │       └─► codex-pr-review.yml：AI审查代码
+         │
+         ├─► PR合并到main + web/有更改
+         │       └─► webapp.yml：更新网站
+         │
+         ├─► 创建标签v1.2.3
+         │       └─► release.yml：构建+发布
+         │
+         └─► 新issue或评论
+                 └─► issue-auto-response.yml / codex-mention-response.yml</code></pre><h2 id="bot-skip-标签"><code>bot-skip</code> 标签<a class="anchor" href="#bot-skip-%e6%a0%87%e7%ad%be">#</a></h2>
+<p>如果你不想让机器人回复特定的issue或PR，添加 <strong><code>bot-skip</code></strong> 标签。所有AI自动化都会检查此标签并跳过这些任务。</p>
+<h2 id="课程总结">课程总结<a class="anchor" href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93">#</a></h2>
+<ul>
+<li>HAPI使用 <strong>6种自动化</strong> GitHub Actions来处理日常任务</li>
+<li><strong>测试</strong> 在每次代码更改时自动运行</li>
+<li><strong>AI（Codex）</strong> 自动审查PR、回复issues和评论</li>
+<li><strong>发布</strong> 通过创建标签一条命令为所有平台构建</li>
+<li><strong>Web应用</strong> 在更改时自动发布</li>
+<li><code>bot-skip</code> 标签可以为特定任务禁用AI自动化</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>第3课：从源码构建HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/zh/docs/level-3-advanced/05-contributing/" class="flex align-center">
+        <span>第5课：参与HAPI项目</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#hapi有哪些自动化">HAPI有哪些自动化</a>
+      <ul>
+        <li><a href="#1--测试testyml">1. 🧪 测试（<code>test.yml</code>）</a></li>
+        <li><a href="#2--ai审查prcodex-pr-reviewyml">2. 🤖 AI审查PR（<code>codex-pr-review.yml</code>）</a></li>
+        <li><a href="#3--自动回复issuesissue-auto-responseyml">3. 💬 自动回复issues（<code>issue-auto-response.yml</code>）</a></li>
+        <li><a href="#4--回复提及codex-mention-responseyml">4. 🗣️ 回复提及（<code>codex-mention-response.yml</code>）</a></li>
+        <li><a href="#5--发布releaseyml">5. 📦 发布（<code>release.yml</code>）</a></li>
+        <li><a href="#6--部署web应用webappyml">6. 🌐 部署Web应用（<code>webapp.yml</code>）</a></li>
+      </ul>
+    </li>
+    <li><a href="#所有这些如何关联">所有这些如何关联</a></li>
+    <li><a href="#bot-skip-标签"><code>bot-skip</code> 标签</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

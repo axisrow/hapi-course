@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第1课：什么是HAPI，为什么需要它# 为什么需要它# 想象一下：你正在电脑上使用AI助手（例如Claude Code）。它编写代码、编辑文件、执行命令。但你需要离开——去喝杯咖啡、去开会、或者只是出去走走。没有HAPI的话，你的AI代理会停下来，等着你回到电脑前。有了HAPI，你只需拿出手机就能继续工作——不会丢失任何进度。
+HAPI 是一个工具，可以让你从手机、平板电脑或任何浏览器远程控制AI代理。
+什么是AI代理？# AI代理 是一种具有人工智能的程序，能够在你的电脑上执行任务。例如：
+Claude Code（Anthropic出品）——编写和编辑代码 Codex（OpenAI出品）——也能帮助编写代码 Gemini CLI（Google出品）——另一个AI助手 OpenCode ——开源替代方案 它们都在你电脑的终端（命令行）中运行。HAPI不是替代它们，而是&#34;包装&#34;它们——添加了远程控制的能力。
+核心功能：Seamless Handoff# Seamless Handoff（无缝切换）——是在电脑和手机之间切换而不丢失上下文的能力。
+工作原理：
+你在电脑终端中与AI代理一起工作 从手机发送消息——控制权自动转移到手机 终端中显示&#34;Remote mode — waiting for input&#34;（远程模式——等待输入） 回到电脑前，按双空格——又回到本地控制 无需重启，不会丢失数据。同一个会话，同一个状态。
+HAPI和Happy有什么区别？# HAPI受到Happy项目的启发，但架构原理完全不同：
+Happy HAPI 数据存储位置 云服务器上（加密存储） 你的电脑上 架构 集中式——所有人共用一个服务器 去中心化——每人运行自己的hub 服务器功能 存储你的加密数据 Relay只转发流量，不存储任何数据 安装方式 多个服务（数据库、缓存、服务器） 一条命令 简单来说：
+Happy 就像Gmail：你的邮件存储在Google的服务器上（虽然加密了，但毕竟存在那里）。 HAPI 就像自己的邮件服务器：一切都在你的机器上，而&#34;邮递员&#34;（relay）只是传递信封，不会查看里面的内容。 什么是Hub和Relay？# Hub（中心）——是在你电脑上运行的&#34;控制中心&#34;。它存储会话、管理连接并提供Web界面访问。 Relay（中继器）——是一个中间服务器，只是在你的手机和电脑之间转发加密流量。它无法读取你的数据——数据使用WireGuard &#43; TLS（军事级加密技术）进行加密。 HAPI能做什么# 📱 手机控制 ——从任何地方向AI代理发送命令 ✅ 审批请求 ——AI想编辑文件？在手机上一键审批 🔄 无缝切换 ——电脑↔手机之间切换不丢失进度 🤖 任选AI ——Claude Code、Codex、Gemini、OpenCode 🖥️ 随处终端 ——直接从手机运行命令 🎤 语音控制 ——用语音与AI代理对话 🔒 安全 ——数据不会离开你的电脑 课程总结# HAPI 是一个从手机和浏览器远程控制AI代理的工具 核心功能是 Seamless Handoff：在设备之间切换而不丢失上下文 与Happy不同，HAPI是去中心化的：数据保留在你的电脑上 Relay 只转发加密流量——它看不到你的数据 HAPI支持Claude Code、Codex、Gemini和OpenCode 在下一课中，我们将在你的电脑上安装HAPI。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/zh/docs/level-1-beginner/01-what-is-hapi/">
+  <meta property="og:site_name" content="HAPI — 远程AI代理控制">
+  <meta property="og:title" content="第1课：什么是HAPI，为什么需要它">
+  <meta property="og:description" content="第1课：什么是HAPI，为什么需要它# 为什么需要它# 想象一下：你正在电脑上使用AI助手（例如Claude Code）。它编写代码、编辑文件、执行命令。但你需要离开——去喝杯咖啡、去开会、或者只是出去走走。没有HAPI的话，你的AI代理会停下来，等着你回到电脑前。有了HAPI，你只需拿出手机就能继续工作——不会丢失任何进度。
+HAPI 是一个工具，可以让你从手机、平板电脑或任何浏览器远程控制AI代理。
+什么是AI代理？# AI代理 是一种具有人工智能的程序，能够在你的电脑上执行任务。例如：
+Claude Code（Anthropic出品）——编写和编辑代码 Codex（OpenAI出品）——也能帮助编写代码 Gemini CLI（Google出品）——另一个AI助手 OpenCode ——开源替代方案 它们都在你电脑的终端（命令行）中运行。HAPI不是替代它们，而是&#34;包装&#34;它们——添加了远程控制的能力。
+核心功能：Seamless Handoff# Seamless Handoff（无缝切换）——是在电脑和手机之间切换而不丢失上下文的能力。
+工作原理：
+你在电脑终端中与AI代理一起工作 从手机发送消息——控制权自动转移到手机 终端中显示&#34;Remote mode — waiting for input&#34;（远程模式——等待输入） 回到电脑前，按双空格——又回到本地控制 无需重启，不会丢失数据。同一个会话，同一个状态。
+HAPI和Happy有什么区别？# HAPI受到Happy项目的启发，但架构原理完全不同：
+Happy HAPI 数据存储位置 云服务器上（加密存储） 你的电脑上 架构 集中式——所有人共用一个服务器 去中心化——每人运行自己的hub 服务器功能 存储你的加密数据 Relay只转发流量，不存储任何数据 安装方式 多个服务（数据库、缓存、服务器） 一条命令 简单来说：
+Happy 就像Gmail：你的邮件存储在Google的服务器上（虽然加密了，但毕竟存在那里）。 HAPI 就像自己的邮件服务器：一切都在你的机器上，而&#34;邮递员&#34;（relay）只是传递信封，不会查看里面的内容。 什么是Hub和Relay？# Hub（中心）——是在你电脑上运行的&#34;控制中心&#34;。它存储会话、管理连接并提供Web界面访问。 Relay（中继器）——是一个中间服务器，只是在你的手机和电脑之间转发加密流量。它无法读取你的数据——数据使用WireGuard &#43; TLS（军事级加密技术）进行加密。 HAPI能做什么# 📱 手机控制 ——从任何地方向AI代理发送命令 ✅ 审批请求 ——AI想编辑文件？在手机上一键审批 🔄 无缝切换 ——电脑↔手机之间切换不丢失进度 🤖 任选AI ——Claude Code、Codex、Gemini、OpenCode 🖥️ 随处终端 ——直接从手机运行命令 🎤 语音控制 ——用语音与AI代理对话 🔒 安全 ——数据不会离开你的电脑 课程总结# HAPI 是一个从手机和浏览器远程控制AI代理的工具 核心功能是 Seamless Handoff：在设备之间切换而不丢失上下文 与Happy不同，HAPI是去中心化的：数据保留在你的电脑上 Relay 只转发加密流量——它看不到你的数据 HAPI支持Claude Code、Codex、Gemini和OpenCode 在下一课中，我们将在你的电脑上安装HAPI。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="第1课：什么是HAPI，为什么需要它">
+  <meta itemprop="description" content="第1课：什么是HAPI，为什么需要它# 为什么需要它# 想象一下：你正在电脑上使用AI助手（例如Claude Code）。它编写代码、编辑文件、执行命令。但你需要离开——去喝杯咖啡、去开会、或者只是出去走走。没有HAPI的话，你的AI代理会停下来，等着你回到电脑前。有了HAPI，你只需拿出手机就能继续工作——不会丢失任何进度。
+HAPI 是一个工具，可以让你从手机、平板电脑或任何浏览器远程控制AI代理。
+什么是AI代理？# AI代理 是一种具有人工智能的程序，能够在你的电脑上执行任务。例如：
+Claude Code（Anthropic出品）——编写和编辑代码 Codex（OpenAI出品）——也能帮助编写代码 Gemini CLI（Google出品）——另一个AI助手 OpenCode ——开源替代方案 它们都在你电脑的终端（命令行）中运行。HAPI不是替代它们，而是&#34;包装&#34;它们——添加了远程控制的能力。
+核心功能：Seamless Handoff# Seamless Handoff（无缝切换）——是在电脑和手机之间切换而不丢失上下文的能力。
+工作原理：
+你在电脑终端中与AI代理一起工作 从手机发送消息——控制权自动转移到手机 终端中显示&#34;Remote mode — waiting for input&#34;（远程模式——等待输入） 回到电脑前，按双空格——又回到本地控制 无需重启，不会丢失数据。同一个会话，同一个状态。
+HAPI和Happy有什么区别？# HAPI受到Happy项目的启发，但架构原理完全不同：
+Happy HAPI 数据存储位置 云服务器上（加密存储） 你的电脑上 架构 集中式——所有人共用一个服务器 去中心化——每人运行自己的hub 服务器功能 存储你的加密数据 Relay只转发流量，不存储任何数据 安装方式 多个服务（数据库、缓存、服务器） 一条命令 简单来说：
+Happy 就像Gmail：你的邮件存储在Google的服务器上（虽然加密了，但毕竟存在那里）。 HAPI 就像自己的邮件服务器：一切都在你的机器上，而&#34;邮递员&#34;（relay）只是传递信封，不会查看里面的内容。 什么是Hub和Relay？# Hub（中心）——是在你电脑上运行的&#34;控制中心&#34;。它存储会话、管理连接并提供Web界面访问。 Relay（中继器）——是一个中间服务器，只是在你的手机和电脑之间转发加密流量。它无法读取你的数据——数据使用WireGuard &#43; TLS（军事级加密技术）进行加密。 HAPI能做什么# 📱 手机控制 ——从任何地方向AI代理发送命令 ✅ 审批请求 ——AI想编辑文件？在手机上一键审批 🔄 无缝切换 ——电脑↔手机之间切换不丢失进度 🤖 任选AI ——Claude Code、Codex、Gemini、OpenCode 🖥️ 随处终端 ——直接从手机运行命令 🎤 语音控制 ——用语音与AI代理对话 🔒 安全 ——数据不会离开你的电脑 课程总结# HAPI 是一个从手机和浏览器远程控制AI代理的工具 核心功能是 Seamless Handoff：在设备之间切换而不丢失上下文 与Happy不同，HAPI是去中心化的：数据保留在你的电脑上 Relay 只转发加密流量——它看不到你的数据 HAPI支持Claude Code、Codex、Gemini和OpenCode 在下一课中，我们将在你的电脑上安装HAPI。">
+  <meta itemprop="wordCount" content="93">
+
+<title>第1课：什么是HAPI，为什么需要它 | HAPI — 远程AI代理控制</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/zh/docs/level-1-beginner/01-what-is-hapi/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-1-beginner/01-what-is-hapi/" title="Урок 1. Что такое HAPI и зачем он нужен">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-1-beginner/01-what-is-hapi/" title="Lesson 1. What is HAPI and Why You Need It">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/zh.search.min.02cccb22f1b23afb6e2618bf247800abf4ca2d9e37f139c8c3c3c2e7e42fe09c.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — 远程AI代理控制</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="搜索"
+    aria-label="搜索"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        中文
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-1-beginner/01-what-is-hapi/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="toggle" checked />
+    <label for="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="flex">
+      <a href="/zh/docs/level-1-beginner/" class="">
+        第1级：初学者</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/01-what-is-hapi/" class="active">
+      第1课：什么是HAPI，为什么需要它</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/02-installation/" class="">
+      第2课：安装HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/03-quick-start/" class="">
+      第3课：快速开始</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      第4课：Web界面与PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      第5课：使用AI代理</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cec75285e88ca15cadb08d32c22729d1" class="toggle"  />
+    <label for="section-cec75285e88ca15cadb08d32c22729d1" class="flex">
+      <a href="/zh/docs/level-2-intermediate/" class="">
+        第2级：中级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/01-architecture/" class="">
+      第1课：HAPI的架构</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="">
+      第2课：HAPI安装选项</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="">
+      第3课：语音助手</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/04-configuration/" class="">
+      第4课：HAPI配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="">
+      第5课：远程终端操作</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41edaa233d27cc3f35a439f1b4daaaa1" class="toggle"  />
+    <label for="section-41edaa233d27cc3f35a439f1b4daaaa1" class="flex">
+      <a href="/zh/docs/level-3-advanced/" class="">
+        第3级：高级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/01-namespace/" class="">
+      第1课：Namespace与团队协作</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/02-security/" class="">
+      第2课：HAPI的安全性</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="">
+      第3课：从源码构建HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="">
+      第4课：CI/CD与HAPI自动化</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/05-contributing/" class="">
+      第5课：参与HAPI项目</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>第1课：什么是HAPI，为什么需要它</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要它">为什么需要它</a></li>
+    <li><a href="#什么是ai代理">什么是AI代理？</a></li>
+    <li><a href="#核心功能seamless-handoff">核心功能：Seamless Handoff</a></li>
+    <li><a href="#hapi和happy有什么区别">HAPI和Happy有什么区别？</a>
+      <ul>
+        <li><a href="#什么是hub和relay">什么是Hub和Relay？</a></li>
+      </ul>
+    </li>
+    <li><a href="#hapi能做什么">HAPI能做什么</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="第1课什么是hapi为什么需要它">第1课：什么是HAPI，为什么需要它<a class="anchor" href="#%e7%ac%ac1%e8%af%be%e4%bb%80%e4%b9%88%e6%98%afhapi%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e5%ae%83">#</a></h1>
+<h2 id="为什么需要它">为什么需要它<a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e5%ae%83">#</a></h2>
+<p>想象一下：你正在电脑上使用AI助手（例如Claude Code）。它编写代码、编辑文件、执行命令。但你需要离开——去喝杯咖啡、去开会、或者只是出去走走。没有HAPI的话，你的AI代理会停下来，等着你回到电脑前。有了HAPI，你只需拿出手机就能继续工作——不会丢失任何进度。</p>
+<p><strong>HAPI</strong> 是一个工具，可以让你从手机、平板电脑或任何浏览器远程控制AI代理。</p>
+<h2 id="什么是ai代理">什么是AI代理？<a class="anchor" href="#%e4%bb%80%e4%b9%88%e6%98%afai%e4%bb%a3%e7%90%86">#</a></h2>
+<p><strong>AI代理</strong> 是一种具有人工智能的程序，能够在你的电脑上执行任务。例如：</p>
+<ul>
+<li><strong>Claude Code</strong>（Anthropic出品）——编写和编辑代码</li>
+<li><strong>Codex</strong>（OpenAI出品）——也能帮助编写代码</li>
+<li><strong>Gemini CLI</strong>（Google出品）——另一个AI助手</li>
+<li><strong>OpenCode</strong> ——开源替代方案</li>
+</ul>
+<p>它们都在你电脑的<strong>终端</strong>（命令行）中运行。HAPI不是替代它们，而是&quot;包装&quot;它们——添加了远程控制的能力。</p>
+<h2 id="核心功能seamless-handoff">核心功能：Seamless Handoff<a class="anchor" href="#%e6%a0%b8%e5%bf%83%e5%8a%9f%e8%83%bdseamless-handoff">#</a></h2>
+<p><strong>Seamless Handoff</strong>（无缝切换）——是在电脑和手机之间切换而不丢失上下文的能力。</p>
+<p>工作原理：</p>
+<ol>
+<li>你在电脑终端中与AI代理一起工作</li>
+<li>从手机发送消息——控制权自动转移到手机</li>
+<li>终端中显示&quot;Remote mode — waiting for input&quot;（远程模式——等待输入）</li>
+<li>回到电脑前，按双空格——又回到本地控制</li>
+</ol>
+<p>无需重启，不会丢失数据。同一个会话，同一个状态。</p>
+<h2 id="hapi和happy有什么区别">HAPI和Happy有什么区别？<a class="anchor" href="#hapi%e5%92%8chappy%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab">#</a></h2>
+<p>HAPI受到<strong>Happy</strong>项目的启发，但架构原理完全不同：</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Happy</th>
+          <th>HAPI</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>数据存储位置</strong></td>
+          <td>云服务器上（加密存储）</td>
+          <td>你的电脑上</td>
+      </tr>
+      <tr>
+          <td><strong>架构</strong></td>
+          <td>集中式——所有人共用一个服务器</td>
+          <td>去中心化——每人运行自己的hub</td>
+      </tr>
+      <tr>
+          <td><strong>服务器功能</strong></td>
+          <td>存储你的加密数据</td>
+          <td>Relay只转发流量，不存储任何数据</td>
+      </tr>
+      <tr>
+          <td><strong>安装方式</strong></td>
+          <td>多个服务（数据库、缓存、服务器）</td>
+          <td>一条命令</td>
+      </tr>
+  </tbody>
+</table>
+<p>简单来说：</p>
+<ul>
+<li><strong>Happy</strong> 就像Gmail：你的邮件存储在Google的服务器上（虽然加密了，但毕竟存在那里）。</li>
+<li><strong>HAPI</strong> 就像自己的邮件服务器：一切都在你的机器上，而&quot;邮递员&quot;（relay）只是传递信封，不会查看里面的内容。</li>
+</ul>
+<h3 id="什么是hub和relay">什么是Hub和Relay？<a class="anchor" href="#%e4%bb%80%e4%b9%88%e6%98%afhub%e5%92%8crelay">#</a></h3>
+<ul>
+<li><strong>Hub</strong>（中心）——是在你电脑上运行的&quot;控制中心&quot;。它存储会话、管理连接并提供Web界面访问。</li>
+<li><strong>Relay</strong>（中继器）——是一个中间服务器，只是在你的手机和电脑之间转发加密流量。它无法读取你的数据——数据使用WireGuard + TLS（军事级加密技术）进行加密。</li>
+</ul>
+<h2 id="hapi能做什么">HAPI能做什么<a class="anchor" href="#hapi%e8%83%bd%e5%81%9a%e4%bb%80%e4%b9%88">#</a></h2>
+<ul>
+<li>📱 <strong>手机控制</strong> ——从任何地方向AI代理发送命令</li>
+<li>✅ <strong>审批请求</strong> ——AI想编辑文件？在手机上一键审批</li>
+<li>🔄 <strong>无缝切换</strong> ——电脑↔手机之间切换不丢失进度</li>
+<li>🤖 <strong>任选AI</strong> ——Claude Code、Codex、Gemini、OpenCode</li>
+<li>🖥️ <strong>随处终端</strong> ——直接从手机运行命令</li>
+<li>🎤 <strong>语音控制</strong> ——用语音与AI代理对话</li>
+<li>🔒 <strong>安全</strong> ——数据不会离开你的电脑</li>
+</ul>
+<h2 id="课程总结">课程总结<a class="anchor" href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93">#</a></h2>
+<ul>
+<li><strong>HAPI</strong> 是一个从手机和浏览器远程控制AI代理的工具</li>
+<li>核心功能是 <strong>Seamless Handoff</strong>：在设备之间切换而不丢失上下文</li>
+<li>与Happy不同，HAPI是<strong>去中心化的</strong>：数据保留在你的电脑上</li>
+<li><strong>Relay</strong> 只转发加密流量——它看不到你的数据</li>
+<li>HAPI支持Claude Code、Codex、Gemini和OpenCode</li>
+</ul>
+<p>在下一课中，我们将在你的电脑上安装HAPI。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/zh/docs/level-1-beginner/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>第1级：初学者</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/zh/docs/level-1-beginner/02-installation/" class="flex align-center">
+        <span>第2课：安装HAPI</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要它">为什么需要它</a></li>
+    <li><a href="#什么是ai代理">什么是AI代理？</a></li>
+    <li><a href="#核心功能seamless-handoff">核心功能：Seamless Handoff</a></li>
+    <li><a href="#hapi和happy有什么区别">HAPI和Happy有什么区别？</a>
+      <ul>
+        <li><a href="#什么是hub和relay">什么是Hub和Relay？</a></li>
+      </ul>
+    </li>
+    <li><a href="#hapi能做什么">HAPI能做什么</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

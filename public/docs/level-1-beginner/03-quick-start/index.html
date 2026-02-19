@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 3. Быстрый старт# Зачем это нужно# Вы установили HAPI — пора его запустить! В этом уроке мы за 5 минут поднимем HAPI, получим QR-код и подключимся с телефона. Всего две команды.
+Шаг 1. Запускаем Hub# Откройте терминал и введите:
+npx @twsxtd/hapi hub --relayИли, если вы установили HAPI глобально:
+hapi hub --relay 💡 hapi server тоже работает — это альтернативное название той же команды.
+Что происходит:
+Запускается hub (центр управления) на вашем компьютере Флаг --relay подключает ретранслятор для доступа через интернет Трафик шифруется с помощью WireGuard &#43; TLS Что вы увидите в терминале:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-1-beginner/03-quick-start/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 3. Быстрый старт">
+  <meta property="og:description" content="Урок 3. Быстрый старт# Зачем это нужно# Вы установили HAPI — пора его запустить! В этом уроке мы за 5 минут поднимем HAPI, получим QR-код и подключимся с телефона. Всего две команды.
+Шаг 1. Запускаем Hub# Откройте терминал и введите:
+npx @twsxtd/hapi hub --relayИли, если вы установили HAPI глобально:
+hapi hub --relay 💡 hapi server тоже работает — это альтернативное название той же команды.
+Что происходит:
+Запускается hub (центр управления) на вашем компьютере Флаг --relay подключает ретранслятор для доступа через интернет Трафик шифруется с помощью WireGuard &#43; TLS Что вы увидите в терминале:">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 3. Быстрый старт">
+  <meta itemprop="description" content="Урок 3. Быстрый старт# Зачем это нужно# Вы установили HAPI — пора его запустить! В этом уроке мы за 5 минут поднимем HAPI, получим QR-код и подключимся с телефона. Всего две команды.
+Шаг 1. Запускаем Hub# Откройте терминал и введите:
+npx @twsxtd/hapi hub --relayИли, если вы установили HAPI глобально:
+hapi hub --relay 💡 hapi server тоже работает — это альтернативное название той же команды.
+Что происходит:
+Запускается hub (центр управления) на вашем компьютере Флаг --relay подключает ретранслятор для доступа через интернет Трафик шифруется с помощью WireGuard &#43; TLS Что вы увидите в терминале:">
+  <meta itemprop="wordCount" content="548">
+
+<title>Урок 3. Быстрый старт | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-1-beginner/03-quick-start/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-1-beginner/03-quick-start/" title="Lesson 3. Quick Start">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-1-beginner/03-quick-start/" title="第3课：快速开始">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-1-beginner/03-quick-start/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-1-beginner/03-quick-start/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle" checked />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="active">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle"  />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle"  />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 3. Быстрый старт</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#шаг-1-запускаем-hub">Шаг 1. Запускаем Hub</a></li>
+    <li><a href="#шаг-2-запускаем-ai-агента">Шаг 2. Запускаем AI-агента</a></li>
+    <li><a href="#шаг-3-подключаемся-с-телефона">Шаг 3. Подключаемся с телефона</a>
+      <ul>
+        <li><a href="#вариант-a-сканируем-qr-код">Вариант A: Сканируем QR-код</a></li>
+        <li><a href="#вариант-b-открываем-url-вручную">Вариант B: Открываем URL вручную</a></li>
+        <li><a href="#вводим-токен">Вводим токен</a></li>
+      </ul>
+    </li>
+    <li><a href="#шаг-4-проверяем-подключение">Шаг 4. Проверяем подключение</a></li>
+    <li><a href="#что-значит-каждая-команда">Что значит каждая команда</a></li>
+    <li><a href="#типичная-схема-работы">Типичная схема работы</a></li>
+    <li><a href="#устранение-проблем">Устранение проблем</a>
+      <ul>
+        <li><a href="#connection-refused">«Connection refused»</a></li>
+        <li><a href="#qr-код-не-сканируется">QR-код не сканируется</a></li>
+        <li><a href="#invalid-token">«Invalid token»</a></li>
+        <li><a href="#relay-не-подключается">Relay не подключается</a></li>
+      </ul>
+    </li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-3-быстрый-старт">Урок 3. Быстрый старт<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-3-%d0%b1%d1%8b%d1%81%d1%82%d1%80%d1%8b%d0%b9-%d1%81%d1%82%d0%b0%d1%80%d1%82">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>Вы установили HAPI — пора его запустить! В этом уроке мы за 5 минут поднимем HAPI, получим QR-код и подключимся с телефона. Всего две команды.</p>
+<h2 id="шаг-1-запускаем-hub">Шаг 1. Запускаем Hub<a class="anchor" href="#%d1%88%d0%b0%d0%b3-1-%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba%d0%b0%d0%b5%d0%bc-hub">#</a></h2>
+<p>Откройте терминал и введите:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx @twsxtd/hapi hub --relay</span></span></code></pre></div><p>Или, если вы установили HAPI глобально:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><blockquote class='book-hint '>
+<p>💡 <code>hapi server</code> тоже работает — это альтернативное название той же команды.</p></blockquote><p><strong>Что происходит:</strong></p>
+<ul>
+<li>Запускается <strong>hub</strong> (центр управления) на вашем компьютере</li>
+<li>Флаг <code>--relay</code> подключает ретранслятор для доступа через интернет</li>
+<li>Трафик шифруется с помощью WireGuard + TLS</li>
+</ul>
+<p><strong>Что вы увидите в терминале:</strong></p>
+<pre tabindex="0"><code>🚀 Hub started on http://localhost:3006
+🔗 Remote URL: https://xxxx.relay.example.com
+📱 Scan QR code to connect:
+
+█████████████████████████
+█████████████████████████
+████ ▄▄▄▄▄ █▄█▄█ ▄▄▄▄▄ ████
+████ █   █ █▀▀▀█ █   █ ████
+...
+
+🔑 Access token: abc123def456...</code></pre><p>Здесь:</p>
+<ul>
+<li><strong>Remote URL</strong> — адрес для подключения с телефона</li>
+<li><strong>QR-код</strong> — тот же адрес, но в виде картинки для сканирования</li>
+<li><strong>Access token</strong> — пароль для входа (сохраните его!)</li>
+</ul>
+<blockquote class='book-hint '>
+<p>⚠️ <strong>Не закрывайте этот терминал!</strong> Hub должен работать постоянно. Откройте новый терминал для следующего шага.</p></blockquote><h2 id="шаг-2-запускаем-ai-агента">Шаг 2. Запускаем AI-агента<a class="anchor" href="#%d1%88%d0%b0%d0%b3-2-%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d0%ba%d0%b0%d0%b5%d0%bc-ai-%d0%b0%d0%b3%d0%b5%d0%bd%d1%82%d0%b0">#</a></h2>
+<p>Откройте <strong>второй</strong> терминал и введите:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npx @twsxtd/hapi</span></span></code></pre></div><p>Или:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi</span></span></code></pre></div><p><strong>Что происходит:</strong></p>
+<ul>
+<li>Запускается <strong>Claude Code</strong> (AI-агент по умолчанию) с обёрткой HAPI</li>
+<li>Сессия автоматически регистрируется в hub</li>
+<li>Вы можете работать с Claude Code как обычно</li>
+</ul>
+<blockquote class='book-hint '>
+<p>💡 Для других AI-агентов используйте:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi codex      <span style="color:#75715e"># OpenAI Codex</span>
+</span></span><span style="display:flex;"><span>hapi gemini     <span style="color:#75715e"># Google Gemini</span>
+</span></span><span style="display:flex;"><span>hapi opencode   <span style="color:#75715e"># OpenCode</span></span></span></code></pre></div></blockquote><h2 id="шаг-3-подключаемся-с-телефона">Шаг 3. Подключаемся с телефона<a class="anchor" href="#%d1%88%d0%b0%d0%b3-3-%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b0%d0%b5%d0%bc%d1%81%d1%8f-%d1%81-%d1%82%d0%b5%d0%bb%d0%b5%d1%84%d0%be%d0%bd%d0%b0">#</a></h2>
+<p>Теперь самое интересное!</p>
+<h3 id="вариант-a-сканируем-qr-код">Вариант A: Сканируем QR-код<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-a-%d1%81%d0%ba%d0%b0%d0%bd%d0%b8%d1%80%d1%83%d0%b5%d0%bc-qr-%d0%ba%d0%be%d0%b4">#</a></h3>
+<ol>
+<li>Откройте камеру телефона (или любой сканер QR-кодов)</li>
+<li>Наведите на QR-код в терминале</li>
+<li>Перейдите по ссылке</li>
+</ol>
+<h3 id="вариант-b-открываем-url-вручную">Вариант B: Открываем URL вручную<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-b-%d0%be%d1%82%d0%ba%d1%80%d1%8b%d0%b2%d0%b0%d0%b5%d0%bc-url-%d0%b2%d1%80%d1%83%d1%87%d0%bd%d1%83%d1%8e">#</a></h3>
+<ol>
+<li>Скопируйте <strong>Remote URL</strong> из терминала</li>
+<li>Откройте его в браузере на телефоне</li>
+</ol>
+<h3 id="вводим-токен">Вводим токен<a class="anchor" href="#%d0%b2%d0%b2%d0%be%d0%b4%d0%b8%d0%bc-%d1%82%d0%be%d0%ba%d0%b5%d0%bd">#</a></h3>
+<p>При первом подключении HAPI попросит <strong>Access token</strong> — тот самый пароль, который появился в терминале. Введите его и нажмите «Войти».</p>
+<blockquote class='book-hint '>
+<p>💡 Токен нужно ввести только один раз — браузер его запомнит.</p></blockquote><h2 id="шаг-4-проверяем-подключение">Шаг 4. Проверяем подключение<a class="anchor" href="#%d1%88%d0%b0%d0%b3-4-%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d1%8f%d0%b5%d0%bc-%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d0%b5">#</a></h2>
+<p>После входа вы увидите веб-интерфейс HAPI с:</p>
+<ul>
+<li><strong>Списком сессий</strong> — ваша сессия Claude Code уже там</li>
+<li><strong>Чатом</strong> — можно отправить сообщение AI-агенту</li>
+<li><strong>Статусом подключения</strong> — зелёный индикатор означает, что всё работает</li>
+</ul>
+<p>Попробуйте отправить сообщение с телефона! Вы увидите, как AI-агент отвечает и на телефоне, и в терминале.</p>
+<h2 id="что-значит-каждая-команда">Что значит каждая команда<a class="anchor" href="#%d1%87%d1%82%d0%be-%d0%b7%d0%bd%d0%b0%d1%87%d0%b8%d1%82-%d0%ba%d0%b0%d0%b6%d0%b4%d0%b0%d1%8f-%d0%ba%d0%be%d0%bc%d0%b0%d0%bd%d0%b4%d0%b0">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Команда</th>
+          <th>Что делает</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>hapi hub</code></td>
+          <td>Запускает hub (локальный доступ)</td>
+      </tr>
+      <tr>
+          <td><code>hapi hub --relay</code></td>
+          <td>Запускает hub с доступом через интернет</td>
+      </tr>
+      <tr>
+          <td><code>hapi</code></td>
+          <td>Запускает Claude Code с обёрткой HAPI</td>
+      </tr>
+      <tr>
+          <td><code>hapi codex</code></td>
+          <td>Запускает Codex с обёрткой HAPI</td>
+      </tr>
+      <tr>
+          <td><code>hapi gemini</code></td>
+          <td>Запускает Gemini с обёрткой HAPI</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="типичная-схема-работы">Типичная схема работы<a class="anchor" href="#%d1%82%d0%b8%d0%bf%d0%b8%d1%87%d0%bd%d0%b0%d1%8f-%d1%81%d1%85%d0%b5%d0%bc%d0%b0-%d1%80%d0%b0%d0%b1%d0%be%d1%82%d1%8b">#</a></h2>
+<pre tabindex="0"><code>Терминал 1 (hub):          Терминал 2 (агент):        Телефон:
+                            
+hapi hub --relay            hapi                       Сканируем QR
+    │                          │                           │
+    │◄─── подключение ────────►│                           │
+    │                          │                           │
+    │◄──────────── просмотр / управление ─────────────────►│</code></pre><h2 id="устранение-проблем">Устранение проблем<a class="anchor" href="#%d1%83%d1%81%d1%82%d1%80%d0%b0%d0%bd%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d1%80%d0%be%d0%b1%d0%bb%d0%b5%d0%bc">#</a></h2>
+<h3 id="connection-refused">«Connection refused»<a class="anchor" href="#connection-refused">#</a></h3>
+<p>Hub не запущен. Убедитесь, что первый терминал с <code>hapi hub --relay</code> всё ещё работает.</p>
+<h3 id="qr-код-не-сканируется">QR-код не сканируется<a class="anchor" href="#qr-%d0%ba%d0%be%d0%b4-%d0%bd%d0%b5-%d1%81%d0%ba%d0%b0%d0%bd%d0%b8%d1%80%d1%83%d0%b5%d1%82%d1%81%d1%8f">#</a></h3>
+<p>Попробуйте увеличить окно терминала, чтобы QR-код отображался целиком. Или скопируйте URL вручную.</p>
+<h3 id="invalid-token">«Invalid token»<a class="anchor" href="#invalid-token">#</a></h3>
+<p>Проверьте, что вводите правильный токен. Его можно найти в файле <code>~/.hapi/settings.json</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat ~/.hapi/settings.json</span></span></code></pre></div><h3 id="relay-не-подключается">Relay не подключается<a class="anchor" href="#relay-%d0%bd%d0%b5-%d0%bf%d0%be%d0%b4%d0%ba%d0%bb%d1%8e%d1%87%d0%b0%d0%b5%d1%82%d1%81%d1%8f">#</a></h3>
+<p>Если у вас проблемы с UDP-соединением (в некоторых сетях UDP заблокирован), попробуйте TCP-режим:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>HAPI_RELAY_FORCE_TCP<span style="color:#f92672">=</span>true hapi hub --relay</span></span></code></pre></div><h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li><strong>Две команды</strong> — это всё, что нужно для старта: <code>hapi hub --relay</code> и <code>hapi</code></li>
+<li><strong>QR-код</strong> позволяет мгновенно подключиться с телефона</li>
+<li><strong>Access token</strong> — ваш пароль для входа, вводится один раз</li>
+<li>Hub должен работать постоянно в отдельном терминале</li>
+<li>Всё соединение <strong>зашифровано</strong> — relay не видит ваших данных</li>
+</ul>
+<p>В следующем уроке мы превратим веб-интерфейс HAPI в полноценное приложение на телефоне.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-1-beginner/02-installation/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 2. Установка HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="flex align-center">
+        <span>Урок 4. Веб-интерфейс и PWA</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#шаг-1-запускаем-hub">Шаг 1. Запускаем Hub</a></li>
+    <li><a href="#шаг-2-запускаем-ai-агента">Шаг 2. Запускаем AI-агента</a></li>
+    <li><a href="#шаг-3-подключаемся-с-телефона">Шаг 3. Подключаемся с телефона</a>
+      <ul>
+        <li><a href="#вариант-a-сканируем-qr-код">Вариант A: Сканируем QR-код</a></li>
+        <li><a href="#вариант-b-открываем-url-вручную">Вариант B: Открываем URL вручную</a></li>
+        <li><a href="#вводим-токен">Вводим токен</a></li>
+      </ul>
+    </li>
+    <li><a href="#шаг-4-проверяем-подключение">Шаг 4. Проверяем подключение</a></li>
+    <li><a href="#что-значит-каждая-команда">Что значит каждая команда</a></li>
+    <li><a href="#типичная-схема-работы">Типичная схема работы</a></li>
+    <li><a href="#устранение-проблем">Устранение проблем</a>
+      <ul>
+        <li><a href="#connection-refused">«Connection refused»</a></li>
+        <li><a href="#qr-код-не-сканируется">QR-код не сканируется</a></li>
+        <li><a href="#invalid-token">«Invalid token»</a></li>
+        <li><a href="#relay-не-подключается">Relay не подключается</a></li>
+      </ul>
+    </li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

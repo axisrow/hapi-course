@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 4. HAPI Configuration# Why This Matters# HAPI works out of the box with default settings. But sometimes you need to change something: switch the port, set a public address, connect a Telegram bot. In this lesson, we’ll cover how to configure the CLI and Hub to your needs.
+Where Settings Are Stored# All HAPI files are in one directory:
+~/.hapi/ ├── settings.json # Main settings file ├── hapi.db # Database (sessions, messages) ├── access.key # CLI access key ├── runner.state.json # Runner state └── logs/ # Logs (activity journal) ~ is shorthand for your home directory. On macOS it’s /Users/your_name, on Linux — /home/your_name.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-2-intermediate/04-configuration/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 4. HAPI Configuration">
+  <meta property="og:description" content="Lesson 4. HAPI Configuration# Why This Matters# HAPI works out of the box with default settings. But sometimes you need to change something: switch the port, set a public address, connect a Telegram bot. In this lesson, we’ll cover how to configure the CLI and Hub to your needs.
+Where Settings Are Stored# All HAPI files are in one directory:
+~/.hapi/ ├── settings.json # Main settings file ├── hapi.db # Database (sessions, messages) ├── access.key # CLI access key ├── runner.state.json # Runner state └── logs/ # Logs (activity journal) ~ is shorthand for your home directory. On macOS it’s /Users/your_name, on Linux — /home/your_name.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 4. HAPI Configuration">
+  <meta itemprop="description" content="Lesson 4. HAPI Configuration# Why This Matters# HAPI works out of the box with default settings. But sometimes you need to change something: switch the port, set a public address, connect a Telegram bot. In this lesson, we’ll cover how to configure the CLI and Hub to your needs.
+Where Settings Are Stored# All HAPI files are in one directory:
+~/.hapi/ ├── settings.json # Main settings file ├── hapi.db # Database (sessions, messages) ├── access.key # CLI access key ├── runner.state.json # Runner state └── logs/ # Logs (activity journal) ~ is shorthand for your home directory. On macOS it’s /Users/your_name, on Linux — /home/your_name.">
+  <meta itemprop="wordCount" content="660">
+
+<title>Lesson 4. HAPI Configuration | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-2-intermediate/04-configuration/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-2-intermediate/04-configuration/" title="Урок 4. Конфигурация HAPI">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-2-intermediate/04-configuration/" title="第4课：HAPI配置">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-2-intermediate/04-configuration/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-2-intermediate/04-configuration/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle"  />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle" checked />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="active">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle"  />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 4. HAPI Configuration</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#where-settings-are-stored">Where Settings Are Stored</a></li>
+    <li><a href="#three-ways-to-set-configuration">Three Ways to Set Configuration</a></li>
+    <li><a href="#hub-settings">Hub Settings</a>
+      <ul>
+        <li><a href="#network-and-access">Network and Access</a></li>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#telegram">Telegram</a></li>
+        <li><a href="#relay">Relay</a></li>
+        <li><a href="#voice-assistant">Voice Assistant</a></li>
+        <li><a href="#database">Database</a></li>
+      </ul>
+    </li>
+    <li><a href="#cli-settings">CLI Settings</a></li>
+    <li><a href="#example-settingsjson">Example settings.json</a></li>
+    <li><a href="#practical-scenarios">Practical Scenarios</a>
+      <ul>
+        <li><a href="#scenario-1-local-only-usage">Scenario 1: Local-only Usage</a></li>
+        <li><a href="#scenario-2-access-via-relay--telegram">Scenario 2: Access via Relay + Telegram</a></li>
+        <li><a href="#scenario-3-multiple-computers-connected-to-one-hub">Scenario 3: Multiple Computers Connected to One Hub</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-4-hapi-configuration">Lesson 4. HAPI Configuration<a class="anchor" href="#lesson-4-hapi-configuration">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>HAPI works out of the box with default settings. But sometimes you need to change something: switch the port, set a public address, connect a Telegram bot. In this lesson, we&rsquo;ll cover how to configure the CLI and Hub to your needs.</p>
+<hr>
+<h2 id="where-settings-are-stored">Where Settings Are Stored<a class="anchor" href="#where-settings-are-stored">#</a></h2>
+<p>All HAPI files are in one directory:</p>
+<pre tabindex="0"><code>~/.hapi/
+├── settings.json       # Main settings file
+├── hapi.db            # Database (sessions, messages)
+├── access.key         # CLI access key
+├── runner.state.json  # Runner state
+└── logs/              # Logs (activity journal)</code></pre><blockquote class='book-hint '>
+<p><strong><code>~</code></strong> is shorthand for your home directory. On macOS it&rsquo;s <code>/Users/your_name</code>, on Linux — <code>/home/your_name</code>.</p></blockquote><p>To change the location of this directory:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_HOME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;~/my-custom-hapi-folder&#34;</span></span></span></code></pre></div><hr>
+<h2 id="three-ways-to-set-configuration">Three Ways to Set Configuration<a class="anchor" href="#three-ways-to-set-configuration">#</a></h2>
+<p>HAPI reads settings from three sources. If the same setting is defined in multiple places, the higher-priority source wins:</p>
+<ol>
+<li><strong>Environment variables</strong> (highest priority) — <code>export HAPI_LISTEN_PORT=4000</code></li>
+<li><strong>settings.json file</strong> — <code>~/.hapi/settings.json</code></li>
+<li><strong>Default values</strong> (lowest priority)</li>
+</ol>
+<blockquote class='book-hint '>
+<p>💡 If you set a value via an environment variable and it&rsquo;s not yet in settings.json, HAPI will automatically save it to the file for future launches.</p></blockquote><hr>
+<h2 id="hub-settings">Hub Settings<a class="anchor" href="#hub-settings">#</a></h2>
+<p>The Hub is the server side of HAPI. Here are the main settings:</p>
+<h3 id="network-and-access">Network and Access<a class="anchor" href="#network-and-access">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Environment variable</th>
+          <th>settings.json</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_LISTEN_HOST</code></td>
+          <td><code>listenHost</code></td>
+          <td><code>127.0.0.1</code></td>
+          <td>Address the Hub listens on</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_LISTEN_PORT</code></td>
+          <td><code>listenPort</code></td>
+          <td><code>3006</code></td>
+          <td>Hub port</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_PUBLIC_URL</code></td>
+          <td><code>publicUrl</code></td>
+          <td>—</td>
+          <td>Public address for external access</td>
+      </tr>
+      <tr>
+          <td><code>CORS_ORIGINS</code></td>
+          <td><code>corsOrigins</code></td>
+          <td>—</td>
+          <td>Allowed request origins</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote class='book-hint '>
+<p>A <strong>port</strong> is like an apartment number in a building. The IP address is the building&rsquo;s address, and the port specifies which program to connect to. By default, the Hub &ldquo;lives&rdquo; on port 3006.</p></blockquote><blockquote class='book-hint '>
+<p><strong><code>127.0.0.1</code></strong> (localhost) means the Hub accepts connections only from your computer. If you want the Hub accessible from the local network, change it to <code>0.0.0.0</code>.</p></blockquote><p><strong>Example: change port to 8080</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_LISTEN_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p>Or in <code>settings.json</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><strong>Example: open access from local network</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenHost&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">3006</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="authentication">Authentication<a class="anchor" href="#authentication">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>settings.json</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>CLI_API_TOKEN</code></td>
+          <td><code>cliApiToken</code></td>
+          <td>Shared secret key for CLI-Hub communication</td>
+      </tr>
+  </tbody>
+</table>
+<p>This token is generated automatically on first launch. It ensures only your CLI can connect to the Hub.</p>
+<blockquote class='book-hint '>
+<p>⚠️ If the token becomes known to others — delete it from <code>settings.json</code> and restart the Hub. A new one will be created.</p></blockquote><h3 id="telegram">Telegram<a class="anchor" href="#telegram">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>settings.json</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>TELEGRAM_BOT_TOKEN</code></td>
+          <td><code>telegramBotToken</code></td>
+          <td>Bot token from @BotFather</td>
+      </tr>
+      <tr>
+          <td><code>TELEGRAM_NOTIFICATION</code></td>
+          <td><code>telegramNotification</code></td>
+          <td>Enable notifications (<code>true</code>/<code>false</code>)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="relay">Relay<a class="anchor" href="#relay">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_RELAY_FORCE_TCP</code></td>
+          <td>Force TCP mode (<code>true</code>/<code>false</code>)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="voice-assistant">Voice Assistant<a class="anchor" href="#voice-assistant">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>ELEVENLABS_API_KEY</code></td>
+          <td>ElevenLabs API key</td>
+      </tr>
+      <tr>
+          <td><code>ELEVENLABS_AGENT_ID</code></td>
+          <td>Custom ElevenLabs agent ID</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="database">Database<a class="anchor" href="#database">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>DB_PATH</code></td>
+          <td><code>~/.hapi/hapi.db</code></td>
+          <td>Path to the database file</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="cli-settings">CLI Settings<a class="anchor" href="#cli-settings">#</a></h2>
+<p>The CLI is the client side that launches the AI agent. It has fewer settings:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>settings.json</th>
+          <th>Default</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_API_URL</code></td>
+          <td><code>apiUrl</code></td>
+          <td><code>http://localhost:3006</code></td>
+          <td>Hub address to connect to</td>
+      </tr>
+      <tr>
+          <td><code>CLI_API_TOKEN</code></td>
+          <td><code>cliApiToken</code></td>
+          <td>—</td>
+          <td>Authentication token</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_HOME</code></td>
+          <td>—</td>
+          <td><code>~/.hapi</code></td>
+          <td>Settings directory</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_EXPERIMENTAL</code></td>
+          <td>—</td>
+          <td><code>false</code></td>
+          <td>Enable experimental features</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Example: connecting CLI to a remote Hub</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://my-server.com&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;my-secret-token&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>Or use interactive authentication:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi auth login     <span style="color:#75715e"># Log in</span>
+</span></span><span style="display:flex;"><span>hapi auth status    <span style="color:#75715e"># Check status</span>
+</span></span><span style="display:flex;"><span>hapi auth logout    <span style="color:#75715e"># Log out</span></span></span></code></pre></div><hr>
+<h2 id="example-settingsjson">Example settings.json<a class="anchor" href="#example-settingsjson">#</a></h2>
+<p>Here&rsquo;s a complete example with comments:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.run/docs/schemas/settings.schema.json&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenHost&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">3006</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;publicUrl&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;telegramBotToken&#34;</span>: <span style="color:#e6db74">&#34;123456:ABC-DEF...&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;telegramNotification&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;corsOrigins&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.example.com&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote class='book-hint '>
+<p>💡 The <code>$schema</code> field is optional, but if your editor supports JSON Schema, it will suggest available settings and check for errors.</p></blockquote><hr>
+<h2 id="practical-scenarios">Practical Scenarios<a class="anchor" href="#practical-scenarios">#</a></h2>
+<h3 id="scenario-1-local-only-usage">Scenario 1: Local-only Usage<a class="anchor" href="#scenario-1-local-only-usage">#</a></h3>
+<p>No changes needed! Default settings work:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub    <span style="color:#75715e"># Hub on localhost:3006</span>
+</span></span><span style="display:flex;"><span>hapi        <span style="color:#75715e"># CLI connects automatically</span></span></span></code></pre></div><h3 id="scenario-2-access-via-relay--telegram">Scenario 2: Access via Relay + Telegram<a class="anchor" href="#scenario-2-access-via-relay--telegram">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export TELEGRAM_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-bot-token&#34;</span>
+</span></span><span style="display:flex;"><span>export ELEVENLABS_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your-key&#34;</span>
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><h3 id="scenario-3-multiple-computers-connected-to-one-hub">Scenario 3: Multiple Computers Connected to One Hub<a class="anchor" href="#scenario-3-multiple-computers-connected-to-one-hub">#</a></h3>
+<p>On the server:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p>On each workstation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://server-address:3006&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;shared-token&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>Each computer gets a unique ID — this is how the Hub tells machines apart.</p>
+<hr>
+<h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li>Settings are stored in <code>~/.hapi/</code>, the main file is <code>settings.json</code></li>
+<li>Three setting sources: environment variables &gt; settings.json &gt; default values</li>
+<li>Main Hub settings: port (<code>3006</code>), address (<code>127.0.0.1</code>), token, Telegram</li>
+<li>CLI is configured via <code>HAPI_API_URL</code> and <code>CLI_API_TOKEN</code></li>
+<li>For most tasks, default settings work fine — changes are only needed for special scenarios</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 3. Voice Assistant</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="flex align-center">
+        <span>Lesson 5. Working with the Terminal Remotely</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#where-settings-are-stored">Where Settings Are Stored</a></li>
+    <li><a href="#three-ways-to-set-configuration">Three Ways to Set Configuration</a></li>
+    <li><a href="#hub-settings">Hub Settings</a>
+      <ul>
+        <li><a href="#network-and-access">Network and Access</a></li>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#telegram">Telegram</a></li>
+        <li><a href="#relay">Relay</a></li>
+        <li><a href="#voice-assistant">Voice Assistant</a></li>
+        <li><a href="#database">Database</a></li>
+      </ul>
+    </li>
+    <li><a href="#cli-settings">CLI Settings</a></li>
+    <li><a href="#example-settingsjson">Example settings.json</a></li>
+    <li><a href="#practical-scenarios">Practical Scenarios</a>
+      <ul>
+        <li><a href="#scenario-1-local-only-usage">Scenario 1: Local-only Usage</a></li>
+        <li><a href="#scenario-2-access-via-relay--telegram">Scenario 2: Access via Relay + Telegram</a></li>
+        <li><a href="#scenario-3-multiple-computers-connected-to-one-hub">Scenario 3: Multiple Computers Connected to One Hub</a></li>
+      </ul>
+    </li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

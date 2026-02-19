@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第4课：HAPI配置# 为什么需要这个# HAPI使用默认设置即可&#34;开箱即用&#34;。但有时你需要更改某些内容：更改端口、设置公共地址、连接Telegram机器人。本课将介绍如何根据自己的需求配置CLI和Hub。
+配置文件存储位置# HAPI的所有文件都在一个文件夹中：
+~/.hapi/ ├── settings.json # 主配置文件 ├── hapi.db # 数据库（会话、消息） ├── access.key # CLI访问密钥 ├── runner.state.json # Runner状态 └── logs/ # 日志（工作记录） ~ 是你主目录的缩写。在macOS上是 /Users/你的用户名，在Linux上是 /home/你的用户名。
+要更改此文件夹的位置：
+export HAPI_HOME=&#34;~/my-custom-hapi-folder&#34; 三种设置方式# HAPI从三个来源读取设置。如果同一设置在多处定义，列表中较高的来源优先：
+环境变量（最高优先级）——export HAPI_LISTEN_PORT=4000 settings.json文件 ——~/.hapi/settings.json 默认值（最低优先级） 💡 如果你通过环境变量设置了某项配置，而settings.json中还没有——HAPI会自动保存到文件中供以后使用。
+Hub设置# Hub是HAPI的服务器部分。以下是主要设置：
+网络和访问# 环境变量 settings.json 默认值 描述 HAPI_LISTEN_HOST listenHost 127.0.0.1 Hub监听连接的地址 HAPI_LISTEN_PORT listenPort 3006 Hub端口 HAPI_PUBLIC_URL publicUrl — 外部访问的公共地址 CORS_ORIGINS corsOrigins — 允许的请求来源 端口 就像楼房中的门牌号。IP地址是楼房的地址，而端口指明要访问哪个具体程序。默认Hub&#34;住在&#34;3006端口。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/zh/docs/level-2-intermediate/04-configuration/">
+  <meta property="og:site_name" content="HAPI — 远程AI代理控制">
+  <meta property="og:title" content="第4课：HAPI配置">
+  <meta property="og:description" content="第4课：HAPI配置# 为什么需要这个# HAPI使用默认设置即可&#34;开箱即用&#34;。但有时你需要更改某些内容：更改端口、设置公共地址、连接Telegram机器人。本课将介绍如何根据自己的需求配置CLI和Hub。
+配置文件存储位置# HAPI的所有文件都在一个文件夹中：
+~/.hapi/ ├── settings.json # 主配置文件 ├── hapi.db # 数据库（会话、消息） ├── access.key # CLI访问密钥 ├── runner.state.json # Runner状态 └── logs/ # 日志（工作记录） ~ 是你主目录的缩写。在macOS上是 /Users/你的用户名，在Linux上是 /home/你的用户名。
+要更改此文件夹的位置：
+export HAPI_HOME=&#34;~/my-custom-hapi-folder&#34; 三种设置方式# HAPI从三个来源读取设置。如果同一设置在多处定义，列表中较高的来源优先：
+环境变量（最高优先级）——export HAPI_LISTEN_PORT=4000 settings.json文件 ——~/.hapi/settings.json 默认值（最低优先级） 💡 如果你通过环境变量设置了某项配置，而settings.json中还没有——HAPI会自动保存到文件中供以后使用。
+Hub设置# Hub是HAPI的服务器部分。以下是主要设置：
+网络和访问# 环境变量 settings.json 默认值 描述 HAPI_LISTEN_HOST listenHost 127.0.0.1 Hub监听连接的地址 HAPI_LISTEN_PORT listenPort 3006 Hub端口 HAPI_PUBLIC_URL publicUrl — 外部访问的公共地址 CORS_ORIGINS corsOrigins — 允许的请求来源 端口 就像楼房中的门牌号。IP地址是楼房的地址，而端口指明要访问哪个具体程序。默认Hub&#34;住在&#34;3006端口。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="第4课：HAPI配置">
+  <meta itemprop="description" content="第4课：HAPI配置# 为什么需要这个# HAPI使用默认设置即可&#34;开箱即用&#34;。但有时你需要更改某些内容：更改端口、设置公共地址、连接Telegram机器人。本课将介绍如何根据自己的需求配置CLI和Hub。
+配置文件存储位置# HAPI的所有文件都在一个文件夹中：
+~/.hapi/ ├── settings.json # 主配置文件 ├── hapi.db # 数据库（会话、消息） ├── access.key # CLI访问密钥 ├── runner.state.json # Runner状态 └── logs/ # 日志（工作记录） ~ 是你主目录的缩写。在macOS上是 /Users/你的用户名，在Linux上是 /home/你的用户名。
+要更改此文件夹的位置：
+export HAPI_HOME=&#34;~/my-custom-hapi-folder&#34; 三种设置方式# HAPI从三个来源读取设置。如果同一设置在多处定义，列表中较高的来源优先：
+环境变量（最高优先级）——export HAPI_LISTEN_PORT=4000 settings.json文件 ——~/.hapi/settings.json 默认值（最低优先级） 💡 如果你通过环境变量设置了某项配置，而settings.json中还没有——HAPI会自动保存到文件中供以后使用。
+Hub设置# Hub是HAPI的服务器部分。以下是主要设置：
+网络和访问# 环境变量 settings.json 默认值 描述 HAPI_LISTEN_HOST listenHost 127.0.0.1 Hub监听连接的地址 HAPI_LISTEN_PORT listenPort 3006 Hub端口 HAPI_PUBLIC_URL publicUrl — 外部访问的公共地址 CORS_ORIGINS corsOrigins — 允许的请求来源 端口 就像楼房中的门牌号。IP地址是楼房的地址，而端口指明要访问哪个具体程序。默认Hub&#34;住在&#34;3006端口。">
+  <meta itemprop="wordCount" content="236">
+
+<title>第4课：HAPI配置 | HAPI — 远程AI代理控制</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/zh/docs/level-2-intermediate/04-configuration/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-2-intermediate/04-configuration/" title="Урок 4. Конфигурация HAPI">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-2-intermediate/04-configuration/" title="Lesson 4. HAPI Configuration">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/zh.search.min.02cccb22f1b23afb6e2618bf247800abf4ca2d9e37f139c8c3c3c2e7e42fe09c.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — 远程AI代理控制</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="搜索"
+    aria-label="搜索"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        中文
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-2-intermediate/04-configuration/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/en/docs/level-2-intermediate/04-configuration/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="toggle"  />
+    <label for="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="flex">
+      <a href="/zh/docs/level-1-beginner/" class="">
+        第1级：初学者</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/01-what-is-hapi/" class="">
+      第1课：什么是HAPI，为什么需要它</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/02-installation/" class="">
+      第2课：安装HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/03-quick-start/" class="">
+      第3课：快速开始</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      第4课：Web界面与PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      第5课：使用AI代理</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cec75285e88ca15cadb08d32c22729d1" class="toggle" checked />
+    <label for="section-cec75285e88ca15cadb08d32c22729d1" class="flex">
+      <a href="/zh/docs/level-2-intermediate/" class="">
+        第2级：中级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/01-architecture/" class="">
+      第1课：HAPI的架构</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="">
+      第2课：HAPI安装选项</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="">
+      第3课：语音助手</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/04-configuration/" class="active">
+      第4课：HAPI配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="">
+      第5课：远程终端操作</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41edaa233d27cc3f35a439f1b4daaaa1" class="toggle"  />
+    <label for="section-41edaa233d27cc3f35a439f1b4daaaa1" class="flex">
+      <a href="/zh/docs/level-3-advanced/" class="">
+        第3级：高级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/01-namespace/" class="">
+      第1课：Namespace与团队协作</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/02-security/" class="">
+      第2课：HAPI的安全性</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="">
+      第3课：从源码构建HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="">
+      第4课：CI/CD与HAPI自动化</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/05-contributing/" class="">
+      第5课：参与HAPI项目</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>第4课：HAPI配置</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#配置文件存储位置">配置文件存储位置</a></li>
+    <li><a href="#三种设置方式">三种设置方式</a></li>
+    <li><a href="#hub设置">Hub设置</a>
+      <ul>
+        <li><a href="#网络和访问">网络和访问</a></li>
+        <li><a href="#认证">认证</a></li>
+        <li><a href="#telegram">Telegram</a></li>
+        <li><a href="#relay">Relay</a></li>
+        <li><a href="#语音助手">语音助手</a></li>
+        <li><a href="#数据库">数据库</a></li>
+      </ul>
+    </li>
+    <li><a href="#cli设置">CLI设置</a></li>
+    <li><a href="#settingsjson示例文件">settings.json示例文件</a></li>
+    <li><a href="#实际场景">实际场景</a>
+      <ul>
+        <li><a href="#场景1仅本地使用">场景1：仅本地使用</a></li>
+        <li><a href="#场景2通过relay--telegram访问">场景2：通过Relay + Telegram访问</a></li>
+        <li><a href="#场景3多台电脑连接到同一hub">场景3：多台电脑连接到同一Hub</a></li>
+      </ul>
+    </li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="第4课hapi配置">第4课：HAPI配置<a class="anchor" href="#%e7%ac%ac4%e8%af%behapi%e9%85%8d%e7%bd%ae">#</a></h1>
+<h2 id="为什么需要这个">为什么需要这个<a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e8%bf%99%e4%b8%aa">#</a></h2>
+<p>HAPI使用默认设置即可&quot;开箱即用&quot;。但有时你需要更改某些内容：更改端口、设置公共地址、连接Telegram机器人。本课将介绍如何根据自己的需求配置CLI和Hub。</p>
+<hr>
+<h2 id="配置文件存储位置">配置文件存储位置<a class="anchor" href="#%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e5%ad%98%e5%82%a8%e4%bd%8d%e7%bd%ae">#</a></h2>
+<p>HAPI的所有文件都在一个文件夹中：</p>
+<pre tabindex="0"><code>~/.hapi/
+├── settings.json       # 主配置文件
+├── hapi.db            # 数据库（会话、消息）
+├── access.key         # CLI访问密钥
+├── runner.state.json  # Runner状态
+└── logs/              # 日志（工作记录）</code></pre><blockquote class='book-hint '>
+<p><strong><code>~</code></strong> 是你主目录的缩写。在macOS上是 <code>/Users/你的用户名</code>，在Linux上是 <code>/home/你的用户名</code>。</p></blockquote><p>要更改此文件夹的位置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_HOME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;~/my-custom-hapi-folder&#34;</span></span></span></code></pre></div><hr>
+<h2 id="三种设置方式">三种设置方式<a class="anchor" href="#%e4%b8%89%e7%a7%8d%e8%ae%be%e7%bd%ae%e6%96%b9%e5%bc%8f">#</a></h2>
+<p>HAPI从三个来源读取设置。如果同一设置在多处定义，列表中较高的来源优先：</p>
+<ol>
+<li><strong>环境变量</strong>（最高优先级）——<code>export HAPI_LISTEN_PORT=4000</code></li>
+<li><strong>settings.json文件</strong> ——<code>~/.hapi/settings.json</code></li>
+<li><strong>默认值</strong>（最低优先级）</li>
+</ol>
+<blockquote class='book-hint '>
+<p>💡 如果你通过环境变量设置了某项配置，而settings.json中还没有——HAPI会自动保存到文件中供以后使用。</p></blockquote><hr>
+<h2 id="hub设置">Hub设置<a class="anchor" href="#hub%e8%ae%be%e7%bd%ae">#</a></h2>
+<p>Hub是HAPI的服务器部分。以下是主要设置：</p>
+<h3 id="网络和访问">网络和访问<a class="anchor" href="#%e7%bd%91%e7%bb%9c%e5%92%8c%e8%ae%bf%e9%97%ae">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>环境变量</th>
+          <th>settings.json</th>
+          <th>默认值</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_LISTEN_HOST</code></td>
+          <td><code>listenHost</code></td>
+          <td><code>127.0.0.1</code></td>
+          <td>Hub监听连接的地址</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_LISTEN_PORT</code></td>
+          <td><code>listenPort</code></td>
+          <td><code>3006</code></td>
+          <td>Hub端口</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_PUBLIC_URL</code></td>
+          <td><code>publicUrl</code></td>
+          <td>—</td>
+          <td>外部访问的公共地址</td>
+      </tr>
+      <tr>
+          <td><code>CORS_ORIGINS</code></td>
+          <td><code>corsOrigins</code></td>
+          <td>—</td>
+          <td>允许的请求来源</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote class='book-hint '>
+<p><strong>端口</strong> 就像楼房中的门牌号。IP地址是楼房的地址，而端口指明要访问哪个具体程序。默认Hub&quot;住在&quot;3006端口。</p></blockquote><blockquote class='book-hint '>
+<p><strong><code>127.0.0.1</code></strong>（localhost）意味着Hub只接受来自你电脑的连接。如果你想让Hub在局域网中可访问，改为 <code>0.0.0.0</code>。</p></blockquote><p><strong>示例：将端口改为8080</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_LISTEN_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p>或在 <code>settings.json</code> 中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><strong>示例：开放局域网访问</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenHost&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">3006</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="认证">认证<a class="anchor" href="#%e8%ae%a4%e8%af%81">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>settings.json</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>CLI_API_TOKEN</code></td>
+          <td><code>cliApiToken</code></td>
+          <td>CLI与Hub之间通信的共享密钥</td>
+      </tr>
+  </tbody>
+</table>
+<p>此令牌在首次启动时自动生成。它确保只有你的CLI能连接到Hub。</p>
+<blockquote class='book-hint '>
+<p>⚠️ 如果令牌被泄露——从 <code>settings.json</code> 中删除它并重启Hub。将生成新的令牌。</p></blockquote><h3 id="telegram">Telegram<a class="anchor" href="#telegram">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>settings.json</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>TELEGRAM_BOT_TOKEN</code></td>
+          <td><code>telegramBotToken</code></td>
+          <td>@BotFather提供的机器人令牌</td>
+      </tr>
+      <tr>
+          <td><code>TELEGRAM_NOTIFICATION</code></td>
+          <td><code>telegramNotification</code></td>
+          <td>启用通知（<code>true</code>/<code>false</code>）</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="relay">Relay<a class="anchor" href="#relay">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_RELAY_FORCE_TCP</code></td>
+          <td>强制TCP模式（<code>true</code>/<code>false</code>）</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="语音助手">语音助手<a class="anchor" href="#%e8%af%ad%e9%9f%b3%e5%8a%a9%e6%89%8b">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>ELEVENLABS_API_KEY</code></td>
+          <td>ElevenLabs API密钥</td>
+      </tr>
+      <tr>
+          <td><code>ELEVENLABS_AGENT_ID</code></td>
+          <td>自定义ElevenLabs代理ID</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="数据库">数据库<a class="anchor" href="#%e6%95%b0%e6%8d%ae%e5%ba%93">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>默认值</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>DB_PATH</code></td>
+          <td><code>~/.hapi/hapi.db</code></td>
+          <td>数据库文件路径</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="cli设置">CLI设置<a class="anchor" href="#cli%e8%ae%be%e7%bd%ae">#</a></h2>
+<p>CLI是客户端部分，用于启动AI代理。它的设置较少：</p>
+<table>
+  <thead>
+      <tr>
+          <th>变量</th>
+          <th>settings.json</th>
+          <th>默认值</th>
+          <th>描述</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>HAPI_API_URL</code></td>
+          <td><code>apiUrl</code></td>
+          <td><code>http://localhost:3006</code></td>
+          <td>Hub连接地址</td>
+      </tr>
+      <tr>
+          <td><code>CLI_API_TOKEN</code></td>
+          <td><code>cliApiToken</code></td>
+          <td>—</td>
+          <td>认证令牌</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_HOME</code></td>
+          <td>—</td>
+          <td><code>~/.hapi</code></td>
+          <td>配置文件夹</td>
+      </tr>
+      <tr>
+          <td><code>HAPI_EXPERIMENTAL</code></td>
+          <td>—</td>
+          <td><code>false</code></td>
+          <td>启用实验性功能</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>示例：连接CLI到远程Hub</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://我的服务器.com&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;我的密钥令牌&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>或使用交互式授权：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi auth login     <span style="color:#75715e"># 登录</span>
+</span></span><span style="display:flex;"><span>hapi auth status    <span style="color:#75715e"># 检查状态</span>
+</span></span><span style="display:flex;"><span>hapi auth logout    <span style="color:#75715e"># 登出</span></span></span></code></pre></div><hr>
+<h2 id="settingsjson示例文件">settings.json示例文件<a class="anchor" href="#settingsjson%e7%a4%ba%e4%be%8b%e6%96%87%e4%bb%b6">#</a></h2>
+<p>完整示例及说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;$schema&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.run/docs/schemas/settings.schema.json&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenHost&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;listenPort&#34;</span>: <span style="color:#ae81ff">3006</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;publicUrl&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;telegramBotToken&#34;</span>: <span style="color:#e6db74">&#34;123456:ABC-DEF...&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;telegramNotification&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;corsOrigins&#34;</span>: <span style="color:#e6db74">&#34;https://hapi.example.com&#34;</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote class='book-hint '>
+<p>💡 <code>$schema</code> 字段是可选的，但如果你的编辑器支持JSON Schema，它会提示可用设置并检查错误。</p></blockquote><hr>
+<h2 id="实际场景">实际场景<a class="anchor" href="#%e5%ae%9e%e9%99%85%e5%9c%ba%e6%99%af">#</a></h2>
+<h3 id="场景1仅本地使用">场景1：仅本地使用<a class="anchor" href="#%e5%9c%ba%e6%99%af1%e4%bb%85%e6%9c%ac%e5%9c%b0%e4%bd%bf%e7%94%a8">#</a></h3>
+<p>无需更改任何设置！默认配置即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub    <span style="color:#75715e"># Hub在localhost:3006</span>
+</span></span><span style="display:flex;"><span>hapi        <span style="color:#75715e"># CLI自动连接</span></span></span></code></pre></div><h3 id="场景2通过relay--telegram访问">场景2：通过Relay + Telegram访问<a class="anchor" href="#%e5%9c%ba%e6%99%af2%e9%80%9a%e8%bf%87relay--telegram%e8%ae%bf%e9%97%ae">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export TELEGRAM_BOT_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;你的机器人令牌&#34;</span>
+</span></span><span style="display:flex;"><span>export ELEVENLABS_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;你的密钥&#34;</span>
+</span></span><span style="display:flex;"><span>hapi hub --relay</span></span></code></pre></div><h3 id="场景3多台电脑连接到同一hub">场景3：多台电脑连接到同一Hub<a class="anchor" href="#%e5%9c%ba%e6%99%af3%e5%a4%9a%e5%8f%b0%e7%94%b5%e8%84%91%e8%bf%9e%e6%8e%a5%e5%88%b0%e5%90%8c%e4%b8%80hub">#</a></h3>
+<p>在服务器上：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hapi hub</span></span></code></pre></div><p>在每台工作电脑上：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export HAPI_API_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://服务器地址:3006&#34;</span>
+</span></span><span style="display:flex;"><span>export CLI_API_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;共享令牌&#34;</span>
+</span></span><span style="display:flex;"><span>hapi</span></span></code></pre></div><p>每台电脑获得唯一ID——Hub以此区分不同机器。</p>
+<hr>
+<h2 id="课程总结">课程总结<a class="anchor" href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93">#</a></h2>
+<ul>
+<li>设置存储在 <code>~/.hapi/</code> 文件夹中，主文件是 <code>settings.json</code></li>
+<li>三个设置来源：环境变量 &gt; settings.json &gt; 默认值</li>
+<li>Hub主要设置：端口（<code>3006</code>）、地址（<code>127.0.0.1</code>）、令牌、Telegram</li>
+<li>CLI通过 <code>HAPI_API_URL</code> 和 <code>CLI_API_TOKEN</code> 配置</li>
+<li>大多数场景使用默认设置就够了——只在特殊场景才需要更改</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>第3课：语音助手</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="flex align-center">
+        <span>第5课：远程终端操作</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#配置文件存储位置">配置文件存储位置</a></li>
+    <li><a href="#三种设置方式">三种设置方式</a></li>
+    <li><a href="#hub设置">Hub设置</a>
+      <ul>
+        <li><a href="#网络和访问">网络和访问</a></li>
+        <li><a href="#认证">认证</a></li>
+        <li><a href="#telegram">Telegram</a></li>
+        <li><a href="#relay">Relay</a></li>
+        <li><a href="#语音助手">语音助手</a></li>
+        <li><a href="#数据库">数据库</a></li>
+      </ul>
+    </li>
+    <li><a href="#cli设置">CLI设置</a></li>
+    <li><a href="#settingsjson示例文件">settings.json示例文件</a></li>
+    <li><a href="#实际场景">实际场景</a>
+      <ul>
+        <li><a href="#场景1仅本地使用">场景1：仅本地使用</a></li>
+        <li><a href="#场景2通过relay--telegram访问">场景2：通过Relay + Telegram访问</a></li>
+        <li><a href="#场景3多台电脑连接到同一hub">场景3：多台电脑连接到同一Hub</a></li>
+      </ul>
+    </li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

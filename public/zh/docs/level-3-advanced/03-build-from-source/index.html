@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="第3课：从源码构建HAPI# 为什么需要这个# 通常HAPI通过现成命令安装（npx @twsxtd/hapi）。但有时需要从源代码自行构建——例如，要进行修改、测试新功能或为你的平台构建版本。
+源代码（source code） 是程序员编写的文本文件。构建（build） 是将这些文件转换为可运行程序的过程。
+项目结构# HAPI组织为 monorepo（单一仓库）——一个仓库中包含多个相关项目：
+hapi/ ├── cli/ — 命令行（你作为 `hapi` 运行的部分） ├── hub/ — 服务器中心（管理会话和连接） ├── web/ — Web应用（浏览器界面/PWA） ├── shared/ — 共享代码，被其他部分使用 ├── website/ — 项目网站（文档） ├── docs/ — 文档 └── package.json — 项目的主配置文件每个部分的作用# 文件夹 用途 类比 cli/ 终端程序 遥控器 hub/ 服务器部分 调度室 web/ 浏览器界面 墙上的屏幕 shared/ 共享功能 公共图书馆 website/ 文档网站 参考手册 构建所需工具# Bun 是一个快速的JavaScript/TypeScript运行工具。是HAPI使用的Node.js替代方案。
+如果还没有安装Bun：
+curl -fsSL https://bun.sh/install | bash分步构建# 第1步：下载源代码# git clone https://github.com/anthropics/hapi.git cd hapi第2步：安装依赖# 依赖（dependencies） 是项目运行所需的外部库。
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/zh/docs/level-3-advanced/03-build-from-source/">
+  <meta property="og:site_name" content="HAPI — 远程AI代理控制">
+  <meta property="og:title" content="第3课：从源码构建HAPI">
+  <meta property="og:description" content="第3课：从源码构建HAPI# 为什么需要这个# 通常HAPI通过现成命令安装（npx @twsxtd/hapi）。但有时需要从源代码自行构建——例如，要进行修改、测试新功能或为你的平台构建版本。
+源代码（source code） 是程序员编写的文本文件。构建（build） 是将这些文件转换为可运行程序的过程。
+项目结构# HAPI组织为 monorepo（单一仓库）——一个仓库中包含多个相关项目：
+hapi/ ├── cli/ — 命令行（你作为 `hapi` 运行的部分） ├── hub/ — 服务器中心（管理会话和连接） ├── web/ — Web应用（浏览器界面/PWA） ├── shared/ — 共享代码，被其他部分使用 ├── website/ — 项目网站（文档） ├── docs/ — 文档 └── package.json — 项目的主配置文件每个部分的作用# 文件夹 用途 类比 cli/ 终端程序 遥控器 hub/ 服务器部分 调度室 web/ 浏览器界面 墙上的屏幕 shared/ 共享功能 公共图书馆 website/ 文档网站 参考手册 构建所需工具# Bun 是一个快速的JavaScript/TypeScript运行工具。是HAPI使用的Node.js替代方案。
+如果还没有安装Bun：
+curl -fsSL https://bun.sh/install | bash分步构建# 第1步：下载源代码# git clone https://github.com/anthropics/hapi.git cd hapi第2步：安装依赖# 依赖（dependencies） 是项目运行所需的外部库。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="第3课：从源码构建HAPI">
+  <meta itemprop="description" content="第3课：从源码构建HAPI# 为什么需要这个# 通常HAPI通过现成命令安装（npx @twsxtd/hapi）。但有时需要从源代码自行构建——例如，要进行修改、测试新功能或为你的平台构建版本。
+源代码（source code） 是程序员编写的文本文件。构建（build） 是将这些文件转换为可运行程序的过程。
+项目结构# HAPI组织为 monorepo（单一仓库）——一个仓库中包含多个相关项目：
+hapi/ ├── cli/ — 命令行（你作为 `hapi` 运行的部分） ├── hub/ — 服务器中心（管理会话和连接） ├── web/ — Web应用（浏览器界面/PWA） ├── shared/ — 共享代码，被其他部分使用 ├── website/ — 项目网站（文档） ├── docs/ — 文档 └── package.json — 项目的主配置文件每个部分的作用# 文件夹 用途 类比 cli/ 终端程序 遥控器 hub/ 服务器部分 调度室 web/ 浏览器界面 墙上的屏幕 shared/ 共享功能 公共图书馆 website/ 文档网站 参考手册 构建所需工具# Bun 是一个快速的JavaScript/TypeScript运行工具。是HAPI使用的Node.js替代方案。
+如果还没有安装Bun：
+curl -fsSL https://bun.sh/install | bash分步构建# 第1步：下载源代码# git clone https://github.com/anthropics/hapi.git cd hapi第2步：安装依赖# 依赖（dependencies） 是项目运行所需的外部库。">
+  <meta itemprop="wordCount" content="170">
+
+<title>第3课：从源码构建HAPI | HAPI — 远程AI代理控制</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/zh/docs/level-3-advanced/03-build-from-source/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-3-advanced/03-build-from-source/" title="Урок 3. Сборка HAPI из исходников">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-3-advanced/03-build-from-source/" title="Lesson 3. Building HAPI from Source">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/zh.search.min.02cccb22f1b23afb6e2618bf247800abf4ca2d9e37f139c8c3c3c2e7e42fe09c.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — 远程AI代理控制</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="搜索"
+    aria-label="搜索"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        中文
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/en/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="toggle"  />
+    <label for="section-59ae91e8e00d6e3ba7c134ee794fc4be" class="flex">
+      <a href="/zh/docs/level-1-beginner/" class="">
+        第1级：初学者</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/01-what-is-hapi/" class="">
+      第1课：什么是HAPI，为什么需要它</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/02-installation/" class="">
+      第2课：安装HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/03-quick-start/" class="">
+      第3课：快速开始</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      第4课：Web界面与PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      第5课：使用AI代理</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-cec75285e88ca15cadb08d32c22729d1" class="toggle"  />
+    <label for="section-cec75285e88ca15cadb08d32c22729d1" class="flex">
+      <a href="/zh/docs/level-2-intermediate/" class="">
+        第2级：中级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/01-architecture/" class="">
+      第1课：HAPI的架构</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/02-installation-options/" class="">
+      第2课：HAPI安装选项</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/03-voice-assistant/" class="">
+      第3课：语音助手</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/04-configuration/" class="">
+      第4课：HAPI配置</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-2-intermediate/05-remote-terminal/" class="">
+      第5课：远程终端操作</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41edaa233d27cc3f35a439f1b4daaaa1" class="toggle" checked />
+    <label for="section-41edaa233d27cc3f35a439f1b4daaaa1" class="flex">
+      <a href="/zh/docs/level-3-advanced/" class="">
+        第3级：高级</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/01-namespace/" class="">
+      第1课：Namespace与团队协作</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/02-security/" class="">
+      第2课：HAPI的安全性</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="active">
+      第3课：从源码构建HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="">
+      第4课：CI/CD与HAPI自动化</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/zh/docs/level-3-advanced/05-contributing/" class="">
+      第5课：参与HAPI项目</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>第3课：从源码构建HAPI</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#项目结构">项目结构</a>
+      <ul>
+        <li><a href="#每个部分的作用">每个部分的作用</a></li>
+      </ul>
+    </li>
+    <li><a href="#构建所需工具">构建所需工具</a></li>
+    <li><a href="#分步构建">分步构建</a>
+      <ul>
+        <li><a href="#第1步下载源代码">第1步：下载源代码</a></li>
+        <li><a href="#第2步安装依赖">第2步：安装依赖</a></li>
+        <li><a href="#第3步构建所有内容">第3步：构建所有内容</a></li>
+        <li><a href="#第4步开发模式">第4步：开发模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#为所有平台构建">为所有平台构建</a></li>
+    <li><a href="#代码检查">代码检查</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="第3课从源码构建hapi">第3课：从源码构建HAPI<a class="anchor" href="#%e7%ac%ac3%e8%af%be%e4%bb%8e%e6%ba%90%e7%a0%81%e6%9e%84%e5%bb%bahapi">#</a></h1>
+<h2 id="为什么需要这个">为什么需要这个<a class="anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e8%bf%99%e4%b8%aa">#</a></h2>
+<p>通常HAPI通过现成命令安装（<code>npx @twsxtd/hapi</code>）。但有时需要从源代码自行构建——例如，要进行修改、测试新功能或为你的平台构建版本。</p>
+<blockquote class='book-hint '>
+<p><strong>源代码（source code）</strong> 是程序员编写的文本文件。<strong>构建（build）</strong> 是将这些文件转换为可运行程序的过程。</p></blockquote><h2 id="项目结构">项目结构<a class="anchor" href="#%e9%a1%b9%e7%9b%ae%e7%bb%93%e6%9e%84">#</a></h2>
+<p>HAPI组织为 <strong>monorepo</strong>（单一仓库）——一个仓库中包含多个相关项目：</p>
+<pre tabindex="0"><code>hapi/
+├── cli/          — 命令行（你作为 `hapi` 运行的部分）
+├── hub/          — 服务器中心（管理会话和连接）
+├── web/          — Web应用（浏览器界面/PWA）
+├── shared/       — 共享代码，被其他部分使用
+├── website/      — 项目网站（文档）
+├── docs/         — 文档
+└── package.json  — 项目的主配置文件</code></pre><h3 id="每个部分的作用">每个部分的作用<a class="anchor" href="#%e6%af%8f%e4%b8%aa%e9%83%a8%e5%88%86%e7%9a%84%e4%bd%9c%e7%94%a8">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>文件夹</th>
+          <th>用途</th>
+          <th>类比</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>cli/</code></td>
+          <td>终端程序</td>
+          <td>遥控器</td>
+      </tr>
+      <tr>
+          <td><code>hub/</code></td>
+          <td>服务器部分</td>
+          <td>调度室</td>
+      </tr>
+      <tr>
+          <td><code>web/</code></td>
+          <td>浏览器界面</td>
+          <td>墙上的屏幕</td>
+      </tr>
+      <tr>
+          <td><code>shared/</code></td>
+          <td>共享功能</td>
+          <td>公共图书馆</td>
+      </tr>
+      <tr>
+          <td><code>website/</code></td>
+          <td>文档网站</td>
+          <td>参考手册</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="构建所需工具">构建所需工具<a class="anchor" href="#%e6%9e%84%e5%bb%ba%e6%89%80%e9%9c%80%e5%b7%a5%e5%85%b7">#</a></h2>
+<p><strong>Bun</strong> 是一个快速的JavaScript/TypeScript运行工具。是HAPI使用的Node.js替代方案。</p>
+<p>如果还没有安装Bun：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -fsSL https://bun.sh/install | bash</span></span></code></pre></div><h2 id="分步构建">分步构建<a class="anchor" href="#%e5%88%86%e6%ad%a5%e6%9e%84%e5%bb%ba">#</a></h2>
+<h3 id="第1步下载源代码">第1步：下载源代码<a class="anchor" href="#%e7%ac%ac1%e6%ad%a5%e4%b8%8b%e8%bd%bd%e6%ba%90%e4%bb%a3%e7%a0%81">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/anthropics/hapi.git
+</span></span><span style="display:flex;"><span>cd hapi</span></span></code></pre></div><h3 id="第2步安装依赖">第2步：安装依赖<a class="anchor" href="#%e7%ac%ac2%e6%ad%a5%e5%ae%89%e8%a3%85%e4%be%9d%e8%b5%96">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>依赖（dependencies）</strong> 是项目运行所需的外部库。</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun install</span></span></code></pre></div><p>此命令读取 <code>package.json</code> 并下载所有必需的库。由于HAPI是monorepo，<code>bun install</code> 会同时为所有部分（cli、hub、web等）安装依赖。</p>
+<h3 id="第3步构建所有内容">第3步：构建所有内容<a class="anchor" href="#%e7%ac%ac3%e6%ad%a5%e6%9e%84%e5%bb%ba%e6%89%80%e6%9c%89%e5%86%85%e5%ae%b9">#</a></h3>
+<p>有几种构建方式：</p>
+<h4 id="方式a分别构建各组件">方式A：分别构建各组件<a class="anchor" href="#%e6%96%b9%e5%bc%8fa%e5%88%86%e5%88%ab%e6%9e%84%e5%bb%ba%e5%90%84%e7%bb%84%e4%bb%b6">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build          <span style="color:#75715e"># 构建 cli + hub + web</span></span></span></code></pre></div><p>或单独构建：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:cli      <span style="color:#75715e"># 仅CLI</span>
+</span></span><span style="display:flex;"><span>bun run build:hub      <span style="color:#75715e"># 仅Hub</span>
+</span></span><span style="display:flex;"><span>bun run build:web      <span style="color:#75715e"># 仅Web应用</span></span></span></code></pre></div><h4 id="方式b构建单个可执行文件">方式B：构建单个可执行文件<a class="anchor" href="#%e6%96%b9%e5%bc%8fb%e6%9e%84%e5%bb%ba%e5%8d%95%e4%b8%aa%e5%8f%af%e6%89%a7%e8%a1%8c%e6%96%87%e4%bb%b6">#</a></h4>
+<blockquote class='book-hint '>
+<p><strong>可执行文件（executable）</strong> 是一个无需额外工具即可运行的现成程序。</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe</span></span></code></pre></div><p>此命令：</p>
+<ol>
+<li>下载tunwg（WireGuard隧道组件）</li>
+<li>构建Web应用</li>
+<li>将Web资源嵌入Hub</li>
+<li>编译为单个文件</li>
+</ol>
+<p>结果是一个包含CLI + Hub + Web应用 + SQLite数据库的单一二进制文件 <code>hapi</code>。</p>
+<h3 id="第4步开发模式">第4步：开发模式<a class="anchor" href="#%e7%ac%ac4%e6%ad%a5%e5%bc%80%e5%8f%91%e6%a8%a1%e5%bc%8f">#</a></h3>
+<p>用于开发（当你进行修改并想立即看到结果时）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run dev</span></span></code></pre></div><p>此命令同时以开发模式启动hub和web，修改时自动重新加载。</p>
+<h2 id="为所有平台构建">为所有平台构建<a class="anchor" href="#%e4%b8%ba%e6%89%80%e6%9c%89%e5%b9%b3%e5%8f%b0%e6%9e%84%e5%bb%ba">#</a></h2>
+<p>要创建所有平台的发布文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe:all</span></span></code></pre></div><p>结果出现在 <code>cli/dist-exe/</code> 中——分别有macOS（ARM和x64）、Linux和Windows的文件。</p>
+<h2 id="代码检查">代码检查<a class="anchor" href="#%e4%bb%a3%e7%a0%81%e6%a3%80%e6%9f%a5">#</a></h2>
+<p>提交更改前运行检查很有用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run typecheck    <span style="color:#75715e"># 类型检查（TypeScript）</span>
+</span></span><span style="display:flex;"><span>bun run test         <span style="color:#75715e"># 运行测试</span></span></span></code></pre></div><h2 id="课程总结">课程总结<a class="anchor" href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93">#</a></h2>
+<ul>
+<li>HAPI是由5个部分组成的 <strong>monorepo</strong>：cli、hub、web、shared、website</li>
+<li>构建只需 <strong>Bun</strong>（<code>bun install</code> → <code>bun run build</code>）</li>
+<li><code>bun run build:single-exe</code> 创建包含所有内容的单一文件</li>
+<li><code>bun run dev</code> ——方便的开发模式，带自动重新加载</li>
+<li>整个构建过程只需2-3条命令</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/zh/docs/level-3-advanced/02-security/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>第2课：HAPI的安全性</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="flex align-center">
+        <span>第4课：CI/CD与HAPI自动化</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#为什么需要这个">为什么需要这个</a></li>
+    <li><a href="#项目结构">项目结构</a>
+      <ul>
+        <li><a href="#每个部分的作用">每个部分的作用</a></li>
+      </ul>
+    </li>
+    <li><a href="#构建所需工具">构建所需工具</a></li>
+    <li><a href="#分步构建">分步构建</a>
+      <ul>
+        <li><a href="#第1步下载源代码">第1步：下载源代码</a></li>
+        <li><a href="#第2步安装依赖">第2步：安装依赖</a></li>
+        <li><a href="#第3步构建所有内容">第3步：构建所有内容</a></li>
+        <li><a href="#第4步开发模式">第4步：开发模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#为所有平台构建">为所有平台构建</a></li>
+    <li><a href="#代码检查">代码检查</a></li>
+    <li><a href="#课程总结">课程总结</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

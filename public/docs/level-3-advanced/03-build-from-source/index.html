@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Урок 3. Сборка HAPI из исходников# Зачем это нужно# Обычно HAPI устанавливается готовой командой (npx @twsxtd/hapi). Но иногда нужно собрать его самостоятельно из исходного кода — например, чтобы внести изменения, протестировать новую функцию или собрать версию под свою платформу.
+Исходный код (source code) — это текстовые файлы, написанные программистами. Сборка (build) — процесс превращения этих файлов в готовую программу.
+Структура проекта# HAPI организован как монорепо (mono-repo) — один репозиторий, в котором живут несколько связанных проектов:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/docs/level-3-advanced/03-build-from-source/">
+  <meta property="og:site_name" content="HAPI — удалённое управление AI-агентами">
+  <meta property="og:title" content="Урок 3. Сборка HAPI из исходников">
+  <meta property="og:description" content="Урок 3. Сборка HAPI из исходников# Зачем это нужно# Обычно HAPI устанавливается готовой командой (npx @twsxtd/hapi). Но иногда нужно собрать его самостоятельно из исходного кода — например, чтобы внести изменения, протестировать новую функцию или собрать версию под свою платформу.
+Исходный код (source code) — это текстовые файлы, написанные программистами. Сборка (build) — процесс превращения этих файлов в готовую программу.
+Структура проекта# HAPI организован как монорепо (mono-repo) — один репозиторий, в котором живут несколько связанных проектов:">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Урок 3. Сборка HAPI из исходников">
+  <meta itemprop="description" content="Урок 3. Сборка HAPI из исходников# Зачем это нужно# Обычно HAPI устанавливается готовой командой (npx @twsxtd/hapi). Но иногда нужно собрать его самостоятельно из исходного кода — например, чтобы внести изменения, протестировать новую функцию или собрать версию под свою платформу.
+Исходный код (source code) — это текстовые файлы, написанные программистами. Сборка (build) — процесс превращения этих файлов в готовую программу.
+Структура проекта# HAPI организован как монорепо (mono-repo) — один репозиторий, в котором живут несколько связанных проектов:">
+  <meta itemprop="wordCount" content="468">
+
+<title>Урок 3. Сборка HAPI из исходников | HAPI — удалённое управление AI-агентами</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/docs/level-3-advanced/03-build-from-source/">
+  <link rel="alternate" hreflang="en" href="/en/docs/level-3-advanced/03-build-from-source/" title="Lesson 3. Building HAPI from Source">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-3-advanced/03-build-from-source/" title="第3课：从源码构建HAPI">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/ru.search.min.90b8e0b1848f61def5cff350a18cc4f6803d68bb6e63e1a19115cf1d7338f475.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — удалённое управление AI-агентами</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Поиск"
+    aria-label="Поиск"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        Русский
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/en/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-47de628a6726c75b60ce96153d4446d5" class="toggle"  />
+    <label for="section-47de628a6726c75b60ce96153d4446d5" class="flex">
+      <a href="/docs/level-1-beginner/" class="">
+        Уровень 1: Начинающий</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Урок 1. Что такое HAPI и зачем он нужен</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/02-installation/" class="">
+      Урок 2. Установка HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/03-quick-start/" class="">
+      Урок 3. Быстрый старт</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Урок 4. Веб-интерфейс и PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Урок 5. Работа с AI-агентами</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5b7b38b9ffb1047729aca3d7c67e6739" class="toggle"  />
+    <label for="section-5b7b38b9ffb1047729aca3d7c67e6739" class="flex">
+      <a href="/docs/level-2-intermediate/" class="">
+        Уровень 2: Средний</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/01-architecture/" class="">
+      Урок 1. Как устроен HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/02-installation-options/" class="">
+      Урок 2. Варианты установки HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Урок 3. Голосовой ассистент</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/04-configuration/" class="">
+      Урок 4. Конфигурация HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Урок 5. Работа с терминалом удалённо</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-39ffcfee9596dc261eda6d63f672a50b" class="toggle" checked />
+    <label for="section-39ffcfee9596dc261eda6d63f672a50b" class="flex">
+      <a href="/docs/level-3-advanced/" class="">
+        Уровень 3: Продвинутый</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/01-namespace/" class="">
+      Урок 1. Namespace и командная работа</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/02-security/" class="">
+      Урок 2. Безопасность в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/03-build-from-source/" class="active">
+      Урок 3. Сборка HAPI из исходников</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/04-ci-cd/" class="">
+      Урок 4. CI/CD и автоматизация в HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/level-3-advanced/05-contributing/" class="">
+      Урок 5. Участие в проекте HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Урок 3. Сборка HAPI из исходников</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#структура-проекта">Структура проекта</a>
+      <ul>
+        <li><a href="#что-делает-каждая-часть">Что делает каждая часть</a></li>
+      </ul>
+    </li>
+    <li><a href="#что-нужно-для-сборки">Что нужно для сборки</a></li>
+    <li><a href="#пошаговая-сборка">Пошаговая сборка</a>
+      <ul>
+        <li><a href="#шаг-1-скачайте-исходный-код">Шаг 1. Скачайте исходный код</a></li>
+        <li><a href="#шаг-2-установите-зависимости">Шаг 2. Установите зависимости</a></li>
+        <li><a href="#шаг-3-соберите-всё">Шаг 3. Соберите всё</a></li>
+        <li><a href="#шаг-4-режим-разработки">Шаг 4. Режим разработки</a></li>
+      </ul>
+    </li>
+    <li><a href="#сборка-для-всех-платформ">Сборка для всех платформ</a></li>
+    <li><a href="#проверка-кода">Проверка кода</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="урок-3-сборка-hapi-из-исходников">Урок 3. Сборка HAPI из исходников<a class="anchor" href="#%d1%83%d1%80%d0%be%d0%ba-3-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b0-hapi-%d0%b8%d0%b7-%d0%b8%d1%81%d1%85%d0%be%d0%b4%d0%bd%d0%b8%d0%ba%d0%be%d0%b2">#</a></h1>
+<h2 id="зачем-это-нужно">Зачем это нужно<a class="anchor" href="#%d0%b7%d0%b0%d1%87%d0%b5%d0%bc-%d1%8d%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be">#</a></h2>
+<p>Обычно HAPI устанавливается готовой командой (<code>npx @twsxtd/hapi</code>). Но иногда нужно собрать его самостоятельно из исходного кода — например, чтобы внести изменения, протестировать новую функцию или собрать версию под свою платформу.</p>
+<blockquote class='book-hint '>
+<p><strong>Исходный код (source code)</strong> — это текстовые файлы, написанные программистами. <strong>Сборка (build)</strong> — процесс превращения этих файлов в готовую программу.</p></blockquote><h2 id="структура-проекта">Структура проекта<a class="anchor" href="#%d1%81%d1%82%d1%80%d1%83%d0%ba%d1%82%d1%83%d1%80%d0%b0-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b0">#</a></h2>
+<p>HAPI организован как <strong>монорепо</strong> (mono-repo) — один репозиторий, в котором живут несколько связанных проектов:</p>
+<pre tabindex="0"><code>hapi/
+├── cli/          — Командная строка (то, что вы запускаете как `hapi`)
+├── hub/          — Сервер-хаб (управляет сессиями и подключениями)
+├── web/          — Веб-приложение (интерфейс в браузере / PWA)
+├── shared/       — Общий код, используемый другими частями
+├── website/      — Сайт проекта (документация)
+├── docs/         — Документация
+└── package.json  — Главный файл конфигурации проекта</code></pre><h3 id="что-делает-каждая-часть">Что делает каждая часть<a class="anchor" href="#%d1%87%d1%82%d0%be-%d0%b4%d0%b5%d0%bb%d0%b0%d0%b5%d1%82-%d0%ba%d0%b0%d0%b6%d0%b4%d0%b0%d1%8f-%d1%87%d0%b0%d1%81%d1%82%d1%8c">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Папка</th>
+          <th>Назначение</th>
+          <th>Аналогия</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>cli/</code></td>
+          <td>Программа для терминала</td>
+          <td>Пульт управления</td>
+      </tr>
+      <tr>
+          <td><code>hub/</code></td>
+          <td>Серверная часть</td>
+          <td>Диспетчерская</td>
+      </tr>
+      <tr>
+          <td><code>web/</code></td>
+          <td>Браузерный интерфейс</td>
+          <td>Экран на стене</td>
+      </tr>
+      <tr>
+          <td><code>shared/</code></td>
+          <td>Общие функции</td>
+          <td>Общая библиотека</td>
+      </tr>
+      <tr>
+          <td><code>website/</code></td>
+          <td>Сайт с документацией</td>
+          <td>Справочник</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="что-нужно-для-сборки">Что нужно для сборки<a class="anchor" href="#%d1%87%d1%82%d0%be-%d0%bd%d1%83%d0%b6%d0%bd%d0%be-%d0%b4%d0%bb%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b8">#</a></h2>
+<p><strong>Bun</strong> — быстрый инструмент для запуска JavaScript/TypeScript. Это альтернатива Node.js, которую использует HAPI.</p>
+<p>Установите Bun, если его ещё нет:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -fsSL https://bun.sh/install | bash</span></span></code></pre></div><h2 id="пошаговая-сборка">Пошаговая сборка<a class="anchor" href="#%d0%bf%d0%be%d1%88%d0%b0%d0%b3%d0%be%d0%b2%d0%b0%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b0">#</a></h2>
+<h3 id="шаг-1-скачайте-исходный-код">Шаг 1. Скачайте исходный код<a class="anchor" href="#%d1%88%d0%b0%d0%b3-1-%d1%81%d0%ba%d0%b0%d1%87%d0%b0%d0%b9%d1%82%d0%b5-%d0%b8%d1%81%d1%85%d0%be%d0%b4%d0%bd%d1%8b%d0%b9-%d0%ba%d0%be%d0%b4">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/anthropics/hapi.git
+</span></span><span style="display:flex;"><span>cd hapi</span></span></code></pre></div><h3 id="шаг-2-установите-зависимости">Шаг 2. Установите зависимости<a class="anchor" href="#%d1%88%d0%b0%d0%b3-2-%d1%83%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%b8%d1%82%d0%b5-%d0%b7%d0%b0%d0%b2%d0%b8%d1%81%d0%b8%d0%bc%d0%be%d1%81%d1%82%d0%b8">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Зависимости (dependencies)</strong> — внешние библиотеки, которые нужны проекту для работы.</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun install</span></span></code></pre></div><p>Эта команда прочитает <code>package.json</code> и скачает все необходимые библиотеки. Поскольку HAPI — монорепо, <code>bun install</code> установит зависимости сразу для всех частей (cli, hub, web и т.д.).</p>
+<h3 id="шаг-3-соберите-всё">Шаг 3. Соберите всё<a class="anchor" href="#%d1%88%d0%b0%d0%b3-3-%d1%81%d0%be%d0%b1%d0%b5%d1%80%d0%b8%d1%82%d0%b5-%d0%b2%d1%81%d1%91">#</a></h3>
+<p>Есть несколько вариантов сборки:</p>
+<h4 id="вариант-а-собрать-отдельные-компоненты">Вариант А: Собрать отдельные компоненты<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-%d0%b0-%d1%81%d0%be%d0%b1%d1%80%d0%b0%d1%82%d1%8c-%d0%be%d1%82%d0%b4%d0%b5%d0%bb%d1%8c%d0%bd%d1%8b%d0%b5-%d0%ba%d0%be%d0%bc%d0%bf%d0%be%d0%bd%d0%b5%d0%bd%d1%82%d1%8b">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build          <span style="color:#75715e"># собрать cli + hub + web</span></span></span></code></pre></div><p>Или по отдельности:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:cli      <span style="color:#75715e"># только CLI</span>
+</span></span><span style="display:flex;"><span>bun run build:hub      <span style="color:#75715e"># только Hub</span>
+</span></span><span style="display:flex;"><span>bun run build:web      <span style="color:#75715e"># только Web-приложение</span></span></span></code></pre></div><h4 id="вариант-б-собрать-единый-исполняемый-файл">Вариант Б: Собрать единый исполняемый файл<a class="anchor" href="#%d0%b2%d0%b0%d1%80%d0%b8%d0%b0%d0%bd%d1%82-%d0%b1-%d1%81%d0%be%d0%b1%d1%80%d0%b0%d1%82%d1%8c-%d0%b5%d0%b4%d0%b8%d0%bd%d1%8b%d0%b9-%d0%b8%d1%81%d0%bf%d0%be%d0%bb%d0%bd%d1%8f%d0%b5%d0%bc%d1%8b%d0%b9-%d1%84%d0%b0%d0%b9%d0%bb">#</a></h4>
+<blockquote class='book-hint '>
+<p><strong>Исполняемый файл (executable)</strong> — готовая программа, которую можно запустить без дополнительных инструментов.</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe</span></span></code></pre></div><p>Эта команда:</p>
+<ol>
+<li>Скачивает tunwg (компонент для WireGuard-туннеля)</li>
+<li>Собирает веб-приложение</li>
+<li>Встраивает веб-ресурсы в хаб</li>
+<li>Компилирует всё в один файл</li>
+</ol>
+<p>Результат — единый бинарный файл <code>hapi</code>, который содержит в себе CLI + Hub + Web-приложение + базу данных SQLite.</p>
+<h3 id="шаг-4-режим-разработки">Шаг 4. Режим разработки<a class="anchor" href="#%d1%88%d0%b0%d0%b3-4-%d1%80%d0%b5%d0%b6%d0%b8%d0%bc-%d1%80%d0%b0%d0%b7%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%ba%d0%b8">#</a></h3>
+<p>Для разработки (когда вы вносите изменения и хотите сразу видеть результат):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run dev</span></span></code></pre></div><p>Эта команда одновременно запускает hub и web в режиме разработки с автоматической перезагрузкой при изменениях.</p>
+<h2 id="сборка-для-всех-платформ">Сборка для всех платформ<a class="anchor" href="#%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b0-%d0%b4%d0%bb%d1%8f-%d0%b2%d1%81%d0%b5%d1%85-%d0%bf%d0%bb%d0%b0%d1%82%d1%84%d0%be%d1%80%d0%bc">#</a></h2>
+<p>Для создания релизных файлов под все платформы:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe:all</span></span></code></pre></div><p>Результат появится в <code>cli/dist-exe/</code> — отдельные файлы для macOS (ARM и x64), Linux и Windows.</p>
+<h2 id="проверка-кода">Проверка кода<a class="anchor" href="#%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%ba%d0%b0-%d0%ba%d0%be%d0%b4%d0%b0">#</a></h2>
+<p>Перед отправкой изменений полезно запустить проверки:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run typecheck    <span style="color:#75715e"># проверка типов (TypeScript)</span>
+</span></span><span style="display:flex;"><span>bun run test         <span style="color:#75715e"># запуск тестов</span></span></span></code></pre></div><h2 id="итоги-урока">Итоги урока<a class="anchor" href="#%d0%b8%d1%82%d0%be%d0%b3%d0%b8-%d1%83%d1%80%d0%be%d0%ba%d0%b0">#</a></h2>
+<ul>
+<li>HAPI — <strong>монорепо</strong> из 5 частей: cli, hub, web, shared, website</li>
+<li>Для сборки нужен только <strong>Bun</strong> (<code>bun install</code> → <code>bun run build</code>)</li>
+<li><code>bun run build:single-exe</code> создаёт единый файл со всем встроенным</li>
+<li><code>bun run dev</code> — удобный режим для разработки с автоперезагрузкой</li>
+<li>Вся сборка занимает буквально 2-3 команды</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/level-3-advanced/02-security/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Урок 2. Безопасность в HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/level-3-advanced/04-ci-cd/" class="flex align-center">
+        <span>Урок 4. CI/CD и автоматизация в HAPI</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#зачем-это-нужно">Зачем это нужно</a></li>
+    <li><a href="#структура-проекта">Структура проекта</a>
+      <ul>
+        <li><a href="#что-делает-каждая-часть">Что делает каждая часть</a></li>
+      </ul>
+    </li>
+    <li><a href="#что-нужно-для-сборки">Что нужно для сборки</a></li>
+    <li><a href="#пошаговая-сборка">Пошаговая сборка</a>
+      <ul>
+        <li><a href="#шаг-1-скачайте-исходный-код">Шаг 1. Скачайте исходный код</a></li>
+        <li><a href="#шаг-2-установите-зависимости">Шаг 2. Установите зависимости</a></li>
+        <li><a href="#шаг-3-соберите-всё">Шаг 3. Соберите всё</a></li>
+        <li><a href="#шаг-4-режим-разработки">Шаг 4. Режим разработки</a></li>
+      </ul>
+    </li>
+    <li><a href="#сборка-для-всех-платформ">Сборка для всех платформ</a></li>
+    <li><a href="#проверка-кода">Проверка кода</a></li>
+    <li><a href="#итоги-урока">Итоги урока</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

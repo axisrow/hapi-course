@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 3. Building HAPI from Source# Why This Matters# Normally, HAPI is installed with a simple command (npx @twsxtd/hapi). But sometimes you need to build it yourself from source code — for example, to make changes, test a new feature, or build a version for your platform.
+Source code is the text files written by programmers. Building is the process of turning these files into a ready-to-run program.
+Project Structure# HAPI is organized as a monorepo — a single repository containing several related projects:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-3-advanced/03-build-from-source/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 3. Building HAPI from Source">
+  <meta property="og:description" content="Lesson 3. Building HAPI from Source# Why This Matters# Normally, HAPI is installed with a simple command (npx @twsxtd/hapi). But sometimes you need to build it yourself from source code — for example, to make changes, test a new feature, or build a version for your platform.
+Source code is the text files written by programmers. Building is the process of turning these files into a ready-to-run program.
+Project Structure# HAPI is organized as a monorepo — a single repository containing several related projects:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 3. Building HAPI from Source">
+  <meta itemprop="description" content="Lesson 3. Building HAPI from Source# Why This Matters# Normally, HAPI is installed with a simple command (npx @twsxtd/hapi). But sometimes you need to build it yourself from source code — for example, to make changes, test a new feature, or build a version for your platform.
+Source code is the text files written by programmers. Building is the process of turning these files into a ready-to-run program.
+Project Structure# HAPI is organized as a monorepo — a single repository containing several related projects:">
+  <meta itemprop="wordCount" content="501">
+
+<title>Lesson 3. Building HAPI from Source | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-3-advanced/03-build-from-source/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-3-advanced/03-build-from-source/" title="Урок 3. Сборка HAPI из исходников">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-3-advanced/03-build-from-source/" title="第3课：从源码构建HAPI">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-3-advanced/03-build-from-source/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle"  />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle"  />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle" checked />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="active">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 3. Building HAPI from Source</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#project-structure">Project Structure</a>
+      <ul>
+        <li><a href="#what-each-part-does">What Each Part Does</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-you-need-to-build">What You Need to Build</a></li>
+    <li><a href="#step-by-step-build">Step-by-Step Build</a>
+      <ul>
+        <li><a href="#step-1-download-the-source-code">Step 1. Download the Source Code</a></li>
+        <li><a href="#step-2-install-dependencies">Step 2. Install Dependencies</a></li>
+        <li><a href="#step-3-build-everything">Step 3. Build Everything</a></li>
+        <li><a href="#step-4-development-mode">Step 4. Development Mode</a></li>
+      </ul>
+    </li>
+    <li><a href="#building-for-all-platforms">Building for All Platforms</a></li>
+    <li><a href="#code-verification">Code Verification</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-3-building-hapi-from-source">Lesson 3. Building HAPI from Source<a class="anchor" href="#lesson-3-building-hapi-from-source">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>Normally, HAPI is installed with a simple command (<code>npx @twsxtd/hapi</code>). But sometimes you need to build it yourself from source code — for example, to make changes, test a new feature, or build a version for your platform.</p>
+<blockquote class='book-hint '>
+<p><strong>Source code</strong> is the text files written by programmers. <strong>Building</strong> is the process of turning these files into a ready-to-run program.</p></blockquote><h2 id="project-structure">Project Structure<a class="anchor" href="#project-structure">#</a></h2>
+<p>HAPI is organized as a <strong>monorepo</strong> — a single repository containing several related projects:</p>
+<pre tabindex="0"><code>hapi/
+├── cli/          — Command line (what you run as `hapi`)
+├── hub/          — Hub server (manages sessions and connections)
+├── web/          — Web application (browser interface / PWA)
+├── shared/       — Shared code used by other parts
+├── website/      — Project website (documentation)
+├── docs/         — Documentation
+└── package.json  — Main project configuration file</code></pre><h3 id="what-each-part-does">What Each Part Does<a class="anchor" href="#what-each-part-does">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Directory</th>
+          <th>Purpose</th>
+          <th>Analogy</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>cli/</code></td>
+          <td>Terminal program</td>
+          <td>Remote control</td>
+      </tr>
+      <tr>
+          <td><code>hub/</code></td>
+          <td>Server side</td>
+          <td>Dispatch center</td>
+      </tr>
+      <tr>
+          <td><code>web/</code></td>
+          <td>Browser interface</td>
+          <td>Screen on the wall</td>
+      </tr>
+      <tr>
+          <td><code>shared/</code></td>
+          <td>Common functions</td>
+          <td>Shared library</td>
+      </tr>
+      <tr>
+          <td><code>website/</code></td>
+          <td>Documentation site</td>
+          <td>Reference manual</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="what-you-need-to-build">What You Need to Build<a class="anchor" href="#what-you-need-to-build">#</a></h2>
+<p><strong>Bun</strong> — a fast tool for running JavaScript/TypeScript. It&rsquo;s an alternative to Node.js that HAPI uses.</p>
+<p>Install Bun if you don&rsquo;t have it yet:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -fsSL https://bun.sh/install | bash</span></span></code></pre></div><h2 id="step-by-step-build">Step-by-Step Build<a class="anchor" href="#step-by-step-build">#</a></h2>
+<h3 id="step-1-download-the-source-code">Step 1. Download the Source Code<a class="anchor" href="#step-1-download-the-source-code">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/anthropics/hapi.git
+</span></span><span style="display:flex;"><span>cd hapi</span></span></code></pre></div><h3 id="step-2-install-dependencies">Step 2. Install Dependencies<a class="anchor" href="#step-2-install-dependencies">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Dependencies</strong> are external libraries that the project needs to work.</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun install</span></span></code></pre></div><p>This command reads <code>package.json</code> and downloads all required libraries. Since HAPI is a monorepo, <code>bun install</code> installs dependencies for all parts at once (cli, hub, web, etc.).</p>
+<h3 id="step-3-build-everything">Step 3. Build Everything<a class="anchor" href="#step-3-build-everything">#</a></h3>
+<p>There are several build options:</p>
+<h4 id="option-a-build-individual-components">Option A: Build Individual Components<a class="anchor" href="#option-a-build-individual-components">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build          <span style="color:#75715e"># build cli + hub + web</span></span></span></code></pre></div><p>Or individually:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:cli      <span style="color:#75715e"># CLI only</span>
+</span></span><span style="display:flex;"><span>bun run build:hub      <span style="color:#75715e"># Hub only</span>
+</span></span><span style="display:flex;"><span>bun run build:web      <span style="color:#75715e"># Web app only</span></span></span></code></pre></div><h4 id="option-b-build-a-single-executable">Option B: Build a Single Executable<a class="anchor" href="#option-b-build-a-single-executable">#</a></h4>
+<blockquote class='book-hint '>
+<p>An <strong>executable</strong> is a ready-to-run program that doesn&rsquo;t need additional tools.</p></blockquote><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe</span></span></code></pre></div><p>This command:</p>
+<ol>
+<li>Downloads tunwg (the WireGuard tunnel component)</li>
+<li>Builds the web application</li>
+<li>Embeds web resources into the hub</li>
+<li>Compiles everything into a single file</li>
+</ol>
+<p>The result is a single binary file <code>hapi</code> that contains CLI + Hub + Web App + SQLite database.</p>
+<h3 id="step-4-development-mode">Step 4. Development Mode<a class="anchor" href="#step-4-development-mode">#</a></h3>
+<p>For development (when you make changes and want to see results immediately):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run dev</span></span></code></pre></div><p>This command simultaneously runs the hub and web in development mode with automatic reloading on changes.</p>
+<h2 id="building-for-all-platforms">Building for All Platforms<a class="anchor" href="#building-for-all-platforms">#</a></h2>
+<p>To create release files for all platforms:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run build:single-exe:all</span></span></code></pre></div><p>The result will appear in <code>cli/dist-exe/</code> — separate files for macOS (ARM and x64), Linux, and Windows.</p>
+<h2 id="code-verification">Code Verification<a class="anchor" href="#code-verification">#</a></h2>
+<p>Before submitting changes, it&rsquo;s useful to run checks:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bun run typecheck    <span style="color:#75715e"># type checking (TypeScript)</span>
+</span></span><span style="display:flex;"><span>bun run test         <span style="color:#75715e"># run tests</span></span></span></code></pre></div><h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li>HAPI is a <strong>monorepo</strong> of 5 parts: cli, hub, web, shared, website</li>
+<li>Building requires only <strong>Bun</strong> (<code>bun install</code> → <code>bun run build</code>)</li>
+<li><code>bun run build:single-exe</code> creates a single file with everything built in</li>
+<li><code>bun run dev</code> — convenient development mode with auto-reloading</li>
+<li>The entire build takes just 2-3 commands</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-3-advanced/02-security/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 2. Security in HAPI</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-3-advanced/04-ci-cd/" class="flex align-center">
+        <span>Lesson 4. CI/CD and Automation in HAPI</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#project-structure">Project Structure</a>
+      <ul>
+        <li><a href="#what-each-part-does">What Each Part Does</a></li>
+      </ul>
+    </li>
+    <li><a href="#what-you-need-to-build">What You Need to Build</a></li>
+    <li><a href="#step-by-step-build">Step-by-Step Build</a>
+      <ul>
+        <li><a href="#step-1-download-the-source-code">Step 1. Download the Source Code</a></li>
+        <li><a href="#step-2-install-dependencies">Step 2. Install Dependencies</a></li>
+        <li><a href="#step-3-build-everything">Step 3. Build Everything</a></li>
+        <li><a href="#step-4-development-mode">Step 4. Development Mode</a></li>
+      </ul>
+    </li>
+    <li><a href="#building-for-all-platforms">Building for All Platforms</a></li>
+    <li><a href="#code-verification">Code Verification</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

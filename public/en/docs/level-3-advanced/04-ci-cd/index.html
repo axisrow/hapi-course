@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lesson 4. CI/CD and Automation in HAPI# Why This Matters# When a team works on a project, it’s important to automate routine tasks: code checking, building, publishing. HAPI uses GitHub Actions — GitHub’s built-in automation system — for this purpose.
+CI/CD (Continuous Integration / Continuous Delivery) is the practice of automatically checking and building code with every change.
+GitHub Actions is a GitHub service that runs tasks automatically on certain events (e.g., when someone pushes code or creates a pull request).
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/en/docs/level-3-advanced/04-ci-cd/">
+  <meta property="og:site_name" content="HAPI — Remote AI Agent Control">
+  <meta property="og:title" content="Lesson 4. CI/CD and Automation in HAPI">
+  <meta property="og:description" content="Lesson 4. CI/CD and Automation in HAPI# Why This Matters# When a team works on a project, it’s important to automate routine tasks: code checking, building, publishing. HAPI uses GitHub Actions — GitHub’s built-in automation system — for this purpose.
+CI/CD (Continuous Integration / Continuous Delivery) is the practice of automatically checking and building code with every change.
+GitHub Actions is a GitHub service that runs tasks automatically on certain events (e.g., when someone pushes code or creates a pull request).">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Lesson 4. CI/CD and Automation in HAPI">
+  <meta itemprop="description" content="Lesson 4. CI/CD and Automation in HAPI# Why This Matters# When a team works on a project, it’s important to automate routine tasks: code checking, building, publishing. HAPI uses GitHub Actions — GitHub’s built-in automation system — for this purpose.
+CI/CD (Continuous Integration / Continuous Delivery) is the practice of automatically checking and building code with every change.
+GitHub Actions is a GitHub service that runs tasks automatically on certain events (e.g., when someone pushes code or creates a pull request).">
+  <meta itemprop="wordCount" content="639">
+
+<title>Lesson 4. CI/CD and Automation in HAPI | HAPI — Remote AI Agent Control</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="/en/docs/level-3-advanced/04-ci-cd/">
+  <link rel="alternate" hreflang="ru" href="/docs/level-3-advanced/04-ci-cd/" title="Урок 4. CI/CD и автоматизация в HAPI">
+  <link rel="alternate" hreflang="zh" href="/zh/docs/level-3-advanced/04-ci-cd/" title="第4课：CI/CD与HAPI自动化">
+<link rel="stylesheet" href="/book.min.cc2c524ed250aac81b23d1f4af87344917b325208841feca0968fe450f570575.css" >
+
+
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.7b4f72bce774c30d5aab33035d86500c323100f73ef7c4538d133be0710e9064.js" ></script>
+
+
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<aside class="book-menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>HAPI — Remote AI Agent Control</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+  
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+
+<ul class="book-languages">
+  <li>
+    <input type="checkbox" id="languages" class="toggle" />
+    <label for="languages" class="flex">
+      <a role="button">
+        <img src="/icons/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+
+    <ul>
+      
+      <li>
+        <a href="/docs/level-3-advanced/04-ci-cd/" class="flex flex-auto">
+          Русский
+        </a>
+      </li>
+      
+      <li>
+        <a href="/zh/docs/level-3-advanced/04-ci-cd/" class="flex flex-auto">
+          中文
+        </a>
+      </li>
+      
+    </ul>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f97fc99ec1a5e700654299011b77b5e6" class="toggle"  />
+    <label for="section-f97fc99ec1a5e700654299011b77b5e6" class="flex">
+      <a href="/en/docs/level-1-beginner/" class="">
+        Level 1: Beginner</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/01-what-is-hapi/" class="">
+      Lesson 1. What is HAPI and Why You Need It</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/02-installation/" class="">
+      Lesson 2. Installing HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/03-quick-start/" class="">
+      Lesson 3. Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/04-web-interface-and-pwa/" class="">
+      Lesson 4. Web Interface and PWA</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-1-beginner/05-working-with-ai-agents/" class="">
+      Lesson 5. Working with AI Agents</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c34489ade20daf6fb1787b758263ae52" class="toggle"  />
+    <label for="section-c34489ade20daf6fb1787b758263ae52" class="flex">
+      <a href="/en/docs/level-2-intermediate/" class="">
+        Level 2: Intermediate</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/01-architecture/" class="">
+      Lesson 1. How HAPI Works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/02-installation-options/" class="">
+      Lesson 2. HAPI Installation Options</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/03-voice-assistant/" class="">
+      Lesson 3. Voice Assistant</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/04-configuration/" class="">
+      Lesson 4. HAPI Configuration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-2-intermediate/05-remote-terminal/" class="">
+      Lesson 5. Working with the Terminal Remotely</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-eb621a11fa9d4f16a0656d61042e6a25" class="toggle" checked />
+    <label for="section-eb621a11fa9d4f16a0656d61042e6a25" class="flex">
+      <a href="/en/docs/level-3-advanced/" class="">
+        Level 3: Advanced</a>
+      <img src="/icons/chevron-right.svg" class="book-icon" alt="Expand" />
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/01-namespace/" class="">
+      Lesson 1. Namespace and Teamwork</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/02-security/" class="">
+      Lesson 2. Security in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/03-build-from-source/" class="">
+      Lesson 3. Building HAPI from Source</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/04-ci-cd/" class="active">
+      Lesson 4. CI/CD and Automation in HAPI</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/en/docs/level-3-advanced/05-contributing/" class="">
+      Lesson 5. Contributing to HAPI</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Lesson 4. CI/CD and Automation in HAPI</h3>
+
+  <label for="toc-control">
+    
+    <img src="/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#what-automations-hapi-has">What Automations HAPI Has</a>
+      <ul>
+        <li><a href="#1--tests-testyml">1. 🧪 Tests (<code>test.yml</code>)</a></li>
+        <li><a href="#2--ai-pr-review-codex-pr-reviewyml">2. 🤖 AI PR Review (<code>codex-pr-review.yml</code>)</a></li>
+        <li><a href="#3--auto-response-to-issues-issue-auto-responseyml">3. 💬 Auto-response to Issues (<code>issue-auto-response.yml</code>)</a></li>
+        <li><a href="#4--responses-to-mentions-codex-mention-responseyml">4. 🗣️ Responses to Mentions (<code>codex-mention-response.yml</code>)</a></li>
+        <li><a href="#5--release-releaseyml">5. 📦 Release (<code>release.yml</code>)</a></li>
+        <li><a href="#6--web-app-deploy-webappyml">6. 🌐 Web App Deploy (<code>webapp.yml</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-it-all-connects">How It All Connects</a></li>
+    <li><a href="#the-bot-skip-label">The <code>bot-skip</code> Label</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="lesson-4-cicd-and-automation-in-hapi">Lesson 4. CI/CD and Automation in HAPI<a class="anchor" href="#lesson-4-cicd-and-automation-in-hapi">#</a></h1>
+<h2 id="why-this-matters">Why This Matters<a class="anchor" href="#why-this-matters">#</a></h2>
+<p>When a team works on a project, it&rsquo;s important to automate routine tasks: code checking, building, publishing. HAPI uses <strong>GitHub Actions</strong> — GitHub&rsquo;s built-in automation system — for this purpose.</p>
+<blockquote class='book-hint '>
+<p><strong>CI/CD</strong> (Continuous Integration / Continuous Delivery) is the practice of automatically checking and building code with every change.</p></blockquote><blockquote class='book-hint '>
+<p><strong>GitHub Actions</strong> is a GitHub service that runs tasks automatically on certain events (e.g., when someone pushes code or creates a pull request).</p></blockquote><h2 id="what-automations-hapi-has">What Automations HAPI Has<a class="anchor" href="#what-automations-hapi-has">#</a></h2>
+<p>In the <code>.github/workflows/</code> directory, there are 6 files — each describes one automation:</p>
+<h3 id="1--tests-testyml">1. 🧪 Tests (<code>test.yml</code>)<a class="anchor" href="#1--tests-testyml">#</a></h3>
+<p><strong>When it runs:</strong> on every push and pull request.</p>
+<p><strong>What it does:</strong></p>
+<ol>
+<li>Checks out the code</li>
+<li>Installs Bun</li>
+<li>Installs dependencies (<code>bun install</code>)</li>
+<li>Checks types (<code>bun typecheck</code>)</li>
+<li>Runs tests (<code>bun run test</code>)</li>
+</ol>
+<p><strong>Why:</strong> to make sure new code didn&rsquo;t break anything.</p>
+<h3 id="2--ai-pr-review-codex-pr-reviewyml">2. 🤖 AI PR Review (<code>codex-pr-review.yml</code>)<a class="anchor" href="#2--ai-pr-review-codex-pr-reviewyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>PR (Pull Request)</strong> is a request to add changes to the project. Other members review the code before accepting.</p></blockquote><p><strong>When it runs:</strong> when a new PR is opened or a PR is moved from draft to ready.</p>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>The <strong>Codex</strong> AI model (GPT-5.2) automatically reviews code in the PR</li>
+<li>Leaves a comment with remarks and recommendations</li>
+<li>Doesn&rsquo;t review PRs from bots or PRs with the <code>bot-skip</code> label</li>
+<li>Doesn&rsquo;t duplicate reviews — if the bot already left a comment, it won&rsquo;t run again</li>
+</ul>
+<p><strong>Why:</strong> speeds up code review and catches common errors.</p>
+<h3 id="3--auto-response-to-issues-issue-auto-responseyml">3. 💬 Auto-response to Issues (<code>issue-auto-response.yml</code>)<a class="anchor" href="#3--auto-response-to-issues-issue-auto-responseyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Issue</strong> is a ticket/task in the repository: bug report, feature request, question.</p></blockquote><p><strong>When it runs:</strong> when a new issue is created or a label is added.</p>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Codex analyzes the issue and responds automatically</li>
+<li>Skips duplicates (<code>duplicate</code>), spam (<code>spam</code>), and issues with the <code>bot-skip</code> label</li>
+<li>Responds only once</li>
+</ul>
+<p><strong>Why:</strong> users get a first response faster, and developers don&rsquo;t need to answer typical questions.</p>
+<h3 id="4--responses-to-mentions-codex-mention-responseyml">4. 🗣️ Responses to Mentions (<code>codex-mention-response.yml</code>)<a class="anchor" href="#4--responses-to-mentions-codex-mention-responseyml">#</a></h3>
+<p><strong>When it runs:</strong> when someone mentions <code>@tiann</code> in a comment.</p>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Codex responds to the question or comment</li>
+<li>Only works for users with write access</li>
+<li>Doesn&rsquo;t respond to its own comments or issues with the <code>bot-skip</code> label</li>
+</ul>
+<p><strong>Why:</strong> quick help for developers right in the discussion.</p>
+<h3 id="5--release-releaseyml">5. 📦 Release (<code>release.yml</code>)<a class="anchor" href="#5--release-releaseyml">#</a></h3>
+<blockquote class='book-hint '>
+<p>A <strong>release</strong> is publishing a new version of the software.</p></blockquote><p><strong>When it runs:</strong> when a new version tag is created (e.g., <code>v1.2.3</code>).</p>
+<p><strong>What it does:</strong></p>
+<ol>
+<li>Builds binary files for all platforms</li>
+<li>Packages into archives (<code>.tar.gz</code> for macOS/Linux, <code>.zip</code> for Windows)</li>
+<li>Calculates checksums</li>
+<li>Creates a GitHub release with downloadable files</li>
+<li>Updates the Homebrew formula (package manager for macOS)</li>
+</ol>
+<h3 id="6--web-app-deploy-webappyml">6. 🌐 Web App Deploy (<code>webapp.yml</code>)<a class="anchor" href="#6--web-app-deploy-webappyml">#</a></h3>
+<blockquote class='book-hint '>
+<p><strong>Deploy</strong> is placing an application on a server so it becomes available to users.</p></blockquote><p><strong>When it runs:</strong> when changes are made to the <code>web/</code> directory in the <code>main</code> branch.</p>
+<p><strong>What it does:</strong></p>
+<ol>
+<li>Builds the web application</li>
+<li>Publishes to GitHub Pages (free hosting from GitHub)</li>
+<li>Available at <code>app.hapi.run</code></li>
+</ol>
+<h2 id="how-it-all-connects">How It All Connects<a class="anchor" href="#how-it-all-connects">#</a></h2>
+<pre tabindex="0"><code>Developer makes changes
+         │
+         ├─► Push to any branch
+         │       └─► test.yml: code checks and tests
+         │
+         ├─► Opens a PR
+         │       └─► codex-pr-review.yml: AI reviews code
+         │
+         ├─► PR merged to main + changes in web/
+         │       └─► webapp.yml: website update
+         │
+         ├─► Creates tag v1.2.3
+         │       └─► release.yml: build + publish
+         │
+         └─► New issue or comment
+                 └─► issue-auto-response.yml / codex-mention-response.yml</code></pre><h2 id="the-bot-skip-label">The <code>bot-skip</code> Label<a class="anchor" href="#the-bot-skip-label">#</a></h2>
+<p>If you don&rsquo;t want the bot to respond to a specific issue or PR, add the <strong><code>bot-skip</code></strong> label. All AI automations check this label and skip such tasks.</p>
+<h2 id="lesson-summary">Lesson Summary<a class="anchor" href="#lesson-summary">#</a></h2>
+<ul>
+<li>HAPI uses <strong>6 automations</strong> via GitHub Actions for routine tasks</li>
+<li><strong>Tests</strong> run automatically with every code change</li>
+<li><strong>AI (Codex)</strong> automatically reviews PRs, responds to issues and comments</li>
+<li><strong>Releases</strong> are built for all platforms with a single command when a tag is created</li>
+<li>The <strong>web application</strong> is automatically published on changes</li>
+<li>The <code>bot-skip</code> label disables AI automations for a specific task</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+
+
+
+
+  
+  
+  
+  <div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/en/docs/level-3-advanced/03-build-from-source/" class="flex align-center">
+        <img src="/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Lesson 3. Building HAPI from Source</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/en/docs/level-3-advanced/05-contributing/" class="flex align-center">
+        <span>Lesson 5. Contributing to HAPI</span>
+        <img src="/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+  
+
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <aside class="book-toc">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-this-matters">Why This Matters</a></li>
+    <li><a href="#what-automations-hapi-has">What Automations HAPI Has</a>
+      <ul>
+        <li><a href="#1--tests-testyml">1. 🧪 Tests (<code>test.yml</code>)</a></li>
+        <li><a href="#2--ai-pr-review-codex-pr-reviewyml">2. 🤖 AI PR Review (<code>codex-pr-review.yml</code>)</a></li>
+        <li><a href="#3--auto-response-to-issues-issue-auto-responseyml">3. 💬 Auto-response to Issues (<code>issue-auto-response.yml</code>)</a></li>
+        <li><a href="#4--responses-to-mentions-codex-mention-responseyml">4. 🗣️ Responses to Mentions (<code>codex-mention-response.yml</code>)</a></li>
+        <li><a href="#5--release-releaseyml">5. 📦 Release (<code>release.yml</code>)</a></li>
+        <li><a href="#6--web-app-deploy-webappyml">6. 🌐 Web App Deploy (<code>webapp.yml</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-it-all-connects">How It All Connects</a></li>
+    <li><a href="#the-bot-skip-label">The <code>bot-skip</code> Label</a></li>
+    <li><a href="#lesson-summary">Lesson Summary</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
