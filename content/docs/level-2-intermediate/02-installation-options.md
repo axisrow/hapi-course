@@ -1,273 +1,273 @@
 ---
-title: "Урок 2. Варианты установки HAPI"
+title: "Lesson 2. HAPI Installation Options"
 weight: 2
 bookToc: true
 ---
 
-# Урок 2. Варианты установки HAPI
+# Lesson 2. HAPI Installation Options
 
-## Зачем это нужно
+## Why This Matters
 
-В первом уровне курса вы, скорее всего, установили HAPI самым простым способом. Но HAPI поддерживает несколько вариантов подключения — от «всё работает из коробки» до полностью самостоятельного развёртывания. В этом уроке мы разберём каждый вариант, чтобы вы могли выбрать подходящий.
+In the first course level, you probably installed HAPI the simplest way. But HAPI supports several connection options — from "everything works out of the box" to fully self-managed deployment. In this lesson, we'll cover each option so you can choose the right one.
 
-## Напоминание: три компонента HAPI
+## Reminder: Three HAPI Components
 
-Прежде чем выбирать вариант установки, вспомним структуру:
+Before choosing an installation option, let's recall the structure:
 
-| Компонент | Что делает | Обязателен? |
+| Component | What it does | Required? |
 |-----------|-----------|-------------|
-| **CLI** | Запускает AI-агента | Да |
-| **Hub** | Центральный сервер, хранит данные | Да |
-| **Runner** | Фоновый сервис для удалённого запуска сессий | По желанию |
+| **CLI** | Launches the AI agent | Yes |
+| **Hub** | Central server, stores data | Yes |
+| **Runner** | Background service for remote session launching | Optional |
 
 ---
 
-## Установка CLI
+## Installing the CLI
 
-Есть несколько способов установить CLI:
+There are several ways to install the CLI:
 
-### Способ 1: npm (рекомендуется)
+### Method 1: npm (recommended)
 
 ```bash
 npm install -g @twsxtd/hapi
 ```
 
-> **npm** — менеджер пакетов для JavaScript. Если у вас установлен Node.js, npm уже есть на вашем компьютере.
+> **npm** is a package manager for JavaScript. If you have Node.js installed, npm is already on your computer.
 
-### Способ 2: Homebrew (для macOS)
+### Method 2: Homebrew (for macOS)
 
 ```bash
 brew install tiann/tap/hapi
 ```
 
-### Способ 3: Без установки (npx)
+### Method 3: Without installation (npx)
 
 ```bash
 npx @twsxtd/hapi
 ```
 
-Этот способ скачивает и запускает HAPI «на лету» — удобно для быстрой проверки.
+This method downloads and runs HAPI on the fly — convenient for a quick check.
 
-### Способ 4: Готовый файл (binary)
+### Method 4: Pre-built binary
 
-Скачайте файл с [GitHub Releases](https://github.com/tiann/hapi/releases) и выполните:
+Download the file from [GitHub Releases](https://github.com/tiann/hapi/releases) and run:
 
 ```bash
-chmod +x ./hapi              # Разрешить запуск
-sudo mv ./hapi /usr/local/bin/  # Переместить в системную папку
+chmod +x ./hapi              # Allow execution
+sudo mv ./hapi /usr/local/bin/  # Move to system directory
 ```
 
 ---
 
-## Четыре варианта подключения Hub
+## Four Hub Connection Options
 
-Главный вопрос: **как вы будете подключаться к Hub с телефона?** Вот четыре варианта:
+The main question: **how will you connect to the Hub from your phone?** Here are four options:
 
 ---
 
-### Вариант 1: Relay (по умолчанию) ⭐
+### Option 1: Relay (default) ⭐
 
-**Что это:** Встроенный сервис, который автоматически создаёт безопасный туннель к вашему Hub через интернет.
+**What it is:** A built-in service that automatically creates a secure tunnel to your Hub over the internet.
 
-**Для кого:** Для большинства пользователей. Работает «из коробки».
+**For whom:** Most users. Works out of the box.
 
-**Как запустить:**
+**How to launch:**
 ```bash
 hapi hub --relay
 ```
 
-После запуска в терминале появится:
-- URL-адрес для доступа
-- QR-код — отсканируйте телефоном
+After launch, the terminal will show:
+- A URL for access
+- A QR code — scan with your phone
 
-**Плюсы:**
-- ✅ Никакой настройки — просто работает
-- ✅ Работает за NAT и файрволом (даже если провайдер «прячет» ваш компьютер)
-- ✅ Шифрование WireGuard + TLS
-- ✅ Бесплатно
+**Pros:**
+- ✅ Zero configuration — just works
+- ✅ Works behind NAT and firewalls (even if your provider "hides" your computer)
+- ✅ WireGuard + TLS encryption
+- ✅ Free
 
-**Нюансы:**
-- По умолчанию используется UDP-протокол. Если возникают проблемы с подключением, включите TCP-режим:
+**Notes:**
+- UDP protocol is used by default. If you have connection issues, enable TCP mode:
 
 ```bash
 export HAPI_RELAY_FORCE_TCP=true
 hapi hub --relay
 ```
 
-> **UDP и TCP** — два способа передачи данных в интернете. UDP — быстрее, но может блокироваться некоторыми сетями. TCP — надёжнее, работает практически везде.
+> **UDP and TCP** are two ways of transmitting data over the internet. UDP is faster but may be blocked by some networks. TCP is more reliable and works virtually everywhere.
 
 ---
 
-### Вариант 2: Cloudflare Tunnel
+### Option 2: Cloudflare Tunnel
 
-**Что это:** Бесплатный сервис от компании Cloudflare, который создаёт безопасный туннель к вашему серверу.
+**What it is:** A free service from Cloudflare that creates a secure tunnel to your server.
 
-**Для кого:** Для тех, кто хочет свой домен (например, `hapi.вашсайт.com`) и больше контроля.
+**For whom:** Those who want their own domain (e.g., `hapi.yoursite.com`) and more control.
 
-**Как настроить:**
+**How to set up:**
 
-1. Установите `cloudflared` с [сайта Cloudflare](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
+1. Install `cloudflared` from the [Cloudflare website](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/)
 
-2. Создайте именованный туннель:
+2. Create a named tunnel:
 ```bash
 cloudflared tunnel create hapi
 cloudflared tunnel route dns hapi hapi.yourdomain.com
 ```
 
-3. Запустите туннель:
+3. Start the tunnel:
 ```bash
 cloudflared tunnel --protocol http2 run hapi
 ```
 
-4. Запустите Hub (без --relay):
+4. Start the Hub (without --relay):
 ```bash
 hapi hub
 ```
 
-**Плюсы:**
-- ✅ Свой красивый домен
-- ✅ Бесплатно
-- ✅ Надёжная инфраструктура Cloudflare
+**Pros:**
+- ✅ Your own custom domain
+- ✅ Free
+- ✅ Reliable Cloudflare infrastructure
 
-**Нюансы:**
-- ⚠️ **Быстрые туннели (TryCloudflare) не поддерживаются** — они не работают с SSE, который HAPI использует для обновлений в реальном времени. Нужен именно «именованный» (named) туннель.
-- ⚠️ Используйте флаг `--protocol http2` — протокол QUIC (по умолчанию) может вызывать проблемы с длительными соединениями.
+**Notes:**
+- ⚠️ **Quick tunnels (TryCloudflare) are not supported** — they don't work with SSE, which HAPI uses for real-time updates. You need a "named" tunnel.
+- ⚠️ Use the `--protocol http2` flag — the QUIC protocol (default) may cause issues with long-lived connections.
 
 ---
 
-### Вариант 3: Tailscale
+### Option 3: Tailscale
 
-**Что это:** VPN-сервис, который объединяет ваши устройства в частную сеть. Все ваши устройства получают специальные IP-адреса и «видят» друг друга, как будто находятся в одной локальной сети.
+**What it is:** A VPN service that joins your devices into a private network. All your devices get special IP addresses and "see" each other as if they were on the same local network.
 
-**Для кого:** Для тех, у кого несколько устройств и кто хочет простую частную сеть.
+**For whom:** Those with multiple devices who want a simple private network.
 
-**Как настроить:**
+**How to set up:**
 
-1. Установите Tailscale: [tailscale.com/download](https://tailscale.com/download)
-2. Подключитесь:
+1. Install Tailscale: [tailscale.com/download](https://tailscale.com/download)
+2. Connect:
 ```bash
 sudo tailscale up
 ```
-3. Запустите Hub:
+3. Start the Hub:
 ```bash
 hapi hub
 ```
-4. Откройте в браузере телефона (Tailscale должен быть установлен и на телефоне):
+4. Open in your phone's browser (Tailscale must also be installed on the phone):
 ```
 http://100.x.x.x:3006
 ```
 
-> Адрес `100.x.x.x` — это ваш Tailscale IP. Узнать его можно командой `tailscale ip`.
+> The `100.x.x.x` address is your Tailscale IP. Find it with the `tailscale ip` command.
 
-**Плюсы:**
-- ✅ Полностью частная сеть — трафик не проходит через чужие серверы
-- ✅ Простая настройка
-- ✅ Бесплатно для личного использования (до 100 устройств)
+**Pros:**
+- ✅ Completely private network — traffic doesn't pass through third-party servers
+- ✅ Simple setup
+- ✅ Free for personal use (up to 100 devices)
 
-**Нюансы:**
-- ⚠️ Tailscale нужно установить на **все** устройства (компьютер + телефон)
+**Notes:**
+- ⚠️ Tailscale needs to be installed on **all** devices (computer + phone)
 
 ---
 
-### Вариант 4: Самостоятельный хостинг (Self-hosted)
+### Option 4: Self-hosted
 
-**Что это:** Вы разворачиваете Hub на сервере с публичным IP-адресом (VPS, облачный сервер).
+**What it is:** You deploy the Hub on a server with a public IP address (VPS, cloud server).
 
-**Для кого:** Для опытных пользователей, которые хотят полный контроль.
+**For whom:** Experienced users who want full control.
 
-**Как настроить:**
+**How to set up:**
 
-1. На сервере (VPS) запустите Hub:
+1. On the server (VPS), start the Hub:
 ```bash
 hapi hub
 ```
 
-2. Настройте обратный прокси (Nginx, Caddy) для HTTPS:
+2. Set up a reverse proxy (Nginx, Caddy) for HTTPS:
 
-> **Обратный прокси** (*reverse proxy*) — программа, которая принимает запросы из интернета и перенаправляет их на ваш Hub. Она также может добавить шифрование HTTPS.
+> A **reverse proxy** is a program that accepts requests from the internet and forwards them to your Hub. It can also add HTTPS encryption.
 
-3. На вашем рабочем компьютере настройте подключение CLI к серверу:
+3. On your workstation, configure the CLI connection to the server:
 ```bash
-export HAPI_API_URL="https://ваш-сервер.com"
-export CLI_API_TOKEN="ваш-токен"
+export HAPI_API_URL="https://your-server.com"
+export CLI_API_TOKEN="your-token"
 hapi
 ```
 
-Или используйте интерактивную авторизацию:
+Or use interactive authentication:
 ```bash
 hapi auth login
 ```
 
-**Плюсы:**
-- ✅ Полный контроль над всем
-- ✅ Минимальная задержка (если сервер близко)
-- ✅ Не зависите от сторонних сервисов
+**Pros:**
+- ✅ Full control over everything
+- ✅ Minimal latency (if the server is nearby)
+- ✅ No dependency on third-party services
 
-**Нюансы:**
-- ⚠️ Нужен сервер (VPS) — от ~$5/мес
-- ⚠️ Нужно настроить HTTPS (Let's Encrypt — бесплатно)
-- ⚠️ Нужно следить за безопасностью
+**Notes:**
+- ⚠️ Requires a server (VPS) — from ~$5/month
+- ⚠️ Need to set up HTTPS (Let's Encrypt — free)
+- ⚠️ Need to monitor security
 
 ---
 
-## Сравнительная таблица
+## Comparison Table
 
-| Критерий | Relay | Cloudflare | Tailscale | Self-hosted |
+| Criteria | Relay | Cloudflare | Tailscale | Self-hosted |
 |----------|-------|-----------|-----------|-------------|
-| Сложность | ⭐ Легко | ⭐⭐ Средне | ⭐⭐ Средне | ⭐⭐⭐ Сложно |
-| Стоимость | Бесплатно | Бесплатно | Бесплатно | VPS ~$5/мес |
-| Свой домен | Нет | Да | Нет | Да |
-| Шифрование | WireGuard+TLS | TLS | WireGuard | Настраиваете сами |
-| Приватность | Через Relay-сервер | Через Cloudflare | Полная | Полная |
+| Difficulty | ⭐ Easy | ⭐⭐ Medium | ⭐⭐ Medium | ⭐⭐⭐ Hard |
+| Cost | Free | Free | Free | VPS ~$5/mo |
+| Custom domain | No | Yes | No | Yes |
+| Encryption | WireGuard+TLS | TLS | WireGuard | Configure yourself |
+| Privacy | Via Relay server | Via Cloudflare | Full | Full |
 
 ---
 
-## Настройка Runner (фоновый сервис)
+## Setting Up Runner (Background Service)
 
-Независимо от варианта подключения, вы можете настроить **Runner** — фоновый сервис, который позволяет запускать сессии с телефона:
+Regardless of the connection option, you can set up the **Runner** — a background service that lets you launch sessions from your phone:
 
 ```bash
-hapi runner start      # Запустить
-hapi runner status     # Проверить статус
-hapi runner logs       # Посмотреть логи
-hapi runner stop       # Остановить
+hapi runner start      # Start
+hapi runner status     # Check status
+hapi runner logs       # View logs
+hapi runner stop       # Stop
 ```
 
-С запущенным Runner:
-- Ваш компьютер появится в списке «Машины» в Web App
-- Вы сможете запускать новые сессии удалённо
-- Сессии работают даже после закрытия терминала
+With Runner running:
+- Your computer will appear in the "Machines" list in the Web App
+- You can launch new sessions remotely
+- Sessions continue running even after closing the terminal
 
 ---
 
-## Как сделать, чтобы HAPI работал постоянно
+## Keeping HAPI Running Permanently
 
-Чтобы Hub и Runner не останавливались при закрытии терминала:
+To prevent the Hub and Runner from stopping when you close the terminal:
 
-### Быстрый способ (nohup):
+### Quick method (nohup):
 ```bash
 nohup hapi hub --relay > ~/.hapi/logs/hub.log 2>&1 &
 nohup hapi runner start --foreground > ~/.hapi/logs/runner.log 2>&1 &
 ```
 
-### Надёжный способ (pm2):
+### Reliable method (pm2):
 ```bash
 npm install -g pm2
 pm2 start "hapi hub --relay" --name hapi-hub
 pm2 start "hapi runner start --foreground" --name hapi-runner
-pm2 startup   # Автозапуск при перезагрузке
+pm2 startup   # Auto-start on reboot
 pm2 save
 ```
 
-> **pm2** — менеджер процессов, который автоматически перезапускает программы при сбоях и при перезагрузке компьютера.
+> **pm2** is a process manager that automatically restarts programs on crashes and system reboots.
 
 ---
 
-## Итоги урока
+## Lesson Summary
 
-- **Relay** — самый простой вариант, работает из коробки, подходит большинству
-- **Cloudflare Tunnel** — если хотите свой домен и надёжную инфраструктуру
-- **Tailscale** — если хотите полностью частную сеть между устройствами
-- **Self-hosted** — если хотите полный контроль и у вас есть свой сервер
-- **Runner** позволяет запускать сессии удалённо с телефона
-- Используйте **pm2** или **systemd** для постоянной работы HAPI
+- **Relay** — the simplest option, works out of the box, suitable for most users
+- **Cloudflare Tunnel** — if you want your own domain and reliable infrastructure
+- **Tailscale** — if you want a completely private network between devices
+- **Self-hosted** — if you want full control and have your own server
+- **Runner** lets you launch sessions remotely from your phone
+- Use **pm2** or **systemd** to keep HAPI running permanently

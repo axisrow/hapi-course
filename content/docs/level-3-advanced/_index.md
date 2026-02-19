@@ -1,8 +1,8 @@
 ---
-title: "Уровень 3: Продвинутый"
+title: "Level 3: Advanced"
 weight: 3
 bookToc: true
 bookCollapseSection: true
 ---
 
-# Уровень 3: Продвинутый
+# Level 3: Advanced

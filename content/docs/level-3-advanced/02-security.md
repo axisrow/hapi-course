@@ -1,113 +1,113 @@
 ---
-title: "Урок 2. Безопасность в HAPI"
+title: "Lesson 2. Security in HAPI"
 weight: 2
 bookToc: true
 ---
 
-# Урок 2. Безопасность в HAPI
+# Lesson 2. Security in HAPI
 
-## Зачем это нужно
+## Why This Matters
 
-Когда вы управляете AI-агентом удалённо (с телефона или из браузера), ваши данные проходят через интернет. Важно понимать, как HAPI защищает эти данные, и чем его подход отличается от аналогов.
+When you control an AI agent remotely (from a phone or browser), your data travels through the internet. It's important to understand how HAPI protects this data and how its approach differs from alternatives.
 
-## Два режима доступа к HAPI
+## Two Access Modes
 
-HAPI предлагает два способа удалённого подключения к вашему хабу. Выбор зависит от вашей ситуации:
+HAPI offers two ways to remotely connect to your hub. The choice depends on your situation:
 
-### Режим 1: Self-hosted (самостоятельный хостинг)
+### Mode 1: Self-hosted
 
-> **Self-hosted** — значит вы сами контролируете сервер и сетевой путь до него.
+> **Self-hosted** means you control the server and the network path to it.
 
-Вы подключаетесь через собственный сервер, Cloudflare Tunnel или Tailscale. Весь путь данных — под вашим контролем.
+You connect through your own server, Cloudflare Tunnel, or Tailscale. The entire data path is under your control.
 
 ```
-Ваш телефон → HTTPS → Ваш сервер/туннель → Hub на вашем компьютере
+Your phone → HTTPS → Your server/tunnel → Hub on your computer
 ```
 
-**Плюсы:** полный контроль, никаких посредников
-**Минусы:** нужно настраивать сервер или туннель
+**Pros:** full control, no intermediaries
+**Cons:** need to set up the server or tunnel
 
-### Режим 2: Relay (публичное реле)
+### Mode 2: Relay
 
-> **Relay** (реле) — промежуточный сервер, который пересылает данные между вашим телефоном и компьютером.
+> **Relay** is an intermediary server that forwards data between your phone and computer.
 
-Запускается одной командой:
+Launched with one command:
 
 ```bash
 hapi hub --relay
 ```
 
-Данные шифруются с помощью **WireGuard + TLS** (технология под названием **tunwg**):
+Data is encrypted using **WireGuard + TLS** (a technology called **tunwg**):
 
 ```
-Ваш телефон ──[зашифровано]──► Relay-сервер ──[зашифровано]──► Ваш компьютер
+Your phone ──[encrypted]──► Relay server ──[encrypted]──► Your computer
                                     │
-                            Видит только «мусор»,
-                            не может прочитать данные
+                            Sees only "garbage",
+                            cannot read the data
 ```
 
-**Плюсы:** одна команда, ничего настраивать не нужно
-**Минусы:** трафик идёт через чужой сервер (но он зашифрован)
+**Pros:** one command, nothing to configure
+**Cons:** traffic goes through a third-party server (but it's encrypted)
 
-## Что такое E2E-шифрование
+## What is E2E Encryption
 
-> **E2E (End-to-End)** — сквозное шифрование. Данные шифруются на вашем устройстве и расшифровываются только на другом вашем устройстве. Никто посередине не может их прочитать.
+> **E2E (End-to-End)** encryption means data is encrypted on your device and decrypted only on your other device. Nobody in between can read it.
 
-В HAPI relay-режиме используются две технологии:
+In HAPI relay mode, two technologies are used:
 
-| Технология | Что делает |
+| Technology | What it does |
 |-----------|-----------|
-| **WireGuard** | Создаёт зашифрованный «туннель» между устройствами (как VPN) |
-| **TLS** | Дополнительный слой шифрования (то же, что защищает банковские сайты) |
+| **WireGuard** | Creates an encrypted "tunnel" between devices (like a VPN) |
+| **TLS** | Additional encryption layer (the same thing that protects banking sites) |
 
-Вместе они гарантируют: relay-сервер пересылает пакеты, но **не может** прочитать их содержимое.
+Together they guarantee: the relay server forwards packets but **cannot** read their contents.
 
-## HAPI vs Happy: сравнение безопасности
+## HAPI vs Happy: Security Comparison
 
-**Happy** — это проект, на основе которого создан HAPI. У них принципиально разные подходы:
+**Happy** is the project that inspired HAPI. They have fundamentally different approaches:
 
-| Аспект | Happy | HAPI |
+| Aspect | Happy | HAPI |
 |--------|-------|------|
-| **Где хранятся данные** | На облачном сервере (зашифрованы) | На вашем компьютере |
-| **Кто хранит данные** | Центральный сервер | Только вы |
-| **Шифрование** | Прикладное E2EE (клиент шифрует перед отправкой) | WireGuard+TLS (relay) или HTTPS (self-hosted) |
-| **Что видит сервер** | Зашифрованные «блобы» — прочитать не может, но хранит | Relay: ничего не хранит, только пересылает |
-| **Архитектура** | Централизованная (все на одном облаке) | Децентрализованная (каждый запускает свой hub) |
+| **Where data is stored** | On a cloud server (encrypted) | On your computer |
+| **Who stores the data** | Central server | Only you |
+| **Encryption** | Application-level E2EE (client encrypts before sending) | WireGuard+TLS (relay) or HTTPS (self-hosted) |
+| **What the server sees** | Encrypted "blobs" — can't read but stores them | Relay: stores nothing, only forwards |
+| **Architecture** | Centralized (everyone on one cloud) | Decentralized (everyone runs their own hub) |
 
-### Главное отличие
+### The Key Difference
 
-- **Happy** решает проблему «ненадёжного сервера» с помощью сложного шифрования. Сервер хранит ваши данные, но не может их прочитать.
+- **Happy** solves the "untrusted server" problem with complex encryption. The server stores your data but cannot read it.
 
-- **HAPI** вообще избегает этой проблемы: данные никогда не покидают ваш компьютер. Relay-сервер просто пересылает зашифрованные пакеты, ничего не сохраняя.
+- **HAPI** avoids this problem entirely: data never leaves your computer. The relay server simply forwards encrypted packets, saving nothing.
 
-## Где хранятся ваши данные
+## Where Your Data Is Stored
 
 ```
 Happy:
-  Ваш компьютер → [шифрование] → Облачный сервер (хранит зашифрованные данные)
+  Your computer → [encryption] → Cloud server (stores encrypted data)
 
 HAPI:
-  Ваш компьютер (данные остаются здесь) → [шифрованный туннель] → Ваш телефон
+  Your computer (data stays here) → [encrypted tunnel] → Your phone
 ```
 
-В HAPI данные хранятся в локальной базе SQLite на вашем компьютере в открытом виде. Безопасность обеспечивается тем, что:
-- Физический доступ к данным имеете только вы
-- Удалённый доступ защищён шифрованием (WireGuard+TLS или HTTPS)
+In HAPI, data is stored in a local SQLite database on your computer in plain text. Security is ensured by:
+- Only you have physical access to the data
+- Remote access is protected by encryption (WireGuard+TLS or HTTPS)
 
-## Рекомендации по безопасности
+## Security Recommendations
 
-1. **Храните токен в секрете.** `CLI_API_TOKEN` — это ваш ключ доступа. Не публикуйте его и не отправляйте в чатах.
+1. **Keep your token secret.** `CLI_API_TOKEN` is your access key. Don't publish it or send it in chats.
 
-2. **Используйте relay для быстрого старта** — шифрование настраивается автоматически.
+2. **Use relay for a quick start** — encryption is configured automatically.
 
-3. **Используйте self-hosted для максимального контроля** — ваш трафик вообще не проходит через чужие серверы.
+3. **Use self-hosted for maximum control** — your traffic doesn't pass through any third-party servers at all.
 
-4. **Защищайте свой компьютер.** Поскольку данные хранятся локально в открытом виде, важно иметь пароль на компьютере и шифрование диска.
+4. **Protect your computer.** Since data is stored locally in plain text, it's important to have a password on your computer and disk encryption.
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI предлагает два режима: **self-hosted** (полный контроль) и **relay** (простота настройки)
-- В relay-режиме данные защищены сквозным шифрованием **WireGuard + TLS**
-- Relay-сервер **не хранит** и **не может прочитать** ваши данные
-- В отличие от Happy, HAPI хранит данные только на вашем компьютере — это проще и безопаснее
-- Главный принцип HAPI: **ваши данные остаются у вас**
+- HAPI offers two modes: **self-hosted** (full control) and **relay** (ease of setup)
+- In relay mode, data is protected by end-to-end **WireGuard + TLS** encryption
+- The relay server **does not store** and **cannot read** your data
+- Unlike Happy, HAPI stores data only on your computer — simpler and more secure
+- HAPI's core principle: **your data stays with you**

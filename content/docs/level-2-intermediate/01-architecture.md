@@ -1,187 +1,187 @@
 ---
-title: "Урок 1. Как устроен HAPI"
+title: "Lesson 1. How HAPI Works"
 weight: 1
 bookToc: true
 ---
 
-# Урок 1. Как устроен HAPI
+# Lesson 1. How HAPI Works
 
-## Зачем это нужно
+## Why This Matters
 
-В первом уровне вы научились запускать HAPI и работать с ним. Теперь давайте разберёмся, **как он устроен внутри**. Это поможет вам понимать, что происходит «под капотом», быстрее находить проблемы и настраивать систему под себя.
+In the first level, you learned how to launch HAPI and work with it. Now let's understand **how it works under the hood**. This will help you understand what's happening behind the scenes, find problems faster, and customize the system to your needs.
 
-## Четыре главных компонента
+## Four Main Components
 
-HAPI состоит из четырёх частей, которые работают вместе, как команда:
+HAPI consists of four parts that work together as a team:
 
 ```
 ┌──────────────────────────────────────────────────┐
-│            Ваш компьютер                         │
+│            Your Computer                         │
 │                                                  │
 │   CLI ◄──────► Hub ◄──────► Web App              │
-│  (агент)      (сервер)      (браузер)            │
+│  (agent)      (server)      (browser)            │
 │                  │                               │
 └──────────────────┼───────────────────────────────┘
                    │
-              Relay (туннель)
+              Relay (tunnel)
                    │
-              📱 Телефон
+              📱 Phone
 ```
 
-Давайте разберём каждый из них.
+Let's break down each one.
 
 ---
 
-### 1. CLI — обёртка вокруг AI-агента
+### 1. CLI — Wrapper Around the AI Agent
 
-**CLI** (от английского *Command Line Interface* — интерфейс командной строки) — это программа, которую вы запускаете в терминале командой `hapi`.
+**CLI** (Command Line Interface) is the program you launch in the terminal with the `hapi` command.
 
-Что она делает:
-- **Запускает AI-агента** (Claude Code, Codex, Gemini или OpenCode) — это тот самый «умный помощник», который пишет код
-- **Соединяется с Hub** — чтобы вы могли управлять сессией удалённо
-- **Передаёт сообщения** между вами и агентом
-- **Отправляет запросы на разрешения** — когда агент хочет что-то сделать (например, отредактировать файл), он сначала спрашивает вас
+What it does:
+- **Launches the AI agent** (Claude Code, Codex, Gemini, or OpenCode) — the "smart assistant" that writes code
+- **Connects to the Hub** — so you can manage the session remotely
+- **Relays messages** between you and the agent
+- **Sends permission requests** — when the agent wants to do something (e.g., edit a file), it asks you first
 
-**Пример запуска:**
+**Launch examples:**
 ```bash
-hapi              # Запустить сессию с Claude Code
-hapi codex        # Запустить сессию с OpenAI Codex
-hapi gemini       # Запустить сессию с Google Gemini
+hapi              # Start a session with Claude Code
+hapi codex        # Start a session with OpenAI Codex
+hapi gemini       # Start a session with Google Gemini
 ```
 
-> 💡 **Простая аналогия:** CLI — это как водитель автомобиля. Он управляет AI-агентом и общается с диспетчером (Hub).
+> 💡 **Simple analogy:** CLI is like a car driver. It controls the AI agent and communicates with the dispatcher (Hub).
 
 ---
 
-### 2. Hub — центральный сервер
+### 2. Hub — Central Server
 
-**Hub** (от английского *hub* — центр, узел) — это «диспетчерская» HAPI. Он работает на вашем компьютере и координирует всё остальное.
+**Hub** is HAPI's "dispatch center." It runs on your computer and coordinates everything else.
 
-Что он делает:
-- **Хранит данные** в базе SQLite (все сессии, сообщения, разрешения)
-- **Раздаёт веб-интерфейс** — ту самую страницу, которую вы открываете в браузере
-- **Связывает CLI и веб-приложение** в реальном времени
-- **Отправляет уведомления** в Telegram
+What it does:
+- **Stores data** in a SQLite database (all sessions, messages, permissions)
+- **Serves the web interface** — the page you open in the browser
+- **Links CLI and web app** in real time
+- **Sends notifications** to Telegram
 
-**Технологии связи Hub:**
+**Hub communication technologies:**
 
-| Связь | Технология | Что это |
+| Connection | Technology | What it is |
 |-------|-----------|---------|
-| Hub ↔ CLI | Socket.IO | Двусторонняя связь в реальном времени (как чат) |
-| Hub ↔ Браузер | REST + SSE | REST — для действий (отправить сообщение), SSE — для мгновенных обновлений |
+| Hub ↔ CLI | Socket.IO | Two-way real-time communication (like a chat) |
+| Hub ↔ Browser | REST + SSE | REST — for actions (send a message), SSE — for instant updates |
 
-> **REST** — способ общения программ через интернет (как отправка писем). **SSE** (*Server-Sent Events*) — технология, при которой сервер сам отправляет обновления в браузер (как радиотрансляция). **Socket.IO** — технология двусторонней связи в реальном времени (как телефонный звонок).
+> **REST** is a way programs communicate over the internet (like sending letters). **SSE** (*Server-Sent Events*) is a technology where the server pushes updates to the browser (like a radio broadcast). **Socket.IO** is a technology for two-way real-time communication (like a phone call).
 
-**Запуск Hub:**
+**Starting the Hub:**
 ```bash
-hapi hub           # Локальный режим
-hapi hub --relay   # С доступом через интернет
+hapi hub           # Local mode
+hapi hub --relay   # With internet access
 ```
 
 ---
 
-### 3. Web App — интерфейс в браузере
+### 3. Web App — Browser Interface
 
-**Web App** — это React-приложение (PWA), которое открывается в браузере вашего телефона или компьютера.
+**Web App** is a React application (PWA) that opens in your phone's or computer's browser.
 
-> **PWA** (*Progressive Web App*) — сайт, который можно «установить» на телефон как обычное приложение. Он работает даже без постоянного интернета.
+> **PWA** (*Progressive Web App*) is a website that can be "installed" on your phone like a regular app. It works even without a constant internet connection.
 
-Что вы можете делать в Web App:
-- 📋 **Смотреть список сессий** — все активные и прошлые
-- 💬 **Отправлять сообщения агенту** — как в обычном чате
-- ✅ **Одобрять или отклонять действия** — когда агент просит разрешение
-- 📁 **Просматривать файлы проекта** — и видеть изменения в коде
-- 🚀 **Запускать новые сессии** — прямо с телефона
-
----
-
-### 4. Relay — туннель для удалённого доступа
-
-**Relay** (от английского *relay* — реле, ретранслятор) — это сервис, который позволяет подключаться к вашему Hub через интернет, даже если ваш компьютер находится за роутером или файрволом.
-
-> **Файрвол** (*firewall*) — защитная стена, которая блокирует нежелательные подключения к вашему компьютеру из интернета. **NAT** — технология в роутере, которая «прячет» ваш компьютер от внешнего мира.
-
-Когда вы запускаете `hapi hub --relay`, происходит следующее:
-
-1. Hub подключается к серверу Relay
-2. Relay создаёт публичный адрес (URL) для вашего Hub
-3. Вы получаете QR-код, который можно отсканировать телефоном
-4. Телефон подключается к Hub через Relay
+What you can do in the Web App:
+- 📋 **View session list** — all active and past sessions
+- 💬 **Send messages to the agent** — like in a regular chat
+- ✅ **Approve or deny actions** — when the agent asks permission
+- 📁 **Browse project files** — and see code changes
+- 🚀 **Launch new sessions** — right from your phone
 
 ---
 
-## Шифрование: WireGuard + TLS
+### 4. Relay — Tunnel for Remote Access
 
-HAPI серьёзно относится к безопасности. Весь трафик через Relay защищён **двойным шифрованием**:
+**Relay** is a service that lets you connect to your Hub over the internet, even if your computer is behind a router or firewall.
 
-1. **WireGuard** — это VPN-протокол (технология создания защищённого «тоннеля» между двумя устройствами). Он шифрует данные так, что никто между вами и вашим компьютером не может их прочитать.
+> **Firewall** is a protective barrier that blocks unwanted connections to your computer from the internet. **NAT** is a technology in your router that "hides" your computer from the outside world.
 
-2. **TLS** (*Transport Layer Security*) — тот же тип шифрования, который используется на сайтах с «замочком» (https://). Это второй слой защиты.
+When you run `hapi hub --relay`, here's what happens:
 
-> 💡 **Простая аналогия:** Представьте, что вы отправляете письмо. WireGuard — это сейф, в который вы кладёте письмо. TLS — это бронированный фургон, который перевозит сейф. Даже если кто-то перехватит фургон, он не сможет добраться до содержимого письма.
-
-```
-Ваш телефон → [TLS шифрование] → [WireGuard тоннель] → Relay → Hub на компьютере
-```
+1. The Hub connects to the Relay server
+2. Relay creates a public address (URL) for your Hub
+3. You get a QR code that you can scan with your phone
+4. Your phone connects to the Hub through the Relay
 
 ---
 
-## Как всё работает вместе
+## Encryption: WireGuard + TLS
 
-### Сценарий: вы отправляете сообщение с телефона
+HAPI takes security seriously. All traffic through the Relay is protected by **double encryption**:
 
-```
-1. Вы пишете сообщение в Web App на телефоне
-         │
-2. Сообщение через Relay попадает в Hub
-         │
-3. Hub передаёт сообщение в CLI через Socket.IO
-         │
-4. CLI передаёт сообщение AI-агенту
-         │
-5. Агент обрабатывает запрос и отвечает
-         │
-6. Ответ идёт обратно: CLI → Hub → SSE → Web App
-         │
-7. Вы видите ответ на экране телефона
-```
+1. **WireGuard** is a VPN protocol (a technology for creating a secure "tunnel" between two devices). It encrypts data so that nobody between you and your computer can read it.
 
-### Сценарий: агент просит разрешение
+2. **TLS** (*Transport Layer Security*) is the same type of encryption used on websites with the "lock" icon (https://). This is the second layer of protection.
+
+> 💡 **Simple analogy:** Imagine you're sending a letter. WireGuard is a safe you put the letter in. TLS is an armored truck that transports the safe. Even if someone intercepts the truck, they can't get to the letter's contents.
 
 ```
-1. AI-агент хочет отредактировать файл
-         │
-2. CLI отправляет запрос на разрешение в Hub
-         │
-3. Hub сохраняет запрос и уведомляет вас (SSE + Telegram)
-         │
-4. Вы получаете уведомление на телефоне
-         │
-5. Вы нажимаете «Одобрить» в Web App
-         │
-6. Hub передаёт решение в CLI → агент продолжает работу
+Your phone → [TLS encryption] → [WireGuard tunnel] → Relay → Hub on your computer
 ```
 
 ---
 
-## Переключение между локальным и удалённым режимом
+## How Everything Works Together
 
-Одна из главных «фишек» HAPI — возможность переключаться между терминалом и телефоном **без потери сессии**.
+### Scenario: You send a message from your phone
 
-| Направление | Как это работает |
+```
+1. You write a message in the Web App on your phone
+         │
+2. The message reaches the Hub through the Relay
+         │
+3. Hub forwards the message to CLI via Socket.IO
+         │
+4. CLI passes the message to the AI agent
+         │
+5. The agent processes the request and responds
+         │
+6. The response goes back: CLI → Hub → SSE → Web App
+         │
+7. You see the response on your phone screen
+```
+
+### Scenario: The agent requests permission
+
+```
+1. The AI agent wants to edit a file
+         │
+2. CLI sends a permission request to the Hub
+         │
+3. Hub saves the request and notifies you (SSE + Telegram)
+         │
+4. You receive a notification on your phone
+         │
+5. You press "Approve" in the Web App
+         │
+6. Hub forwards the decision to CLI → the agent continues
+```
+
+---
+
+## Switching Between Local and Remote Mode
+
+One of HAPI's key features is the ability to switch between the terminal and phone **without losing the session**.
+
+| Direction | How it works |
 |-------------|-----------------|
-| **Терминал → Телефон** | Отправьте сообщение с телефона — терминал автоматически перейдёт в режим ожидания |
-| **Телефон → Терминал** | Нажмите двойной пробел в терминале — мгновенно вернёте локальное управление |
+| **Terminal → Phone** | Send a message from your phone — the terminal automatically enters standby mode |
+| **Phone → Terminal** | Press double space in the terminal — instantly regain local control |
 
-Это как пульт дистанционного управления: вы можете управлять одним и тем же телевизором с дивана или подойдя к нему.
+It's like a remote control: you can control the same TV from the couch or by walking up to it.
 
 ---
 
-## Итоги урока
+## Lesson Summary
 
-- **CLI** — запускает и управляет AI-агентом на вашем компьютере
-- **Hub** — центральный сервер, который связывает все части вместе и хранит данные
-- **Web App** — интерфейс в браузере для управления с любого устройства
-- **Relay** — безопасный туннель для доступа через интернет
-- Трафик защищён двойным шифрованием: **WireGuard + TLS**
-- Вы можете свободно переключаться между терминалом и телефоном, не теряя сессию
+- **CLI** — launches and controls the AI agent on your computer
+- **Hub** — central server that links all parts together and stores data
+- **Web App** — browser interface for management from any device
+- **Relay** — secure tunnel for internet access
+- Traffic is protected by double encryption: **WireGuard + TLS**
+- You can freely switch between the terminal and phone without losing the session

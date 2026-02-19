@@ -1,184 +1,184 @@
 ---
-title: "Урок 5. Работа с AI-агентами"
+title: "Lesson 5. Working with AI Agents"
 weight: 5
 bookToc: true
 ---
 
-# Урок 5. Работа с AI-агентами
+# Lesson 5. Working with AI Agents
 
-## Зачем это нужно
+## Why This Matters
 
-HAPI поддерживает несколько AI-агентов — не только Claude Code. В этом уроке вы узнаете, как запускать разных агентов, переключаться между ними и одобрять их запросы прямо с телефона.
+HAPI supports multiple AI agents — not just Claude Code. In this lesson, you'll learn how to launch different agents, switch between them, and approve their requests right from your phone.
 
-## Какие AI-агенты поддерживаются
+## Supported AI Agents
 
-| Агент | Компания | Команда запуска |
+| Agent | Company | Launch command |
 |---|---|---|
 | **Claude Code** | Anthropic | `hapi` |
 | **Codex** | OpenAI | `hapi codex` |
 | **Gemini CLI** | Google | `hapi gemini` |
 | **OpenCode** | Open source | `hapi opencode` |
 
-> 💡 По умолчанию (просто `hapi`) запускается Claude Code. Это самый популярный вариант.
+> 💡 By default (just `hapi`), Claude Code is launched. It's the most popular option.
 
-## Запуск разных агентов
+## Launching Different Agents
 
-### Подготовка
+### Preparation
 
-Убедитесь, что hub уже запущен (из урока 3):
+Make sure the hub is already running (from lesson 3):
 
 ```bash
 hapi hub --relay
 ```
 
-### Запуск Claude Code
+### Launch Claude Code
 
 ```bash
 hapi
 ```
 
-Это запустит Claude Code в обёртке HAPI. Вы работаете с ним как обычно в терминале, но теперь сессия видна и с телефона.
+This launches Claude Code with the HAPI wrapper. You work with it as usual in the terminal, but now the session is also visible from your phone.
 
-### Запуск Codex
+### Launch Codex
 
 ```bash
 hapi codex
 ```
 
-### Запуск Gemini
+### Launch Gemini
 
 ```bash
 hapi gemini
 ```
 
-### Запуск OpenCode
+### Launch OpenCode
 
 ```bash
 hapi opencode
 ```
 
-> ⚠️ Перед запуском убедитесь, что нужный агент установлен. Например, для Claude Code: `claude --version`. Если команда не найдена — установите агент отдельно.
+> ⚠️ Before launching, make sure the agent is installed. For example, for Claude Code: `claude --version`. If the command is not found — install the agent separately.
 
-## Несколько сессий одновременно
+## Multiple Sessions Simultaneously
 
-Вы можете запустить **несколько агентов** одновременно! Каждый — в отдельном терминале:
-
-```
-Терминал 1: hapi hub --relay     ← hub (всегда один)
-Терминал 2: hapi                 ← Claude Code (сессия 1)
-Терминал 3: hapi codex           ← Codex (сессия 2)
-Терминал 4: hapi gemini          ← Gemini (сессия 3)
-```
-
-Все сессии появятся в списке в веб-интерфейсе. Вы можете переключаться между ними на телефоне.
-
-## Одобрение запросов с телефона
-
-Это одна из главных функций HAPI. Вот как это работает:
-
-### Как это выглядит
-
-1. AI-агент хочет выполнить действие (например, отредактировать файл)
-2. Он отправляет **запрос на разрешение**
-3. Вы получаете **уведомление на телефон** 🔔
-4. Открываете HAPI и видите запрос:
+You can run **multiple agents** at the same time! Each in a separate terminal:
 
 ```
-Claude Code хочет:
-📝 Отредактировать файл src/app.js
-
-[✅ Одобрить]  [❌ Отклонить]
+Terminal 1: hapi hub --relay     ← hub (always one)
+Terminal 2: hapi                 ← Claude Code (session 1)
+Terminal 3: hapi codex           ← Codex (session 2)
+Terminal 4: hapi gemini          ← Gemini (session 3)
 ```
 
-5. Нажимаете **«Одобрить»** — агент продолжает работу
-6. Или **«Отклонить»** — агент не выполнит действие
+All sessions will appear in the list in the web interface. You can switch between them on your phone.
 
-### Зачем нужно одобрение
+## Approving Requests from Your Phone
 
-AI-агенты мощные, но иногда ошибаются. Система одобрений — это ваш **контроль**:
-- Вы видите, что именно хочет сделать агент, прежде чем он это сделает
-- Вы можете остановить нежелательные изменения
-- Вы всегда в курсе, что происходит с вашим кодом
+This is one of HAPI's key features. Here's how it works:
 
-### Одобрение через Telegram
+### What It Looks Like
 
-Если вы настроили Telegram-бот (это тема для продвинутого курса), уведомления приходят прямо в Telegram. Одобрять можно не выходя из мессенджера.
+1. The AI agent wants to perform an action (e.g., edit a file)
+2. It sends a **permission request**
+3. You receive a **notification on your phone** 🔔
+4. You open HAPI and see the request:
 
-## Seamless Handoff в действии
+```
+Claude Code wants to:
+📝 Edit file src/app.js
 
-Вот типичный сценарий рабочего дня с HAPI:
+[✅ Approve]  [❌ Deny]
+```
 
-### Утро: работа за компьютером
+5. Press **"Approve"** — the agent continues working
+6. Or **"Deny"** — the agent won't perform the action
+
+### Why Approval Is Needed
+
+AI agents are powerful but sometimes make mistakes. The approval system is your **control**:
+- You see exactly what the agent wants to do before it does it
+- You can stop unwanted changes
+- You always know what's happening with your code
+
+### Approval via Telegram
+
+If you've set up a Telegram bot (a topic for the advanced course), notifications come directly to Telegram. You can approve without leaving the messenger.
+
+## Seamless Handoff in Action
+
+Here's a typical workday scenario with HAPI:
+
+### Morning: Working at the Computer
 
 ```bash
-hapi hub --relay    # в первом терминале
-hapi                # во втором терминале
+hapi hub --relay    # in the first terminal
+hapi                # in the second terminal
 ```
 
-Вы работаете с Claude Code в терминале как обычно. Даёте задания, обсуждаете код.
+You work with Claude Code in the terminal as usual. Give tasks, discuss code.
 
-### Обед: переключение на телефон
+### Lunch: Switching to Phone
 
-Вы уходите от компьютера. Но Claude Code продолжает работать! С телефона вы:
-- Следите за прогрессом в чате
-- Одобряете запросы одним нажатием
-- Отправляете дополнительные инструкции
+You leave the computer. But Claude Code keeps working! From your phone, you:
+- Monitor progress in the chat
+- Approve requests with one tap
+- Send additional instructions
 
-В терминале на компьютере отображается: **«Remote mode — waiting for input»**.
+The terminal on the computer shows: **"Remote mode — waiting for input"**.
 
-### После обеда: возвращение к компьютеру
+### After Lunch: Returning to the Computer
 
-Садитесь за компьютер и нажимаете **двойной пробел** в терминале. Мгновенно возвращается локальное управление. Продолжаете работу как ни в чём не бывало.
+You sit down at the computer and press **double space** in the terminal. Local control returns instantly. You continue working as if nothing happened.
 
-## Удалённый запуск сессий
+## Remote Session Launch
 
-Ещё одна полезная функция: можно **запускать новые сессии** прямо с телефона, даже если вы далеко от компьютера.
+Another useful feature: you can **launch new sessions** right from your phone, even when you're far from the computer.
 
-Для этого нужен **Runner** — фоновый сервис:
+For this, you need the **Runner** — a background service:
 
 ```bash
 hapi runner start
 ```
 
-После этого:
-1. Откройте HAPI на телефоне
-2. В списке «Machines» (Машины) вы увидите свой компьютер
-3. Нажмите, чтобы создать новую сессию
-4. Выберите AI-агента и начните работу
+After that:
+1. Open HAPI on your phone
+2. In the "Machines" list, you'll see your computer
+3. Tap to create a new session
+4. Choose an AI agent and start working
 
-> 💡 Runner полезен, когда вы хотите запустить задачу на домашнем компьютере, находясь в другом месте.
+> 💡 Runner is useful when you want to start a task on your home computer while you're somewhere else.
 
-## Диагностика
+## Diagnostics
 
-Если что-то не работает, HAPI имеет встроенную диагностику:
+If something isn't working, HAPI has built-in diagnostics:
 
 ```bash
 hapi doctor
 ```
 
-Эта команда проверит:
-- Подключение к hub
-- Правильность токена
-- Наличие AI-агентов
-- Общее состояние системы
+This command will check:
+- Connection to the hub
+- Token validity
+- Presence of AI agents
+- Overall system health
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI поддерживает **4 AI-агента**: Claude Code, Codex, Gemini, OpenCode
-- Можно запускать **несколько сессий** одновременно в разных терминалах
-- **Одобрение запросов** с телефона — ваш контроль над действиями AI
-- **Seamless Handoff** позволяет плавно переключаться между компьютером и телефоном
-- **Runner** позволяет запускать сессии удалённо
-- Команда `hapi doctor` поможет найти проблемы
+- HAPI supports **4 AI agents**: Claude Code, Codex, Gemini, OpenCode
+- You can run **multiple sessions** simultaneously in different terminals
+- **Request approval** from your phone — your control over AI actions
+- **Seamless Handoff** lets you smoothly switch between computer and phone
+- **Runner** lets you launch sessions remotely
+- The `hapi doctor` command helps find problems
 
-## Что дальше
+## What's Next
 
-Поздравляем! 🎉 Вы прошли все 5 уроков для начинающих. Теперь вы умеете:
+Congratulations! 🎉 You've completed all 5 beginner lessons. Now you know how to:
 
-1. ✅ Понимать, что такое HAPI и чем он отличается от Happy
-2. ✅ Устанавливать HAPI на компьютер
-3. ✅ Запускать hub и подключаться с телефона
-4. ✅ Использовать веб-интерфейс и PWA
-5. ✅ Работать с разными AI-агентами и одобрять запросы удалённо
+1. ✅ Understand what HAPI is and how it differs from Happy
+2. ✅ Install HAPI on your computer
+3. ✅ Launch the hub and connect from your phone
+4. ✅ Use the web interface and PWA
+5. ✅ Work with different AI agents and approve requests remotely
 
-В следующем уровне курса мы рассмотрим продвинутые темы: настройку Telegram-бота, самостоятельный хостинг, голосовое управление и многое другое.
+In the next course level, we'll cover advanced topics: Telegram bot setup, self-hosting, voice control, and much more.

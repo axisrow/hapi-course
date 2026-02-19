@@ -1,99 +1,99 @@
 ---
-title: "Урок 1. Namespace и командная работа"
+title: "Lesson 1. Namespace and Teamwork"
 weight: 1
 bookToc: true
 ---
 
-# Урок 1. Namespace и командная работа
+# Lesson 1. Namespace and Teamwork
 
-## Зачем это нужно
+## Why This Matters
 
-Представьте: вы работаете в команде из трёх человек, и у вас один общий HAPI hub (сервер-хаб). Без специальных настроек все видят сессии друг друга — это неудобно и небезопасно. **Namespace** (пространство имён) решает эту проблему: каждый член команды получает свою изолированную «комнату» на одном и том же хабе.
+Imagine: you work in a team of three people, and you share one HAPI hub. Without special settings, everyone sees each other's sessions — that's inconvenient and insecure. **Namespace** solves this problem: each team member gets their own isolated "room" on the same hub.
 
-> **Namespace** (читается «неймспейс») — это как отдельная квартира в многоквартирном доме. Дом один (hub), но каждый жилец (разработчик) видит только свою квартиру.
+> **Namespace** is like a separate apartment in an apartment building. The building is one (hub), but each tenant (developer) only sees their own apartment.
 
-## Как это работает
+## How It Works
 
-Хаб использует один общий токен доступа (`CLI_API_TOKEN` — секретный ключ для подключения). Каждый пользователь добавляет к этому токену своё имя через двоеточие — и получает изолированное пространство.
+The hub uses a single shared access token (`CLI_API_TOKEN`). Each user appends their name to this token with a colon — and gets an isolated space.
 
-Вот что изолируется между namespace:
-- 🔒 Сессии (рабочие сеансы AI-агентов)
-- 🖥️ Машины (подключённые компьютеры)
-- 👤 Пользователи
+Here's what is isolated between namespaces:
+- 🔒 Sessions (AI agent work sessions)
+- 🖥️ Machines (connected computers)
+- 👤 Users
 
-## Пошаговая настройка
+## Step-by-Step Setup
 
-### Шаг 1. Настройте хаб
+### Step 1. Configure the Hub
 
-На сервере (хабе) укажите базовый токен **без** суффикса:
+On the server (hub), set the base token **without** a suffix:
 
 ```
 CLI_API_TOKEN="my-team-secret-token"
 ```
 
-⚠️ **Важно:** токен на хабе НЕ должен содержать двоеточие. Если вы случайно добавите `:что-то`, хаб обрежет суффикс и выведет предупреждение.
+⚠️ **Important:** the token on the hub must NOT contain a colon. If you accidentally add `:something`, the hub will trim the suffix and display a warning.
 
-### Шаг 2. Раздайте токены команде
+### Step 2. Distribute Tokens to the Team
 
-Каждый участник получает токен с уникальным именем:
+Each team member gets a token with a unique name:
 
-| Участник | Токен |
+| Member | Token |
 |----------|-------|
-| Алиса | `my-team-secret-token:alice` |
-| Борис | `my-team-secret-token:boris` |
-| Вика | `my-team-secret-token:vika` |
+| Alice | `my-team-secret-token:alice` |
+| Bob | `my-team-secret-token:bob` |
+| Vika | `my-team-secret-token:vika` |
 
-Каждый прописывает свой токен в настройках HAPI:
+Each person sets their token in the HAPI settings:
 
 ```bash
-# У Алисы на компьютере
+# On Alice's computer
 CLI_API_TOKEN="my-team-secret-token:alice"
 ```
 
-### Шаг 3. Подключение через веб и Telegram
+### Step 3. Web and Telegram Connection
 
-При входе через веб-интерфейс или привязке Telegram используйте тот же токен с namespace:
+When logging in through the web interface or linking Telegram, use the same token with namespace:
 
 ```
 my-team-secret-token:alice
 ```
 
-## Важные ограничения
+## Important Limitations
 
-1. **Один компьютер — один namespace.** Нельзя использовать один и тот же ID машины в разных namespace. Если нужно работать с несколькими namespace на одном компьютере — используйте отдельную папку `HAPI_HOME` для каждого:
+1. **One computer — one namespace.** You cannot use the same machine ID in different namespaces. If you need to work with multiple namespaces on one computer — use a separate `HAPI_HOME` directory for each:
 
 ```bash
-# Для работы как alice
+# Working as alice
 HAPI_HOME=~/.hapi-alice hapi
 
-# Для работы как boris
-HAPI_HOME=~/.hapi-boris hapi
+# Working as bob
+HAPI_HOME=~/.hapi-bob hapi
 ```
 
-2. **Переключение namespace.** Перед сменой namespace на одной машине выполните выход:
+2. **Switching namespaces.** Before changing namespace on the same machine, log out:
 
 ```bash
 hapi auth logout
 ```
 
-3. **Удалённый запуск (remote spawn)** тоже изолирован по namespace. Для нескольких namespace на одной машине запускайте отдельный runner (раннер — фоновый процесс для удалённых задач) для каждого.
+3. **Remote spawn** is also isolated by namespace. For multiple namespaces on one machine, run a separate runner for each.
 
-## Пример из жизни
+## Real-World Example
 
-Команда из трёх фрилансеров арендует один VPS (виртуальный сервер). Каждый подключается со своего ноутбука:
+A team of three freelancers rents one VPS (virtual private server). Each connects from their own laptop:
 
 ```
-VPS (hub) — токен: "freelance-team-2025"
-  ├── Алиса (token: freelance-team-2025:alice) — видит только свои сессии
-  ├── Борис (token: freelance-team-2025:boris) — видит только свои сессии
-  └── Вика  (token: freelance-team-2025:vika)  — видит только свои сессии
+VPS (hub) — token: "freelance-team-2025"
+  ├── Alice (token: freelance-team-2025:alice) — sees only her sessions
+  ├── Bob   (token: freelance-team-2025:bob)   — sees only his sessions
+  └── Vika  (token: freelance-team-2025:vika)  — sees only her sessions
 ```
 
-Никто не мешает друг другу, данные изолированы, а платить нужно только за один сервер.
+Nobody interferes with each other, data is isolated, and you only pay for one server.
 
-## Итоги урока
+## Lesson Summary
 
-- **Namespace** позволяет нескольким людям безопасно работать на одном хабе
-- Настройка проста: базовый токен + двоеточие + имя пользователя
-- Сессии, машины и пользователи полностью изолированы между namespace
-- Для работы с несколькими namespace на одном компьютере используйте отдельные `HAPI_HOME`
+- **Namespace** lets multiple people safely work on the same hub
+- Setup is simple: base token + colon + username
+- Sessions, machines, and users are fully isolated between namespaces
+- To work with multiple namespaces on one computer, use separate `HAPI_HOME` directories

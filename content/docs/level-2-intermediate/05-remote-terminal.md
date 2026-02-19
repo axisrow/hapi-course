@@ -1,170 +1,170 @@
 ---
-title: "Урок 5. Работа с терминалом удалённо"
+title: "Lesson 5. Working with the Terminal Remotely"
 weight: 5
 bookToc: true
 ---
 
-# Урок 5. Работа с терминалом удалённо
+# Lesson 5. Working with the Terminal Remotely
 
-## Зачем это нужно
+## Why This Matters
 
-Вы начали задачу на рабочем компьютере, но нужно уйти. С HAPI вы можете **продолжить управлять AI-агентом с телефона** — отправлять команды, одобрять действия и следить за прогрессом. Это как пульт дистанционного управления для вашего терминала.
-
----
-
-## Два режима работы
-
-HAPI поддерживает два режима, между которыми можно переключаться мгновенно:
-
-### Локальный режим (в терминале)
-
-- Вы сидите за компьютером и работаете как обычно
-- Полный интерфейс терминала с подсветкой синтаксиса
-- Мгновенный отклик на нажатия клавиш
-- AI-агент работает прямо на вашей машине
-
-### Удалённый режим (с телефона/браузера)
-
-- Управление через Web App из любой точки мира
-- Одобрение разрешений одним нажатием
-- Мониторинг прогресса в реальном времени
-- Сессия продолжает работать на вашем компьютере
+You started a task on your work computer, but need to leave. With HAPI, you can **continue controlling the AI agent from your phone** — send commands, approve actions, and monitor progress. It's like a remote control for your terminal.
 
 ---
 
-## Как переключаться между режимами
+## Two Operating Modes
 
-### Из терминала → на телефон
+HAPI supports two modes that you can switch between instantly:
 
-Просто отправьте сообщение с телефона (через Web App). Терминал автоматически перейдёт в режим ожидания и покажет:
+### Local Mode (in the terminal)
+
+- You're sitting at the computer and working as usual
+- Full terminal interface with syntax highlighting
+- Instant response to key presses
+- The AI agent runs directly on your machine
+
+### Remote Mode (from phone/browser)
+
+- Control via the Web App from anywhere in the world
+- Approve permissions with one tap
+- Monitor progress in real time
+- The session continues running on your computer
+
+---
+
+## How to Switch Between Modes
+
+### From Terminal → to Phone
+
+Simply send a message from your phone (via the Web App). The terminal will automatically enter standby mode and show:
 
 ```
 Remote mode - waiting for input
 ```
 
-Всё! Теперь управление на стороне телефона.
+That's it! Control is now on the phone side.
 
-### С телефона → в терминал
+### From Phone → to Terminal
 
-Нажмите **двойной пробел** в терминале. Мгновенно вернётесь к локальному управлению — как будто никуда не уходили.
+Press **double space** in the terminal. You'll instantly regain local control — as if you never left.
 
-> 💡 Сессия одна и та же — переключение не теряет контекст, историю и состояние.
+> 💡 It's the same session — switching doesn't lose context, history, or state.
 
 ---
 
-## Запуск команд с телефона
+## Running Commands from Your Phone
 
-### Шаг 1: Убедитесь, что Hub и Runner запущены
+### Step 1: Make sure Hub and Runner are running
 
 ```bash
-hapi hub --relay           # Hub с доступом через интернет
-hapi runner start          # Фоновый сервис для удалённого запуска
+hapi hub --relay           # Hub with internet access
+hapi runner start          # Background service for remote launching
 ```
 
-### Шаг 2: Откройте Web App на телефоне
+### Step 2: Open the Web App on your phone
 
-Отсканируйте QR-код, который показал Hub, или перейдите по URL.
+Scan the QR code shown by the Hub, or navigate to the URL.
 
-### Шаг 3: Управляйте сессиями
+### Step 3: Manage sessions
 
-В Web App вы можете:
+In the Web App you can:
 
-- **Открыть существующую сессию** — нажмите на неё в списке
-- **Создать новую сессию** — нажмите кнопку «New Session» и выберите машину
-- **Отправить сообщение агенту** — напишите в поле ввода, как в обычном мессенджере
-- **Просмотреть файлы** — откройте файловый браузер сессии
-- **Посмотреть изменения кода** — git-диффы прямо в интерфейсе
+- **Open an existing session** — tap on it in the list
+- **Create a new session** — tap the "New Session" button and select a machine
+- **Send a message to the agent** — type in the input field, like in a regular messenger
+- **Browse files** — open the session's file browser
+- **View code changes** — git diffs right in the interface
 
 ---
 
-## AFK-режим: «Ушёл от клавиатуры»
+## AFK Mode: "Away From Keyboard"
 
-**AFK** (*Away From Keyboard* — ушёл от клавиатуры) — это сценарий, для которого HAPI создан:
+**AFK** (*Away From Keyboard*) is the scenario HAPI was built for:
 
-### Типичный сценарий
+### Typical Scenario
 
 ```
-09:00  Вы за компьютером. Запускаете: hapi
-       Даёте задачу: «Рефакторить модуль оплаты»
+09:00  You're at the computer. Run: hapi
+       Give a task: "Refactor the payment module"
        
-09:10  Уходите за кофе ☕
+09:10  You go for coffee ☕
        
-09:12  Агент хочет изменить файл payment.ts
-       → Уведомление на телефон!
-       → Открываете Web App → Нажимаете «Одобрить» ✅
+09:12  Agent wants to modify payment.ts
+       → Notification on your phone!
+       → Open Web App → Press "Approve" ✅
        
-09:15  Агент хочет запустить тесты
-       → Уведомление на телефон
-       → «Одобрить» ✅
+09:15  Agent wants to run tests
+       → Notification on your phone
+       → "Approve" ✅
        
-09:20  Возвращаетесь к компьютеру
-       → Двойной пробел → снова в терминале
-       → Агент уже всё сделал! 🎉
+09:20  You return to the computer
+       → Double space → back in the terminal
+       → Agent already finished! 🎉
 ```
 
 ---
 
-## Одобрение действий
+## Approving Actions
 
-Когда AI-агент хочет выполнить потенциально опасное действие (изменить файл, запустить команду), он запрашивает ваше разрешение.
+When an AI agent wants to perform a potentially dangerous action (modify a file, run a command), it requests your permission.
 
-### Как выглядит запрос разрешения
+### What a Permission Request Looks Like
 
-В Web App вы увидите:
-- **Что** хочет сделать агент (например, «Edit file: src/payment.ts»)
-- **Детали** — какие именно изменения предлагаются
-- Кнопки **Approve** (одобрить) и **Deny** (отклонить)
+In the Web App you'll see:
+- **What** the agent wants to do (e.g., "Edit file: src/payment.ts")
+- **Details** — exactly what changes are proposed
+- **Approve** and **Deny** buttons
 
-### Способы одобрения
+### Approval Methods
 
-| Способ | Как |
+| Method | How |
 |--------|-----|
-| Web App | Нажмите кнопку «Approve» или «Deny» |
-| Telegram | Получите уведомление от бота, ответьте |
-| Голос | Скажите «да» или «нет» голосовому ассистенту |
-| Терминал | Если вы за компьютером — подтвердите как обычно |
+| Web App | Press the "Approve" or "Deny" button |
+| Telegram | Receive a notification from the bot, respond |
+| Voice | Say "yes" or "no" to the voice assistant |
+| Terminal | If you're at the computer — confirm as usual |
 
 ---
 
-## Удалённый запуск сессий
+## Remote Session Launch
 
-С Runner вы можете **создавать новые сессии прямо с телефона**, даже если на компьютере не открыт терминал.
+With Runner, you can **create new sessions right from your phone**, even if no terminal is open on the computer.
 
-### Как это работает
+### How It Works
 
-1. Runner работает в фоне на вашем компьютере
-2. В Web App нажмите **«+»** (новая сессия)
-3. Выберите машину из списка
-4. Выберите AI-агента (Claude, Codex, Gemini)
-5. Опционально: укажите рабочую папку
-6. Сессия запустится на вашем компьютере — управляйте с телефона!
+1. Runner runs in the background on your computer
+2. In the Web App, press **"+"** (new session)
+3. Select a machine from the list
+4. Choose an AI agent (Claude, Codex, Gemini)
+5. Optionally: specify a working directory
+6. The session starts on your computer — control it from your phone!
 
 ```
-Телефон → Web App → Hub → Runner → Новая сессия CLI
+Phone → Web App → Hub → Runner → New CLI session
                                          │
-                                    AI-агент работает
-                                    на вашем компьютере
+                                    AI agent is working
+                                    on your computer
 ```
 
 ---
 
-## Практические советы
+## Practical Tips
 
-### 1. Настройте уведомления
+### 1. Set Up Notifications
 
-Подключите Telegram-бота, чтобы получать push-уведомления:
+Connect a Telegram bot to receive push notifications:
 ```bash
-export TELEGRAM_BOT_TOKEN="ваш-токен"
+export TELEGRAM_BOT_TOKEN="your-token"
 hapi hub --relay
 ```
 
-Теперь запросы на разрешения будут приходить прямо в Telegram — не нужно постоянно держать Web App открытым.
+Now permission requests will come directly to Telegram — no need to keep the Web App open.
 
-### 2. Установите PWA
+### 2. Install the PWA
 
-Откройте Web App в мобильном браузере и «Добавьте на главный экран». Приложение будет работать как обычное — с иконкой, полноэкранным режимом и быстрым доступом.
+Open the Web App in your mobile browser and "Add to Home Screen." The app will work like a regular app — with an icon, full-screen mode, and quick access.
 
-### 3. Используйте pm2 для надёжности
+### 3. Use pm2 for Reliability
 
 ```bash
 pm2 start "hapi hub --relay" --name hapi-hub
@@ -172,19 +172,19 @@ pm2 start "hapi runner start --foreground" --name hapi-runner
 pm2 save
 ```
 
-Так Hub и Runner будут работать постоянно, даже после перезагрузки компьютера.
+This way the Hub and Runner will run permanently, even after a computer reboot.
 
-### 4. Несколько машин
+### 4. Multiple Machines
 
-Если у вас несколько компьютеров (рабочий + домашний), установите CLI и Runner на каждом и подключите их к одному Hub. В Web App вы увидите все машины и сможете запускать сессии на любой из них.
+If you have multiple computers (work + home), install CLI and Runner on each and connect them to a single Hub. In the Web App, you'll see all machines and can launch sessions on any of them.
 
 ---
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI позволяет управлять AI-агентом **с телефона** — отправлять задачи и одобрять действия
-- Переключение между терминалом и телефоном — **мгновенное** (двойной пробел)
-- **AFK-режим** — уходите от компьютера, а агент продолжает работать; вы одобряете действия с телефона
-- **Runner** позволяет запускать новые сессии удалённо
-- Уведомления можно получать через **Telegram**, **Web App** или **голосовой ассистент**
-- Установите PWA и pm2 для максимально удобной работы
+- HAPI lets you control the AI agent **from your phone** — send tasks and approve actions
+- Switching between terminal and phone is **instant** (double space)
+- **AFK mode** — leave the computer and the agent keeps working; you approve actions from your phone
+- **Runner** lets you launch new sessions remotely
+- Notifications can be received via **Telegram**, **Web App**, or **voice assistant**
+- Install PWA and pm2 for the most convenient workflow

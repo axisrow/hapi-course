@@ -1,37 +1,37 @@
 ---
-title: "Урок 3. Быстрый старт"
+title: "Lesson 3. Quick Start"
 weight: 3
 bookToc: true
 ---
 
-# Урок 3. Быстрый старт
+# Lesson 3. Quick Start
 
-## Зачем это нужно
+## Why This Matters
 
-Вы установили HAPI — пора его запустить! В этом уроке мы за 5 минут поднимем HAPI, получим QR-код и подключимся с телефона. Всего две команды.
+You've installed HAPI — time to launch it! In this lesson, we'll get HAPI running in 5 minutes, get a QR code, and connect from your phone. Just two commands.
 
-## Шаг 1. Запускаем Hub
+## Step 1. Start the Hub
 
-Откройте терминал и введите:
+Open a terminal and type:
 
 ```bash
 npx @twsxtd/hapi hub --relay
 ```
 
-Или, если вы установили HAPI глобально:
+Or, if you installed HAPI globally:
 
 ```bash
 hapi hub --relay
 ```
 
-> 💡 `hapi server` тоже работает — это альтернативное название той же команды.
+> 💡 `hapi server` also works — it's an alternative name for the same command.
 
-**Что происходит:**
-- Запускается **hub** (центр управления) на вашем компьютере
-- Флаг `--relay` подключает ретранслятор для доступа через интернет
-- Трафик шифруется с помощью WireGuard + TLS
+**What happens:**
+- The **hub** (control center) starts on your computer
+- The `--relay` flag connects the relay for internet access
+- Traffic is encrypted using WireGuard + TLS
 
-**Что вы увидите в терминале:**
+**What you'll see in the terminal:**
 
 ```
 🚀 Hub started on http://localhost:3006
@@ -47,124 +47,124 @@ hapi hub --relay
 🔑 Access token: abc123def456...
 ```
 
-Здесь:
-- **Remote URL** — адрес для подключения с телефона
-- **QR-код** — тот же адрес, но в виде картинки для сканирования
-- **Access token** — пароль для входа (сохраните его!)
+Here:
+- **Remote URL** — the address for connecting from your phone
+- **QR code** — the same address as a scannable image
+- **Access token** — the password for login (save it!)
 
-> ⚠️ **Не закрывайте этот терминал!** Hub должен работать постоянно. Откройте новый терминал для следующего шага.
+> ⚠️ **Don't close this terminal!** The Hub must keep running. Open a new terminal for the next step.
 
-## Шаг 2. Запускаем AI-агента
+## Step 2. Start the AI Agent
 
-Откройте **второй** терминал и введите:
+Open a **second** terminal and type:
 
 ```bash
 npx @twsxtd/hapi
 ```
 
-Или:
+Or:
 
 ```bash
 hapi
 ```
 
-**Что происходит:**
-- Запускается **Claude Code** (AI-агент по умолчанию) с обёрткой HAPI
-- Сессия автоматически регистрируется в hub
-- Вы можете работать с Claude Code как обычно
+**What happens:**
+- **Claude Code** (the default AI agent) starts with the HAPI wrapper
+- The session is automatically registered with the hub
+- You can work with Claude Code as usual
 
-> 💡 Для других AI-агентов используйте:
+> 💡 For other AI agents, use:
 > ```bash
 > hapi codex      # OpenAI Codex
 > hapi gemini     # Google Gemini
 > hapi opencode   # OpenCode
 > ```
 
-## Шаг 3. Подключаемся с телефона
+## Step 3. Connect from Your Phone
 
-Теперь самое интересное!
+Now the exciting part!
 
-### Вариант A: Сканируем QR-код
+### Option A: Scan the QR Code
 
-1. Откройте камеру телефона (или любой сканер QR-кодов)
-2. Наведите на QR-код в терминале
-3. Перейдите по ссылке
+1. Open your phone camera (or any QR code scanner)
+2. Point it at the QR code in the terminal
+3. Follow the link
 
-### Вариант B: Открываем URL вручную
+### Option B: Open the URL Manually
 
-1. Скопируйте **Remote URL** из терминала
-2. Откройте его в браузере на телефоне
+1. Copy the **Remote URL** from the terminal
+2. Open it in the browser on your phone
 
-### Вводим токен
+### Enter the Token
 
-При первом подключении HAPI попросит **Access token** — тот самый пароль, который появился в терминале. Введите его и нажмите «Войти».
+On first connection, HAPI will ask for the **Access token** — the password that appeared in the terminal. Enter it and press "Login."
 
-> 💡 Токен нужно ввести только один раз — браузер его запомнит.
+> 💡 You only need to enter the token once — the browser will remember it.
 
-## Шаг 4. Проверяем подключение
+## Step 4. Verify the Connection
 
-После входа вы увидите веб-интерфейс HAPI с:
+After logging in, you'll see the HAPI web interface with:
 
-- **Списком сессий** — ваша сессия Claude Code уже там
-- **Чатом** — можно отправить сообщение AI-агенту
-- **Статусом подключения** — зелёный индикатор означает, что всё работает
+- **Session list** — your Claude Code session is already there
+- **Chat** — you can send messages to the AI agent
+- **Connection status** — a green indicator means everything is working
 
-Попробуйте отправить сообщение с телефона! Вы увидите, как AI-агент отвечает и на телефоне, и в терминале.
+Try sending a message from your phone! You'll see the AI agent respond on both the phone and in the terminal.
 
-## Что значит каждая команда
+## What Each Command Does
 
-| Команда | Что делает |
+| Command | What it does |
 |---|---|
-| `hapi hub` | Запускает hub (локальный доступ) |
-| `hapi hub --relay` | Запускает hub с доступом через интернет |
-| `hapi` | Запускает Claude Code с обёрткой HAPI |
-| `hapi codex` | Запускает Codex с обёрткой HAPI |
-| `hapi gemini` | Запускает Gemini с обёрткой HAPI |
+| `hapi hub` | Starts the hub (local access) |
+| `hapi hub --relay` | Starts the hub with internet access |
+| `hapi` | Starts Claude Code with the HAPI wrapper |
+| `hapi codex` | Starts Codex with the HAPI wrapper |
+| `hapi gemini` | Starts Gemini with the HAPI wrapper |
 
-## Типичная схема работы
+## Typical Workflow
 
 ```
-Терминал 1 (hub):          Терминал 2 (агент):        Телефон:
+Terminal 1 (hub):          Terminal 2 (agent):        Phone:
                             
-hapi hub --relay            hapi                       Сканируем QR
+hapi hub --relay            hapi                       Scan QR
     │                          │                           │
-    │◄─── подключение ────────►│                           │
+    │◄─── connection ─────────►│                           │
     │                          │                           │
-    │◄──────────── просмотр / управление ─────────────────►│
+    │◄──────────── view / control ────────────────────────►│
 ```
 
-## Устранение проблем
+## Troubleshooting
 
-### «Connection refused»
+### "Connection refused"
 
-Hub не запущен. Убедитесь, что первый терминал с `hapi hub --relay` всё ещё работает.
+The Hub is not running. Make sure the first terminal with `hapi hub --relay` is still active.
 
-### QR-код не сканируется
+### QR code won't scan
 
-Попробуйте увеличить окно терминала, чтобы QR-код отображался целиком. Или скопируйте URL вручную.
+Try enlarging the terminal window so the QR code displays fully. Or copy the URL manually.
 
-### «Invalid token»
+### "Invalid token"
 
-Проверьте, что вводите правильный токен. Его можно найти в файле `~/.hapi/settings.json`:
+Make sure you're entering the correct token. You can find it in `~/.hapi/settings.json`:
 
 ```bash
 cat ~/.hapi/settings.json
 ```
 
-### Relay не подключается
+### Relay won't connect
 
-Если у вас проблемы с UDP-соединением (в некоторых сетях UDP заблокирован), попробуйте TCP-режим:
+If you're having trouble with UDP connections (some networks block UDP), try TCP mode:
 
 ```bash
 HAPI_RELAY_FORCE_TCP=true hapi hub --relay
 ```
 
-## Итоги урока
+## Lesson Summary
 
-- **Две команды** — это всё, что нужно для старта: `hapi hub --relay` и `hapi`
-- **QR-код** позволяет мгновенно подключиться с телефона
-- **Access token** — ваш пароль для входа, вводится один раз
-- Hub должен работать постоянно в отдельном терминале
-- Всё соединение **зашифровано** — relay не видит ваших данных
+- **Two commands** — that's all you need to start: `hapi hub --relay` and `hapi`
+- The **QR code** lets you instantly connect from your phone
+- **Access token** is your login password, entered only once
+- The Hub must keep running in a separate terminal
+- The entire connection is **encrypted** — the relay cannot see your data
 
-В следующем уроке мы превратим веб-интерфейс HAPI в полноценное приложение на телефоне.
+In the next lesson, we'll turn the HAPI web interface into a full-fledged app on your phone.

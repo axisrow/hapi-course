@@ -1,23 +1,25 @@
 theme = "hugo-book"
-defaultContentLanguage = "ru"
+defaultContentLanguage = "en"
 
 [params]
-  BookToc = true
+  BookToc = false
   BookSection = "docs"
 
 [languages]
-  [languages.ru]
-    languageName = "Русский"
-    languageCode = "ru"
-    contentDir = "content"
-    title = "HAPI — удалённое управление AI-агентами"
-    weight = 1
   [languages.en]
     languageName = "English"
     languageCode = "en"
-    contentDir = "content.en"
+    contentDir = "content"
     title = "HAPI — Remote AI Agent Control"
+    weight = 1
+
+  [languages.ru]
+    languageName = "Русский"
+    languageCode = "ru"
+    contentDir = "content.ru"
+    title = "HAPI — удалённое управление AI-агентами"
     weight = 2
+
   [languages.zh]
     languageName = "中文"
     languageCode = "zh"

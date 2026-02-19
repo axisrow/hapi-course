@@ -1,152 +1,152 @@
 ---
-title: "Урок 2. Установка HAPI"
+title: "Lesson 2. Installing HAPI"
 weight: 2
 bookToc: true
 ---
 
-# Урок 2. Установка HAPI
+# Lesson 2. Installing HAPI
 
-## Зачем это нужно
+## Why This Matters
 
-Прежде чем управлять AI-агентами с телефона, нужно установить HAPI на компьютер. Хорошая новость: это делается одной командой. В этом уроке мы пройдём весь процесс от начала до конца.
+Before you can control AI agents from your phone, you need to install HAPI on your computer. The good news: it takes just one command. In this lesson, we'll walk through the entire process from start to finish.
 
-## Что нужно для установки
+## What You Need
 
-### 1. Компьютер с macOS, Linux или Windows
+### 1. A Computer with macOS, Linux, or Windows
 
-HAPI работает на любой из этих систем. Подойдёт обычный ноутбук или настольный компьютер.
+HAPI works on any of these systems. A regular laptop or desktop computer will do.
 
-### 2. Node.js (версия 18 или новее)
+### 2. Node.js (version 18 or newer)
 
-**Node.js** — это платформа, которая позволяет запускать программы на JavaScript. HAPI написан на JavaScript, поэтому ему нужен Node.js.
+**Node.js** is a platform that lets you run JavaScript programs. HAPI is written in JavaScript, so it needs Node.js.
 
-**Как проверить, установлен ли Node.js:**
+**How to check if Node.js is installed:**
 
-Откройте терминал и введите:
+Open a terminal and type:
 
 ```bash
 node --version
 ```
 
-Если увидите что-то вроде `v22.22.0` — всё в порядке. Если команда не найдена — нужно установить.
+If you see something like `v22.22.0` — you're good. If the command is not found — you need to install it.
 
-**Как открыть терминал:**
-- **macOS**: найдите «Terminal» через Spotlight (Cmd + Пробел) или в Программы → Утилиты
-- **Windows**: найдите «PowerShell» или «Командная строка» в меню Пуск
-- **Linux**: обычно Ctrl + Alt + T
+**How to open a terminal:**
+- **macOS**: find "Terminal" via Spotlight (Cmd + Space) or in Applications → Utilities
+- **Windows**: find "PowerShell" or "Command Prompt" in the Start menu
+- **Linux**: usually Ctrl + Alt + T
 
-**Как установить Node.js:**
+**How to install Node.js:**
 
-1. Перейдите на сайт [nodejs.org](https://nodejs.org)
-2. Скачайте версию **LTS** (Long Term Support — стабильная версия)
-3. Запустите установщик и следуйте инструкциям
+1. Go to [nodejs.org](https://nodejs.org)
+2. Download the **LTS** version (Long Term Support — stable version)
+3. Run the installer and follow the instructions
 
-> 💡 **Альтернатива**: вместо Node.js можно использовать **Bun** — более быстрый аналог. Скачать его можно на [bun.sh](https://bun.sh). Но для начинающих рекомендуем Node.js — он более распространён.
+> 💡 **Alternative**: instead of Node.js, you can use **Bun** — a faster alternative. Download it at [bun.sh](https://bun.sh). But for beginners, we recommend Node.js — it's more widely used.
 
-### 3. AI-агент (хотя бы один)
+### 3. An AI Agent (at least one)
 
-HAPI — это обёртка над AI-агентами. Поэтому нужен хотя бы один из них:
+HAPI is a wrapper around AI agents, so you need at least one of them:
 
 ```bash
-# Проверить Claude Code
+# Check Claude Code
 claude --version
 
-# Проверить Codex
+# Check Codex
 codex --version
 
-# Проверить Gemini
+# Check Gemini
 gemini --version
 ```
 
-Если у вас ещё нет AI-агента, самый популярный вариант — **Claude Code**:
+If you don't have an AI agent yet, the most popular option is **Claude Code**:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
-## Установка HAPI
+## Installing HAPI
 
-Есть несколько способов. Выберите тот, что вам удобнее.
+There are several methods. Choose whichever is most convenient.
 
-### Способ 1: npx (без установки) — самый простой
+### Method 1: npx (no installation) — the simplest
 
-**npx** — это утилита, которая идёт вместе с Node.js. Она скачивает и запускает программу одной командой, не устанавливая её «навсегда».
+**npx** is a utility that comes with Node.js. It downloads and runs a program with one command, without installing it permanently.
 
 ```bash
 npx @twsxtd/hapi
 ```
 
-Этот способ хорош для первого знакомства. Каждый раз npx будет проверять обновления.
+This method is great for a first look. Each time, npx will check for updates.
 
-### Способ 2: Глобальная установка через npm
+### Method 2: Global installation via npm
 
-**npm** (Node Package Manager) — менеджер пакетов, который тоже идёт вместе с Node.js. Глобальная установка означает, что программа будет доступна из любой папки.
+**npm** (Node Package Manager) is a package manager that also comes with Node.js. Global installation means the program will be available from any directory.
 
 ```bash
 npm install -g @twsxtd/hapi
 ```
 
-После этого можно просто писать `hapi` вместо `npx @twsxtd/hapi`.
+After this, you can simply type `hapi` instead of `npx @twsxtd/hapi`.
 
-### Способ 3: Homebrew (только macOS и Linux)
+### Method 3: Homebrew (macOS and Linux only)
 
-**Homebrew** — это популярный менеджер пакетов для macOS. Если он у вас установлен:
+**Homebrew** is a popular package manager for macOS. If you have it installed:
 
 ```bash
 brew install tiann/tap/hapi
 ```
 
-## Проверяем установку
+## Verifying the Installation
 
-После установки выполните:
+After installation, run:
 
 ```bash
 hapi --help
 ```
 
-Если всё прошло успешно, вы увидите список доступных команд.
+If everything went well, you'll see a list of available commands.
 
-## Что создаётся при первом запуске
+## What Gets Created on First Launch
 
-Когда вы впервые запустите HAPI, он создаст папку `~/.hapi/` с конфигурацией:
+When you first run HAPI, it will create a `~/.hapi/` directory with configuration:
 
 ```
 ~/.hapi/
-├── settings.json      # Настройки (токен доступа, адреса)
-├── hapi.db           # База данных (хранит сессии)
-└── logs/             # Логи (журнал работы)
+├── settings.json      # Settings (access token, addresses)
+├── hapi.db           # Database (stores sessions)
+└── logs/             # Logs (activity journal)
 ```
 
-> 💡 Символ `~` означает вашу домашнюю папку. На macOS это `/Users/ваше_имя/`, на Linux — `/home/ваше_имя/`.
+> 💡 The `~` symbol means your home directory. On macOS it's `/Users/your_name/`, on Linux — `/home/your_name/`.
 
-## Системные требования
+## System Requirements
 
-| Требование | Минимум | Рекомендуется |
+| Requirement | Minimum | Recommended |
 |---|---|---|
-| ОС | macOS, Linux, Windows | macOS или Linux |
+| OS | macOS, Linux, Windows | macOS or Linux |
 | Node.js | 18+ | 22+ (LTS) |
-| Оперативная память | 512 МБ | 2 ГБ |
-| Диск | 100 МБ | 500 МБ |
-| Интернет | Для relay-подключения | Стабильный интернет |
+| RAM | 512 MB | 2 GB |
+| Disk | 100 MB | 500 MB |
+| Internet | For relay connection | Stable internet |
 
-## Возможные проблемы
+## Troubleshooting
 
-### «command not found: node»
+### "command not found: node"
 
-Node.js не установлен. Перейдите на [nodejs.org](https://nodejs.org) и установите.
+Node.js is not installed. Go to [nodejs.org](https://nodejs.org) and install it.
 
-### «permission denied» при установке
+### "permission denied" during installation
 
-На macOS/Linux попробуйте:
+On macOS/Linux, try:
 ```bash
 sudo npm install -g @twsxtd/hapi
 ```
 
-`sudo` — это команда, которая запускает следующую команду с правами администратора. Система попросит ваш пароль.
+`sudo` is a command that runs the following command with administrator privileges. The system will ask for your password.
 
-### «EACCES» ошибка
+### "EACCES" error
 
-Это тоже проблема с правами. Лучшее решение — настроить npm для работы без sudo:
+This is also a permissions issue. The best solution is to configure npm to work without sudo:
 
 ```bash
 mkdir ~/.npm-global
@@ -155,14 +155,14 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-После этого повторите установку без `sudo`.
+Then retry the installation without `sudo`.
 
-## Итоги урока
+## Lesson Summary
 
-- Для HAPI нужен **Node.js** (версия 18+) и хотя бы один **AI-агент**
-- Самый простой способ попробовать: `npx @twsxtd/hapi`
-- Для постоянного использования: `npm install -g @twsxtd/hapi`
-- При первом запуске HAPI создаёт папку `~/.hapi/` с настройками
-- Если что-то не работает — проверьте версию Node.js и права доступа
+- HAPI requires **Node.js** (version 18+) and at least one **AI agent**
+- The simplest way to try it: `npx @twsxtd/hapi`
+- For permanent use: `npm install -g @twsxtd/hapi`
+- On first launch, HAPI creates the `~/.hapi/` directory with settings
+- If something doesn't work — check Node.js version and permissions
 
-В следующем уроке мы запустим HAPI и подключимся к нему с телефона.
+In the next lesson, we'll launch HAPI and connect to it from a phone.

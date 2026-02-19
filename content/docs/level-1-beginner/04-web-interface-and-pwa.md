@@ -1,127 +1,127 @@
 ---
-title: "Урок 4. Веб-интерфейс и PWA"
+title: "Lesson 4. Web Interface and PWA"
 weight: 4
 bookToc: true
 ---
 
-# Урок 4. Веб-интерфейс и PWA
+# Lesson 4. Web Interface and PWA
 
-## Зачем это нужно
+## Why This Matters
 
-В прошлом уроке вы открыли HAPI в браузере телефона. Но каждый раз открывать браузер и вводить адрес неудобно. В этом уроке мы установим HAPI как **приложение** на телефон — с иконкой на главном экране, как обычная программа.
+In the last lesson, you opened HAPI in your phone's browser. But opening the browser and entering the address every time is inconvenient. In this lesson, we'll install HAPI as an **app** on your phone — with an icon on the home screen, just like a regular program.
 
-## Что такое PWA
+## What is PWA
 
-**PWA** (Progressive Web App — «прогрессивное веб-приложение») — это сайт, который можно установить на телефон как обычное приложение. После установки:
+**PWA** (Progressive Web App) is a website that can be installed on your phone like a regular app. After installation:
 
-- 📱 На главном экране появится **иконка** HAPI
-- 🖥️ Приложение откроется **на весь экран** (без адресной строки браузера)
-- 🔔 Вы будете получать **уведомления** (когда AI-агент ждёт вашего ответа)
-- 🔄 Приложение **обновляется само** — всегда последняя версия
+- 📱 An HAPI **icon** appears on your home screen
+- 🖥️ The app opens **full screen** (without the browser address bar)
+- 🔔 You'll receive **notifications** (when the AI agent is waiting for your response)
+- 🔄 The app **updates itself** — always the latest version
 
-> 💡 PWA не нужно скачивать из App Store или Google Play. Оно устанавливается прямо из браузера.
+> 💡 PWA doesn't need to be downloaded from the App Store or Google Play. It's installed directly from the browser.
 
-## Установка на Android
+## Installation on Android
 
-1. Откройте HAPI в **Chrome** или **Edge**
-2. Внизу экрана появится баннер **«Установить HAPI»** — нажмите на него
-3. Подтвердите установку
-4. Готово! Иконка HAPI появится на главном экране
+1. Open HAPI in **Chrome** or **Edge**
+2. A banner **"Install HAPI"** will appear at the bottom — tap it
+3. Confirm the installation
+4. Done! The HAPI icon will appear on your home screen
 
-> 💡 Если баннер не появился: нажмите **три точки** (⋮) в правом верхнем углу Chrome → **«Установить приложение»** или **«Добавить на главный экран»**.
+> 💡 If the banner didn't appear: tap the **three dots** (⋮) in the top-right corner of Chrome → **"Install app"** or **"Add to Home screen"**.
 
-## Установка на iPhone (iOS)
+## Installation on iPhone (iOS)
 
-На iPhone установка работает **только через Safari** (не Chrome, не Firefox):
+On iPhone, installation works **only through Safari** (not Chrome, not Firefox):
 
-1. Откройте HAPI в **Safari**
-2. Нажмите кнопку **«Поделиться»** (квадрат со стрелкой вверх ↑)
-3. Прокрутите вниз и нажмите **«На экран Домой»**
-4. Нажмите **«Добавить»** в правом верхнем углу
-5. Готово!
+1. Open HAPI in **Safari**
+2. Tap the **Share** button (square with an upward arrow ↑)
+3. Scroll down and tap **"Add to Home Screen"**
+4. Tap **"Add"** in the top-right corner
+5. Done!
 
-> ⚠️ На iOS обязательно используйте Safari. Другие браузеры на iPhone не поддерживают установку PWA.
+> ⚠️ On iOS, you must use Safari. Other browsers on iPhone don't support PWA installation.
 
-## Установка на компьютер
+## Installation on Desktop
 
-HAPI можно установить и на компьютер как отдельное приложение:
+HAPI can also be installed on a computer as a standalone app:
 
-1. Откройте HAPI в **Chrome** или **Edge**
-2. В адресной строке справа нажмите значок установки (⊕)
-3. Или в меню: **«Установить HAPI...»**
-4. HAPI откроется в отдельном окне
+1. Open HAPI in **Chrome** or **Edge**
+2. Click the install icon (⊕) on the right side of the address bar
+3. Or in the menu: **"Install HAPI..."**
+4. HAPI will open in a separate window
 
-## Основные возможности интерфейса
+## Main Interface Features
 
-### Список сессий
+### Session List
 
-Главный экран показывает все ваши сессии с AI-агентами:
-- **Активные** — помечены зелёным, работают прямо сейчас
-- **Завершённые** — серые, можно посмотреть историю
+The main screen shows all your AI agent sessions:
+- **Active** — marked in green, currently running
+- **Completed** — gray, you can view the history
 
-### Чат с AI-агентом
+### Chat with AI Agent
 
-Нажмите на любую сессию, чтобы открыть чат:
-- Вы видите всю переписку (и свои сообщения, и ответы AI)
-- Можете отправить новое сообщение
-- AI-агент отвечает в реальном времени
+Tap any session to open the chat:
+- You see the entire conversation (your messages and AI responses)
+- You can send a new message
+- The AI agent responds in real time
 
-### Одобрение запросов
+### Request Approval
 
-Когда AI-агент хочет что-то сделать (отредактировать файл, выполнить команду), он просит разрешение. Вы увидите уведомление и сможете:
-- ✅ **Одобрить** — агент продолжит работу
-- ❌ **Отклонить** — агент не выполнит действие
+When an AI agent wants to do something (edit a file, run a command), it asks for permission. You'll see a notification and can:
+- ✅ **Approve** — the agent continues working
+- ❌ **Deny** — the agent won't perform the action
 
-### Просмотр файлов
+### File Viewer
 
-Во вкладке «Files» можно:
-- Просмотреть файлы проекта
-- Увидеть, что изменил AI-агент
-- Посмотреть разницу между старой и новой версией файла
+In the "Files" tab you can:
+- Browse project files
+- See what the AI agent changed
+- View the diff between old and new file versions
 
-### Терминал
+### Terminal
 
-Вкладка «Terminal» — это удалённый терминал, подключённый к вашему компьютеру. Можно запускать команды прямо с телефона.
+The "Terminal" tab is a remote terminal connected to your computer. You can run commands right from your phone.
 
-## Уведомления
+## Notifications
 
-HAPI умеет присылать push-уведомления на телефон:
+HAPI can send push notifications to your phone:
 
-1. При первом запуске приложение попросит **разрешение на уведомления** — нажмите «Разрешить»
-2. Теперь вы будете получать уведомления, когда:
-   - AI-агент просит одобрить действие
-   - AI-агент закончил работу и ждёт ввода
+1. On first launch, the app will ask for **notification permission** — tap "Allow"
+2. Now you'll receive notifications when:
+   - The AI agent asks to approve an action
+   - The AI agent has finished and is waiting for input
 
-> 💡 Если push-уведомления не работают (например, в Китае, где заблокирован Firebase), используйте **Telegram-бот** как альтернативу.
+> 💡 If push notifications don't work (for example, in China where Firebase is blocked), use a **Telegram bot** as an alternative.
 
-## Работа без интернета
+## Offline Mode
 
-PWA умеет работать офлайн (без интернета) в ограниченном режиме:
-- Показывает кэшированный список сессий
-- Показывает ранее загруженные сообщения
-- Действия, сделанные офлайн, отправятся когда интернет вернётся
+PWA can work offline (without internet) in a limited mode:
+- Shows cached session list
+- Shows previously loaded messages
+- Actions taken offline will be sent when internet returns
 
-## Несколько устройств
+## Multiple Devices
 
-HAPI можно установить на **несколько устройств** одновременно:
-- Телефон, планшет, второй компьютер — все подключаются к одному hub
-- Используйте один и тот же access token
-- Сессии синхронизируются между устройствами
+HAPI can be installed on **multiple devices** simultaneously:
+- Phone, tablet, second computer — all connect to the same hub
+- Use the same access token
+- Sessions sync between devices
 
-## Удаление приложения
+## Removing the App
 
-Если нужно удалить HAPI:
+If you need to remove HAPI:
 
-- **Android**: долгое нажатие на иконку → «Удалить»
-- **iPhone**: долгое нажатие на иконку → «Удалить приложение»
-- **Компьютер**: откройте HAPI → меню (три точки) → «Удалить HAPI»
+- **Android**: long-press the icon → "Uninstall"
+- **iPhone**: long-press the icon → "Delete App"
+- **Desktop**: open HAPI → menu (three dots) → "Uninstall HAPI"
 
-## Итоги урока
+## Lesson Summary
 
-- **PWA** — это веб-приложение, которое устанавливается как обычная программа
-- На **Android** устанавливается через Chrome, на **iPhone** — только через Safari
-- Интерфейс включает: список сессий, чат, одобрение запросов, просмотр файлов, терминал
-- **Push-уведомления** сообщают, когда AI-агенту нужно ваше внимание
-- Можно установить на **несколько устройств** одновременно
+- **PWA** is a web application that installs like a regular program
+- On **Android** it's installed through Chrome, on **iPhone** — only through Safari
+- The interface includes: session list, chat, request approval, file viewer, terminal
+- **Push notifications** let you know when the AI agent needs your attention
+- You can install on **multiple devices** simultaneously
 
-В следующем уроке мы научимся работать с разными AI-агентами через HAPI.
+In the next lesson, we'll learn how to work with different AI agents through HAPI.

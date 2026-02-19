@@ -1,0 +1,99 @@
+// Breakpoint из темы hugo-book (_defaults.scss); fallback на случай обновления темы
+$mobile-breakpoint: 56rem !default;
+
+// ─── Типографика ───
+
+:root {
+  --font-body: 'Source Sans 3', 'Noto Sans SC', sans-serif;
+  --font-display: 'Manrope', 'Noto Sans SC', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+// Заголовки: жирные + display шрифт
+// Перебиваем специфичный селектор темы .markdown h1...
+h1, h2, h3, h4, h5, h6,
+.markdown h1, .markdown h2, .markdown h3,
+.markdown h4, .markdown h5, .markdown h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+// Бренд в sidebar
+.book-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+// Активный пункт меню
+.book-menu a.active {
+  font-weight: 600;
+}
+
+// Чуть свободнее строки в контенте
+.markdown {
+  line-height: 1.7;
+}
+
+// ─── Inline language switcher ───
+
+.book-languages {
+  display: none !important;
+}
+
+.book-languages-inline {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.book-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: var(--font-size-smallest);
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &.active {
+    background: var(--color-link);
+    color: var(--body-background);
+    cursor: default;
+  }
+
+  &:not(.active) {
+    color: var(--body-font-color);
+    opacity: 0.65;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// Защита от переполнения заголовка в mobile header
+.book-header h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+// Language switcher в content area (desktop)
+.book-content-lang {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+
+  // На мобильном скрыть — он уже есть в header
+  @media screen and (max-width: $mobile-breakpoint) {
+    display: none;
+  }
+}

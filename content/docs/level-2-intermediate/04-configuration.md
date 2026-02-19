@@ -1,82 +1,82 @@
 ---
-title: "Урок 4. Конфигурация HAPI"
+title: "Lesson 4. HAPI Configuration"
 weight: 4
 bookToc: true
 ---
 
-# Урок 4. Конфигурация HAPI
+# Lesson 4. HAPI Configuration
 
-## Зачем это нужно
+## Why This Matters
 
-HAPI работает «из коробки» с настройками по умолчанию. Но иногда нужно что-то изменить: поменять порт, задать публичный адрес, подключить Telegram-бота. В этом уроке разберём, как настроить CLI и Hub под свои нужды.
+HAPI works out of the box with default settings. But sometimes you need to change something: switch the port, set a public address, connect a Telegram bot. In this lesson, we'll cover how to configure the CLI and Hub to your needs.
 
 ---
 
-## Где хранятся настройки
+## Where Settings Are Stored
 
-Все файлы HAPI лежат в одной папке:
+All HAPI files are in one directory:
 
 ```
 ~/.hapi/
-├── settings.json       # Главный файл настроек
-├── hapi.db            # База данных (сессии, сообщения)
-├── access.key         # Ключ доступа CLI
-├── runner.state.json  # Состояние Runner
-└── logs/              # Логи (журналы работы)
+├── settings.json       # Main settings file
+├── hapi.db            # Database (sessions, messages)
+├── access.key         # CLI access key
+├── runner.state.json  # Runner state
+└── logs/              # Logs (activity journal)
 ```
 
-> **`~`** — это сокращение для вашей домашней папки. На macOS это `/Users/ваше_имя`, на Linux — `/home/ваше_имя`.
+> **`~`** is shorthand for your home directory. On macOS it's `/Users/your_name`, on Linux — `/home/your_name`.
 
-Чтобы изменить расположение этой папки:
+To change the location of this directory:
 ```bash
 export HAPI_HOME="~/my-custom-hapi-folder"
 ```
 
 ---
 
-## Три способа задать настройки
+## Three Ways to Set Configuration
 
-HAPI читает настройки из трёх источников. Если одна настройка задана в нескольких местах, побеждает тот источник, который выше в списке:
+HAPI reads settings from three sources. If the same setting is defined in multiple places, the higher-priority source wins:
 
-1. **Переменные окружения** (высший приоритет) — `export HAPI_LISTEN_PORT=4000`
-2. **Файл settings.json** — `~/.hapi/settings.json`
-3. **Значения по умолчанию** (низший приоритет)
+1. **Environment variables** (highest priority) — `export HAPI_LISTEN_PORT=4000`
+2. **settings.json file** — `~/.hapi/settings.json`
+3. **Default values** (lowest priority)
 
-> 💡 Если вы задали настройку через переменную окружения, и её ещё нет в settings.json — HAPI автоматически сохранит её в файл для будущих запусков.
+> 💡 If you set a value via an environment variable and it's not yet in settings.json, HAPI will automatically save it to the file for future launches.
 
 ---
 
-## Настройки Hub
+## Hub Settings
 
-Hub — это серверная часть HAPI. Вот основные настройки:
+The Hub is the server side of HAPI. Here are the main settings:
 
-### Сеть и доступ
+### Network and Access
 
-| Переменная окружения | settings.json | По умолчанию | Описание |
+| Environment variable | settings.json | Default | Description |
 |---------------------|---------------|-------------|----------|
-| `HAPI_LISTEN_HOST` | `listenHost` | `127.0.0.1` | Адрес, на котором Hub слушает подключения |
-| `HAPI_LISTEN_PORT` | `listenPort` | `3006` | Порт Hub |
-| `HAPI_PUBLIC_URL` | `publicUrl` | — | Публичный адрес для доступа извне |
-| `CORS_ORIGINS` | `corsOrigins` | — | Разрешённые источники запросов |
+| `HAPI_LISTEN_HOST` | `listenHost` | `127.0.0.1` | Address the Hub listens on |
+| `HAPI_LISTEN_PORT` | `listenPort` | `3006` | Hub port |
+| `HAPI_PUBLIC_URL` | `publicUrl` | — | Public address for external access |
+| `CORS_ORIGINS` | `corsOrigins` | — | Allowed request origins |
 
-> **Порт** — это как номер квартиры в доме. IP-адрес — это адрес дома, а порт указывает, к какой конкретно программе обращаться. По умолчанию Hub «живёт» на порту 3006.
+> A **port** is like an apartment number in a building. The IP address is the building's address, and the port specifies which program to connect to. By default, the Hub "lives" on port 3006.
 
-> **`127.0.0.1`** (localhost) означает, что Hub принимает подключения только с вашего компьютера. Если вы хотите, чтобы Hub был доступен из локальной сети, измените на `0.0.0.0`.
+> **`127.0.0.1`** (localhost) means the Hub accepts connections only from your computer. If you want the Hub accessible from the local network, change it to `0.0.0.0`.
 
-**Пример: сменить порт на 8080**
+**Example: change port to 8080**
 ```bash
 export HAPI_LISTEN_PORT=8080
 hapi hub
 ```
 
-Или в `settings.json`:
+Or in `settings.json`:
 ```json
 {
   "listenPort": 8080
 }
 ```
 
-**Пример: открыть доступ из локальной сети**
+**Example: open access from local network**
 ```json
 {
   "listenHost": "0.0.0.0",
@@ -84,74 +84,74 @@ hapi hub
 }
 ```
 
-### Аутентификация
+### Authentication
 
-| Переменная | settings.json | Описание |
+| Variable | settings.json | Description |
 |-----------|---------------|----------|
-| `CLI_API_TOKEN` | `cliApiToken` | Общий секретный ключ для связи CLI и Hub |
+| `CLI_API_TOKEN` | `cliApiToken` | Shared secret key for CLI-Hub communication |
 
-Этот токен генерируется автоматически при первом запуске. Он нужен, чтобы только ваш CLI мог подключаться к Hub.
+This token is generated automatically on first launch. It ensures only your CLI can connect to the Hub.
 
-> ⚠️ Если токен стал известен посторонним — удалите его из `settings.json` и перезапустите Hub. Будет создан новый.
+> ⚠️ If the token becomes known to others — delete it from `settings.json` and restart the Hub. A new one will be created.
 
 ### Telegram
 
-| Переменная | settings.json | Описание |
+| Variable | settings.json | Description |
 |-----------|---------------|----------|
-| `TELEGRAM_BOT_TOKEN` | `telegramBotToken` | Токен бота от @BotFather |
-| `TELEGRAM_NOTIFICATION` | `telegramNotification` | Включить уведомления (`true`/`false`) |
+| `TELEGRAM_BOT_TOKEN` | `telegramBotToken` | Bot token from @BotFather |
+| `TELEGRAM_NOTIFICATION` | `telegramNotification` | Enable notifications (`true`/`false`) |
 
 ### Relay
 
-| Переменная | Описание |
+| Variable | Description |
 |-----------|----------|
-| `HAPI_RELAY_FORCE_TCP` | Принудительный TCP-режим (`true`/`false`) |
+| `HAPI_RELAY_FORCE_TCP` | Force TCP mode (`true`/`false`) |
 
-### Голосовой ассистент
+### Voice Assistant
 
-| Переменная | Описание |
+| Variable | Description |
 |-----------|----------|
-| `ELEVENLABS_API_KEY` | API-ключ ElevenLabs |
-| `ELEVENLABS_AGENT_ID` | ID пользовательского агента ElevenLabs |
+| `ELEVENLABS_API_KEY` | ElevenLabs API key |
+| `ELEVENLABS_AGENT_ID` | Custom ElevenLabs agent ID |
 
-### База данных
+### Database
 
-| Переменная | По умолчанию | Описание |
+| Variable | Default | Description |
 |-----------|-------------|----------|
-| `DB_PATH` | `~/.hapi/hapi.db` | Путь к файлу базы данных |
+| `DB_PATH` | `~/.hapi/hapi.db` | Path to the database file |
 
 ---
 
-## Настройки CLI
+## CLI Settings
 
-CLI — это клиентская часть, которая запускает AI-агента. У неё меньше настроек:
+The CLI is the client side that launches the AI agent. It has fewer settings:
 
-| Переменная | settings.json | По умолчанию | Описание |
+| Variable | settings.json | Default | Description |
 |-----------|---------------|-------------|----------|
-| `HAPI_API_URL` | `apiUrl` | `http://localhost:3006` | Адрес Hub для подключения |
-| `CLI_API_TOKEN` | `cliApiToken` | — | Токен аутентификации |
-| `HAPI_HOME` | — | `~/.hapi` | Папка с настройками |
-| `HAPI_EXPERIMENTAL` | — | `false` | Включить экспериментальные функции |
+| `HAPI_API_URL` | `apiUrl` | `http://localhost:3006` | Hub address to connect to |
+| `CLI_API_TOKEN` | `cliApiToken` | — | Authentication token |
+| `HAPI_HOME` | — | `~/.hapi` | Settings directory |
+| `HAPI_EXPERIMENTAL` | — | `false` | Enable experimental features |
 
-**Пример: подключение CLI к удалённому Hub**
+**Example: connecting CLI to a remote Hub**
 ```bash
-export HAPI_API_URL="https://мой-сервер.com"
-export CLI_API_TOKEN="мой-секретный-токен"
+export HAPI_API_URL="https://my-server.com"
+export CLI_API_TOKEN="my-secret-token"
 hapi
 ```
 
-Или используйте интерактивную авторизацию:
+Or use interactive authentication:
 ```bash
-hapi auth login     # Войти
-hapi auth status    # Проверить статус
-hapi auth logout    # Выйти
+hapi auth login     # Log in
+hapi auth status    # Check status
+hapi auth logout    # Log out
 ```
 
 ---
 
-## Пример файла settings.json
+## Example settings.json
 
-Вот полный пример с комментариями:
+Here's a complete example with comments:
 
 ```json
 {
@@ -165,50 +165,50 @@ hapi auth logout    # Выйти
 }
 ```
 
-> 💡 Поле `$schema` необязательно, но если ваш редактор поддерживает JSON Schema, он будет подсказывать доступные настройки и проверять ошибки.
+> 💡 The `$schema` field is optional, but if your editor supports JSON Schema, it will suggest available settings and check for errors.
 
 ---
 
-## Практические сценарии
+## Practical Scenarios
 
-### Сценарий 1: Работа только локально
+### Scenario 1: Local-only Usage
 
-Ничего менять не нужно! Настройки по умолчанию подходят:
+No changes needed! Default settings work:
 ```bash
-hapi hub    # Hub на localhost:3006
-hapi        # CLI подключается автоматически
+hapi hub    # Hub on localhost:3006
+hapi        # CLI connects automatically
 ```
 
-### Сценарий 2: Доступ через Relay + Telegram
+### Scenario 2: Access via Relay + Telegram
 
 ```bash
-export TELEGRAM_BOT_TOKEN="ваш-токен-бота"
-export ELEVENLABS_API_KEY="ваш-ключ"
+export TELEGRAM_BOT_TOKEN="your-bot-token"
+export ELEVENLABS_API_KEY="your-key"
 hapi hub --relay
 ```
 
-### Сценарий 3: Несколько компьютеров подключены к одному Hub
+### Scenario 3: Multiple Computers Connected to One Hub
 
-На сервере:
+On the server:
 ```bash
 hapi hub
 ```
 
-На каждом рабочем компьютере:
+On each workstation:
 ```bash
-export HAPI_API_URL="http://адрес-сервера:3006"
-export CLI_API_TOKEN="общий-токен"
+export HAPI_API_URL="http://server-address:3006"
+export CLI_API_TOKEN="shared-token"
 hapi
 ```
 
-Каждый компьютер получает уникальный ID — так Hub различает машины.
+Each computer gets a unique ID — this is how the Hub tells machines apart.
 
 ---
 
-## Итоги урока
+## Lesson Summary
 
-- Настройки хранятся в папке `~/.hapi/`, главный файл — `settings.json`
-- Три источника настроек: переменные окружения > settings.json > значения по умолчанию
-- Основные настройки Hub: порт (`3006`), адрес (`127.0.0.1`), токен, Telegram
-- CLI настраивается через `HAPI_API_URL` и `CLI_API_TOKEN`
-- Для большинства задач настройки по умолчанию подходят — менять что-то нужно только при особых сценариях
+- Settings are stored in `~/.hapi/`, the main file is `settings.json`
+- Three setting sources: environment variables > settings.json > default values
+- Main Hub settings: port (`3006`), address (`127.0.0.1`), token, Telegram
+- CLI is configured via `HAPI_API_URL` and `CLI_API_TOKEN`
+- For most tasks, default settings work fine — changes are only needed for special scenarios

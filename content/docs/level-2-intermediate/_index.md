@@ -1,8 +1,8 @@
 ---
-title: "Уровень 2: Средний"
+title: "Level 2: Intermediate"
 weight: 2
 bookToc: true
 bookCollapseSection: true
 ---
 
-# Уровень 2: Средний
+# Level 2: Intermediate

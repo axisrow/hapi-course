@@ -1,160 +1,160 @@
 ---
-title: "Урок 5. Участие в проекте HAPI"
+title: "Lesson 5. Contributing to HAPI"
 weight: 5
 bookToc: true
 ---
 
-# Урок 5. Участие в проекте HAPI
+# Lesson 5. Contributing to HAPI
 
-## Зачем это нужно
+## Why This Matters
 
-HAPI — проект с открытым исходным кодом. Это значит, что любой может предложить улучшения, исправить ошибки или помочь с документацией. В этом уроке вы узнаете, как правильно внести свой вклад.
+HAPI is an open-source project. This means anyone can suggest improvements, fix bugs, or help with documentation. In this lesson, you'll learn how to properly contribute.
 
-## Правила сообщества
+## Community Guidelines
 
-Прежде чем начать, запомните четыре простых правила:
+Before you start, remember four simple rules:
 
-- 🤝 **Будьте дружелюбны и уважительны** — относитесь к каждому с добротой
-- 🙋 **Помогайте другим** — делитесь знаниями
-- 💬 **Давайте конструктивную обратную связь** — обсуждайте код, а не человека
-- ⏳ **Будьте терпеливы** — у всех разный уровень опыта
+- 🤝 **Be friendly and respectful** — treat everyone with kindness
+- 🙋 **Help others** — share your knowledge
+- 💬 **Give constructive feedback** — discuss code, not the person
+- ⏳ **Be patient** — everyone has different experience levels
 
-## Что можно сделать
+## What You Can Do
 
-### 1. Сообщить об ошибке (Bug Report)
+### 1. Report a Bug
 
-> **Bug (баг)** — ошибка в программе, когда что-то работает не так, как ожидалось.
+> A **bug** is an error in a program where something doesn't work as expected.
 
-Если вы нашли проблему, создайте **issue** на GitHub и укажите:
+If you found a problem, create an **issue** on GitHub and include:
 
-- 📝 Чёткое описание проблемы
-- 🔄 Шаги для воспроизведения (что именно вы делали)
-- ✅ Что вы ожидали увидеть
-- ❌ Что произошло на самом деле
-- 💻 Ваше окружение (операционная система, версия Bun/Node)
-- 📸 Логи или скриншоты (если есть)
+- 📝 A clear description of the problem
+- 🔄 Steps to reproduce (exactly what you did)
+- ✅ What you expected to see
+- ❌ What actually happened
+- 💻 Your environment (operating system, Bun/Node version)
+- 📸 Logs or screenshots (if available)
 
-### 2. Предложить новую функцию (Feature Request)
+### 2. Suggest a New Feature (Feature Request)
 
-Есть идея? Создайте issue с описанием:
+Have an idea? Create an issue describing:
 
-- Что за функция
-- Какую проблему она решает
-- Ваши идеи по реализации (если есть)
+- What the feature is
+- What problem it solves
+- Your implementation ideas (if any)
 
-### 3. Внести изменения в код (Pull Request)
+### 3. Submit Code Changes (Pull Request)
 
-#### Шаг 1. Сделайте форк
+#### Step 1. Fork the Repository
 
-> **Fork (форк)** — ваша личная копия репозитория на GitHub, в которую вы можете вносить изменения.
+> A **fork** is your personal copy of the repository on GitHub where you can make changes.
 
-Нажмите кнопку **Fork** на странице репозитория HAPI.
+Click the **Fork** button on the HAPI repository page.
 
-#### Шаг 2. Склонируйте и настройте
+#### Step 2. Clone and Set Up
 
 ```bash
-git clone https://github.com/ВАШ-ЛОГИН/hapi.git
+git clone https://github.com/YOUR-USERNAME/hapi.git
 cd hapi
 bun install
 ```
 
-#### Шаг 3. Запустите в режиме разработки
+#### Step 3. Run in Development Mode
 
 ```bash
 bun run dev
 ```
 
-#### Шаг 4. Внесите изменения
+#### Step 4. Make Your Changes
 
-Отредактируйте нужные файлы, ориентируясь на структуру проекта:
+Edit the necessary files, following the project structure:
 
-| Что хотите изменить | Где искать |
+| What you want to change | Where to look |
 |--------------------|-----------|
-| Команды терминала | `cli/src/` |
-| Серверную логику | `hub/src/` |
-| Веб-интерфейс | `web/src/` |
-| Общий код | `shared/src/` |
-| Документацию | `docs/` |
-| Сайт | `website/src/` |
+| Terminal commands | `cli/src/` |
+| Server logic | `hub/src/` |
+| Web interface | `web/src/` |
+| Shared code | `shared/src/` |
+| Documentation | `docs/` |
+| Website | `website/src/` |
 
-#### Шаг 5. Проверьте код
+#### Step 5. Verify Your Code
 
 ```bash
-bun run typecheck    # проверка типов
-bun run test         # запуск тестов
+bun run typecheck    # type checking
+bun run test         # run tests
 ```
 
-#### Шаг 6. Отправьте PR
+#### Step 6. Submit the PR
 
 ```bash
 git add .
-git commit -m "Описание изменений"
-git push origin ваша-ветка
+git commit -m "Description of changes"
+git push origin your-branch
 ```
 
-Затем откройте PR на GitHub.
+Then open a PR on GitHub.
 
-## Правила для Pull Request
+## Pull Request Guidelines
 
-### ❌ Никаких «мега-PR»
+### ❌ No "mega-PRs"
 
-Не отправляйте огромные изменения одним PR. Большие PR:
-- Сложно проверять
-- Легче пропустить ошибки
-- Труднее откатить при проблемах
+Don't submit huge changes in a single PR. Large PRs:
+- Are hard to review
+- Make it easy to miss errors
+- Are harder to revert if problems arise
 
-**Если хотите добавить большую функцию — сначала создайте issue и обсудите подход.** Команда поможет разбить задачу на мелкие части.
+**If you want to add a large feature — first create an issue and discuss the approach.** The team will help break the task into smaller parts.
 
-### ✅ Хороший PR
+### ✅ A Good PR
 
-- Решает одну конкретную задачу
-- Имеет понятное описание коммита
-- Содержит тесты (если применимо)
-- Обновляет документацию (если нужно)
-- Ссылается на связанный issue
+- Solves one specific task
+- Has a clear commit message
+- Includes tests (if applicable)
+- Updates documentation (if needed)
+- References the related issue
 
-## ⚠️ Политика AI-кода
+## ⚠️ AI Code Policy
 
-В HAPI действует особая политика: **принимается только код, сгенерированный моделью GPT-5.2-codex**.
+HAPI has a special policy: **only code generated by the GPT-5.2-codex model is accepted**.
 
-PR с кодом от других AI-моделей (другие версии GPT, Claude, Gemini и т.д.) будут отклонены. Это сделано для единообразия и качества кода.
+PRs with code from other AI models (other GPT versions, Claude, Gemini, etc.) will be rejected. This is done for code consistency and quality.
 
-Если сомневаетесь — сначала создайте issue и спросите.
+If in doubt — first create an issue and ask.
 
-## Пример: ваш первый вклад
+## Example: Your First Contribution
 
-Допустим, вы нашли опечатку в документации:
+Let's say you found a typo in the documentation:
 
 ```bash
-# 1. Форкните и склонируйте
-git clone https://github.com/ваш-логин/hapi.git
+# 1. Fork and clone
+git clone https://github.com/your-username/hapi.git
 cd hapi
 
-# 2. Создайте ветку
+# 2. Create a branch
 git checkout -b fix/typo-in-docs
 
-# 3. Исправьте опечатку в нужном файле
-# (отредактируйте файл в текстовом редакторе)
+# 3. Fix the typo in the relevant file
+# (edit the file in a text editor)
 
-# 4. Закоммитьте и отправьте
+# 4. Commit and push
 git add .
 git commit -m "docs: fix typo in installation guide"
 git push origin fix/typo-in-docs
 
-# 5. Откройте PR на GitHub
+# 5. Open a PR on GitHub
 ```
 
-Это отличный способ начать — даже небольшие исправления очень ценятся!
+This is a great way to start — even small fixes are highly valued!
 
-## Есть вопросы?
+## Questions?
 
-Не стесняйтесь создать issue с вопросом. Команда HAPI дружелюбна и готова помочь.
+Don't hesitate to create an issue with a question. The HAPI team is friendly and ready to help.
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI — проект с открытым кодом, и **ваш вклад приветствуется**
-- Можно помочь тремя способами: сообщить об ошибке, предложить функцию, отправить PR
-- PR должны быть **небольшими и сфокусированными** — никаких мега-PR
-- AI-код принимается **только от GPT-5.2-codex**
-- Начните с малого: исправление опечатки — уже вклад!
-- Структура проекта: `cli/`, `hub/`, `web/`, `shared/`, `website/`, `docs/`
+- HAPI is an open-source project and **your contributions are welcome**
+- You can help in three ways: report a bug, suggest a feature, submit a PR
+- PRs should be **small and focused** — no mega-PRs
+- AI-generated code is accepted **only from GPT-5.2-codex**
+- Start small: fixing a typo is already a contribution!
+- Project structure: `cli/`, `hub/`, `web/`, `shared/`, `website/`, `docs/`

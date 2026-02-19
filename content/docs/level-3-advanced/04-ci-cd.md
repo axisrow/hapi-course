@@ -1,128 +1,128 @@
 ---
-title: "Урок 4. CI/CD и автоматизация в HAPI"
+title: "Lesson 4. CI/CD and Automation in HAPI"
 weight: 4
 bookToc: true
 ---
 
-# Урок 4. CI/CD и автоматизация в HAPI
+# Lesson 4. CI/CD and Automation in HAPI
 
-## Зачем это нужно
+## Why This Matters
 
-Когда над проектом работает команда, важно автоматизировать рутинные задачи: проверку кода, сборку, публикацию. HAPI использует **GitHub Actions** — встроенную систему автоматизации GitHub — для этого.
+When a team works on a project, it's important to automate routine tasks: code checking, building, publishing. HAPI uses **GitHub Actions** — GitHub's built-in automation system — for this purpose.
 
-> **CI/CD** (Continuous Integration / Continuous Delivery) — непрерывная интеграция и доставка. Это практика, когда код автоматически проверяется и собирается при каждом изменении.
+> **CI/CD** (Continuous Integration / Continuous Delivery) is the practice of automatically checking and building code with every change.
 
-> **GitHub Actions** — сервис GitHub, который запускает задачи автоматически при определённых событиях (например, когда кто-то отправляет код или создаёт pull request).
+> **GitHub Actions** is a GitHub service that runs tasks automatically on certain events (e.g., when someone pushes code or creates a pull request).
 
-## Какие автоматизации есть в HAPI
+## What Automations HAPI Has
 
-В папке `.github/workflows/` находятся 6 файлов — каждый описывает одну автоматизацию:
+In the `.github/workflows/` directory, there are 6 files — each describes one automation:
 
-### 1. 🧪 Тесты (`test.yml`)
+### 1. 🧪 Tests (`test.yml`)
 
-**Когда запускается:** при каждом push и pull request.
+**When it runs:** on every push and pull request.
 
-**Что делает:**
-1. Скачивает код
-2. Устанавливает Bun
-3. Устанавливает зависимости (`bun install`)
-4. Проверяет типы (`bun typecheck`)
-5. Запускает тесты (`bun run test`)
+**What it does:**
+1. Checks out the code
+2. Installs Bun
+3. Installs dependencies (`bun install`)
+4. Checks types (`bun typecheck`)
+5. Runs tests (`bun run test`)
 
-**Зачем:** чтобы убедиться, что новый код ничего не сломал.
+**Why:** to make sure new code didn't break anything.
 
-### 2. 🤖 AI-ревью PR (`codex-pr-review.yml`)
+### 2. 🤖 AI PR Review (`codex-pr-review.yml`)
 
-> **PR (Pull Request)** — запрос на добавление изменений в проект. Другие участники проверяют код перед принятием.
+> **PR (Pull Request)** is a request to add changes to the project. Other members review the code before accepting.
 
-**Когда запускается:** когда открывается новый PR или PR переводится из черновика в готовый.
+**When it runs:** when a new PR is opened or a PR is moved from draft to ready.
 
-**Что делает:**
-- AI-модель **Codex** (GPT-5.2) автоматически проверяет код в PR
-- Оставляет комментарий с замечаниями и рекомендациями
-- Не проверяет PR от ботов и PR с меткой `bot-skip`
-- Не дублирует ревью — если бот уже оставлял комментарий, повторно не запускается
+**What it does:**
+- The **Codex** AI model (GPT-5.2) automatically reviews code in the PR
+- Leaves a comment with remarks and recommendations
+- Doesn't review PRs from bots or PRs with the `bot-skip` label
+- Doesn't duplicate reviews — if the bot already left a comment, it won't run again
 
-**Зачем:** ускоряет ревью кода и ловит типичные ошибки.
+**Why:** speeds up code review and catches common errors.
 
-### 3. 💬 Автоответ на issues (`issue-auto-response.yml`)
+### 3. 💬 Auto-response to Issues (`issue-auto-response.yml`)
 
-> **Issue** — тикет/задача в репозитории: баг-репорт, запрос на функцию, вопрос.
+> **Issue** is a ticket/task in the repository: bug report, feature request, question.
 
-**Когда запускается:** когда создаётся новый issue или добавляется метка.
+**When it runs:** when a new issue is created or a label is added.
 
-**Что делает:**
-- Codex анализирует issue и автоматически отвечает
-- Пропускает дубликаты (`duplicate`), спам (`spam`) и issues с меткой `bot-skip`
-- Отвечает только один раз
+**What it does:**
+- Codex analyzes the issue and responds automatically
+- Skips duplicates (`duplicate`), spam (`spam`), and issues with the `bot-skip` label
+- Responds only once
 
-**Зачем:** пользователи быстрее получают первый ответ, а разработчикам не нужно отвечать на типовые вопросы.
+**Why:** users get a first response faster, and developers don't need to answer typical questions.
 
-### 4. 🗣️ Ответы на упоминания (`codex-mention-response.yml`)
+### 4. 🗣️ Responses to Mentions (`codex-mention-response.yml`)
 
-**Когда запускается:** когда кто-то упоминает `@tiann` в комментарии.
+**When it runs:** when someone mentions `@tiann` in a comment.
 
-**Что делает:**
-- Codex отвечает на вопрос или комментарий
-- Работает только для пользователей с правами записи (write access)
-- Не отвечает на свои же комментарии и на issues с меткой `bot-skip`
+**What it does:**
+- Codex responds to the question or comment
+- Only works for users with write access
+- Doesn't respond to its own comments or issues with the `bot-skip` label
 
-**Зачем:** быстрая помощь разработчикам прямо в обсуждении.
+**Why:** quick help for developers right in the discussion.
 
-### 5. 📦 Релиз (`release.yml`)
+### 5. 📦 Release (`release.yml`)
 
-> **Релиз** — публикация новой версии программы.
+> A **release** is publishing a new version of the software.
 
-**Когда запускается:** когда создаётся новый тег версии (например, `v1.2.3`).
+**When it runs:** when a new version tag is created (e.g., `v1.2.3`).
 
-**Что делает:**
-1. Собирает бинарные файлы для всех платформ
-2. Упаковывает в архивы (`.tar.gz` для macOS/Linux, `.zip` для Windows)
-3. Считает контрольные суммы (checksums)
-4. Создаёт релиз на GitHub с файлами для скачивания
-5. Обновляет формулу Homebrew (менеджер пакетов для macOS)
+**What it does:**
+1. Builds binary files for all platforms
+2. Packages into archives (`.tar.gz` for macOS/Linux, `.zip` for Windows)
+3. Calculates checksums
+4. Creates a GitHub release with downloadable files
+5. Updates the Homebrew formula (package manager for macOS)
 
-### 6. 🌐 Деплой веб-приложения (`webapp.yml`)
+### 6. 🌐 Web App Deploy (`webapp.yml`)
 
-> **Деплой (deploy)** — размещение приложения на сервере, чтобы оно стало доступно пользователям.
+> **Deploy** is placing an application on a server so it becomes available to users.
 
-**Когда запускается:** при изменениях в папке `web/` в ветке `main`.
+**When it runs:** when changes are made to the `web/` directory in the `main` branch.
 
-**Что делает:**
-1. Собирает веб-приложение
-2. Публикует на GitHub Pages (бесплатный хостинг от GitHub)
-3. Доступно по адресу `app.hapi.run`
+**What it does:**
+1. Builds the web application
+2. Publishes to GitHub Pages (free hosting from GitHub)
+3. Available at `app.hapi.run`
 
-## Как это всё связано
+## How It All Connects
 
 ```
-Разработчик вносит изменения
+Developer makes changes
          │
-         ├─► Push в любую ветку
-         │       └─► test.yml: проверка кода и тесты
+         ├─► Push to any branch
+         │       └─► test.yml: code checks and tests
          │
-         ├─► Открывает PR
-         │       └─► codex-pr-review.yml: AI проверяет код
+         ├─► Opens a PR
+         │       └─► codex-pr-review.yml: AI reviews code
          │
-         ├─► PR принят в main + изменения в web/
-         │       └─► webapp.yml: обновление сайта
+         ├─► PR merged to main + changes in web/
+         │       └─► webapp.yml: website update
          │
-         ├─► Создаёт тег v1.2.3
-         │       └─► release.yml: сборка + публикация
+         ├─► Creates tag v1.2.3
+         │       └─► release.yml: build + publish
          │
-         └─► Новый issue или комментарий
+         └─► New issue or comment
                  └─► issue-auto-response.yml / codex-mention-response.yml
 ```
 
-## Метка `bot-skip`
+## The `bot-skip` Label
 
-Если вы не хотите, чтобы бот отвечал на конкретный issue или PR, добавьте метку **`bot-skip`**. Все автоматизации с AI проверяют эту метку и пропускают такие задачи.
+If you don't want the bot to respond to a specific issue or PR, add the **`bot-skip`** label. All AI automations check this label and skip such tasks.
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI использует **6 автоматизаций** GitHub Actions для рутинных задач
-- **Тесты** запускаются автоматически при каждом изменении кода
-- **AI (Codex)** автоматически ревьюит PR, отвечает на issues и комментарии
-- **Релизы** собираются для всех платформ одной командой при создании тега
-- **Веб-приложение** автоматически публикуется при изменениях
-- Метка `bot-skip` отключает AI-автоматизации для конкретной задачи
+- HAPI uses **6 automations** via GitHub Actions for routine tasks
+- **Tests** run automatically with every code change
+- **AI (Codex)** automatically reviews PRs, responds to issues and comments
+- **Releases** are built for all platforms with a single command when a tag is created
+- The **web application** is automatically published on changes
+- The `bot-skip` label disables AI automations for a specific task

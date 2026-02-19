@@ -1,8 +1,8 @@
 ---
-title: "Уровень 1: Начинающий"
+title: "Level 1: Beginner"
 weight: 1
 bookToc: true
 bookCollapseSection: true
 ---
 
-# Уровень 1: Начинающий
+# Level 1: Beginner

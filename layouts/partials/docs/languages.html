@@ -1,0 +1,32 @@
+{{ $bookTranslatedOnly := default false .Site.Params.BookTranslatedOnly }}
+{{ $translations := dict }}
+{{ if (eq $bookTranslatedOnly false ) }}
+  {{ range .Site.Home.Translations }}
+    {{ $translations = merge $translations (dict .Language.Lang .) }}
+  {{ end }}
+{{ end }}
+{{ range .Translations }}
+  {{ $translations = merge $translations (dict .Language.Lang .) }}
+{{ end }}
+
+{{ if gt (len $translations) 0 }}
+<div class="book-languages-inline">
+  {{- range .Site.Languages -}}
+    {{- $lang := .Lang -}}
+    {{- if eq $lang $.Site.Language.Lang -}}
+      <span class="book-lang-btn active"
+            onclick="document.cookie='openclaw-lang={{ $lang }};path=/;max-age=31536000;SameSite=Lax;Secure'">
+        {{- .LanguageName -}}
+      </span>
+    {{- else -}}
+      {{- with index $translations $lang -}}
+      <a href="{{ cond hugo.IsMultihost .Permalink .RelPermalink }}"
+         class="book-lang-btn"
+         onclick="document.cookie='openclaw-lang={{ $lang }};path=/;max-age=31536000;SameSite=Lax;Secure'">
+        {{- .Language.LanguageName -}}
+      </a>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+</div>
+{{ end }}

@@ -1,15 +1,20 @@
 ---
-title: "HAPI — 远程AI代理控制"
-weight: 1
-bookToc: true
+title: "课程大纲"
+bookToc: false
 ---
 
-# HAPI 课程
+# HAPI 课程大纲
 
-欢迎来到 HAPI 课程——一个用于远程控制 AI 代理的工具。
-
-## 课程级别
-
-- [第1级：初学者](level-1-beginner/) — 安装、启动、基本操作
-- [第2级：中级](level-2-intermediate/) — 架构、配置、语音助手
-- [第3级：高级](level-3-advanced/) — 命名空间、安全性、构建、CI/CD
+| # | 课程 | 级别 |
+|---|------|------|
+| 1 | [什么是 HAPI](level-1-beginner/01-what-is-hapi/) | 初学者 |
+| 2 | [安装](level-1-beginner/02-installation/) | 初学者 |
+| 3 | [首次启动](level-1-beginner/03-first-launch/) | 初学者 |
+| 4 | [基本操作](level-1-beginner/04-basic-usage/) | 初学者 |
+| 5 | [架构](level-2-intermediate/01-architecture/) | 中级 |
+| 6 | [配置](level-2-intermediate/02-configuration/) | 中级 |
+| 7 | [语音助手](level-2-intermediate/03-voice-assistant/) | 中级 |
+| 8 | [命名空间](level-3-advanced/01-namespace/) | 高级 |
+| 9 | [安全性](level-3-advanced/02-security/) | 高级 |
+| 10 | [构建](level-3-advanced/03-building/) | 高级 |
+| 11 | [CI/CD](level-3-advanced/04-ci-cd/) | 高级 |

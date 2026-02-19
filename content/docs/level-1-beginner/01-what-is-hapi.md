@@ -1,78 +1,78 @@
 ---
-title: "Урок 1. Что такое HAPI и зачем он нужен"
+title: "Lesson 1. What is HAPI and Why You Need It"
 weight: 1
 bookToc: true
 ---
 
-# Урок 1. Что такое HAPI и зачем он нужен
+# Lesson 1. What is HAPI and Why You Need It
 
-## Зачем это нужно
+## Why This Matters
 
-Представьте: вы работаете с AI-помощником (например, Claude Code) на компьютере. Он пишет код, редактирует файлы, выполняет команды. Но вам нужно отойти — выпить кофе, поехать на встречу, просто прогуляться. Без HAPI ваш AI-агент остановится и будет ждать вас у компьютера. С HAPI вы достаёте телефон и продолжаете работу прямо с него — без потери прогресса.
+Imagine: you're working with an AI assistant (say, Claude Code) on your computer. It writes code, edits files, runs commands. But you need to step away — grab coffee, head to a meeting, take a walk. Without HAPI, your AI agent stops and waits for you at the computer. With HAPI, you pull out your phone and continue working right from it — without losing progress.
 
-**HAPI** — это инструмент, который позволяет управлять AI-агентами удалённо: с телефона, планшета или любого браузера.
+**HAPI** is a tool that lets you control AI agents remotely: from your phone, tablet, or any browser.
 
-## Что такое AI-агент?
+## What is an AI Agent?
 
-**AI-агент** — это программа с искусственным интеллектом, которая умеет выполнять задачи на вашем компьютере. Например:
+An **AI agent** is a program with artificial intelligence that can perform tasks on your computer. For example:
 
-- **Claude Code** (от Anthropic) — пишет и редактирует код
-- **Codex** (от OpenAI) — тоже помогает с кодом
-- **Gemini CLI** (от Google) — ещё один AI-помощник
-- **OpenCode** — открытый аналог
+- **Claude Code** (by Anthropic) — writes and edits code
+- **Codex** (by OpenAI) — also helps with code
+- **Gemini CLI** (by Google) — another AI assistant
+- **OpenCode** — an open-source alternative
 
-Все они работают в **терминале** (командной строке) вашего компьютера. HAPI не заменяет их, а «оборачивает» — добавляет возможность управлять ими удалённо.
+They all work in the **terminal** (command line) of your computer. HAPI doesn't replace them — it "wraps" them, adding the ability to control them remotely.
 
-## Главная фишка: Seamless Handoff
+## The Key Feature: Seamless Handoff
 
-**Seamless Handoff** (бесшовное переключение) — это возможность переключаться между компьютером и телефоном без потери контекста.
+**Seamless Handoff** is the ability to switch between your computer and phone without losing context.
 
-Как это работает:
+How it works:
 
-1. Вы работаете с AI-агентом в терминале на компьютере
-2. Отправляете сообщение с телефона — управление автоматически переходит на телефон
-3. В терминале появляется надпись «Remote mode — waiting for input» (Удалённый режим — ожидание ввода)
-4. Возвращаетесь к компьютеру, нажимаете двойной пробел — и снова работаете локально
+1. You're working with an AI agent in the terminal on your computer
+2. You send a message from your phone — control automatically transfers to the phone
+3. The terminal shows "Remote mode — waiting for input"
+4. You return to the computer, press double space — and you're back to local control
 
-Никаких перезапусков, никакой потери данных. Один и тот же сеанс, одно и то же состояние.
+No restarts, no data loss. The same session, the same state.
 
-## Чем HAPI отличается от Happy?
+## How HAPI Differs from Happy
 
-HAPI вдохновлён проектом **Happy**, но устроен принципиально по-другому:
+HAPI is inspired by the **Happy** project, but is fundamentally different:
 
 | | Happy | HAPI |
 |---|---|---|
-| **Где хранятся данные** | На облачном сервере (зашифрованы) | На вашем компьютере |
-| **Архитектура** | Централизованная — один сервер для всех | Децентрализованная — каждый запускает свой hub |
-| **Что делает сервер** | Хранит ваши зашифрованные данные | Relay только передаёт трафик, ничего не хранит |
-| **Установка** | Несколько сервисов (база данных, кеш, сервер) | Одна команда |
+| **Where data is stored** | On a cloud server (encrypted) | On your computer |
+| **Architecture** | Centralized — one server for everyone | Decentralized — everyone runs their own hub |
+| **What the server does** | Stores your encrypted data | Relay only forwards traffic, stores nothing |
+| **Installation** | Multiple services (database, cache, server) | One command |
 
-Проще говоря:
+In simple terms:
 
-- **Happy** — это как Gmail: ваши письма лежат на серверах Google (зашифрованные, но всё-таки там).
-- **HAPI** — это как свой почтовый сервер: всё на вашей машине, а «почтальон» (relay) только передаёт конверты, не заглядывая внутрь.
+- **Happy** is like Gmail: your emails sit on Google's servers (encrypted, but still there).
+- **HAPI** is like running your own mail server: everything is on your machine, and the "postman" (relay) only delivers envelopes without looking inside.
 
-### Что такое Hub и Relay?
+### What are Hub and Relay?
 
-- **Hub** (хаб) — это «центр управления», который работает на вашем компьютере. Он хранит сессии, управляет подключениями и даёт доступ к веб-интерфейсу.
-- **Relay** (ретранслятор) — это промежуточный сервер, который просто пересылает зашифрованный трафик между вашим телефоном и компьютером. Он не может прочитать ваши данные — они зашифрованы с помощью WireGuard + TLS (технологии шифрования военного уровня).
+- **Hub** is the "control center" running on your computer. It stores sessions, manages connections, and provides the web interface.
+- **Relay** is an intermediary server that simply forwards encrypted traffic between your phone and computer. It cannot read your data — it's encrypted using WireGuard + TLS (military-grade encryption technologies).
 
-## Что умеет HAPI
+## What HAPI Can Do
 
-- 📱 **Управление с телефона** — отправляйте команды AI-агенту откуда угодно
-- ✅ **Одобрение запросов** — AI хочет отредактировать файл? Одобрите одним нажатием с телефона
-- 🔄 **Бесшовное переключение** — компьютер ↔ телефон без потери прогресса
-- 🤖 **Любой AI на выбор** — Claude Code, Codex, Gemini, OpenCode
-- 🖥️ **Терминал везде** — запускайте команды прямо с телефона
-- 🎤 **Голосовое управление** — разговаривайте с AI-агентом голосом
-- 🔒 **Безопасность** — данные не покидают ваш компьютер
+- 📱 **Control from your phone** — send commands to your AI agent from anywhere
+- ✅ **Approve requests** — AI wants to edit a file? Approve with one tap from your phone
+- 🔄 **Seamless switching** — computer ↔ phone without losing progress
+- 🤖 **Any AI of your choice** — Claude Code, Codex, Gemini, OpenCode
+- 🖥️ **Terminal anywhere** — run commands right from your phone
+- 🎤 **Voice control** — talk to your AI agent by voice
+- 🔒 **Security** — data never leaves your computer
 
-## Итоги урока
+## Lesson Summary
 
-- **HAPI** — инструмент для удалённого управления AI-агентами с телефона и браузера
-- Главная функция — **Seamless Handoff**: переключение между устройствами без потери контекста
-- В отличие от Happy, HAPI **децентрализован**: данные остаются на вашем компьютере
-- **Relay** только передаёт зашифрованный трафик — он не видит ваших данных
-- HAPI поддерживает Claude Code, Codex, Gemini и OpenCode
+- **HAPI** is a tool for remotely controlling AI agents from your phone and browser
+- The key feature is **Seamless Handoff**: switching between devices without losing context
+- Unlike Happy, HAPI is **decentralized**: data stays on your computer
+- **Relay** only forwards encrypted traffic — it cannot see your data
+- HAPI supports Claude Code, Codex, Gemini, and OpenCode
 
-В следующем уроке мы установим HAPI на ваш компьютер.
+In the next lesson, we'll install HAPI on your computer.

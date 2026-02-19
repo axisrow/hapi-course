@@ -1,138 +1,138 @@
 ---
-title: "Урок 3. Сборка HAPI из исходников"
+title: "Lesson 3. Building HAPI from Source"
 weight: 3
 bookToc: true
 ---
 
-# Урок 3. Сборка HAPI из исходников
+# Lesson 3. Building HAPI from Source
 
-## Зачем это нужно
+## Why This Matters
 
-Обычно HAPI устанавливается готовой командой (`npx @twsxtd/hapi`). Но иногда нужно собрать его самостоятельно из исходного кода — например, чтобы внести изменения, протестировать новую функцию или собрать версию под свою платформу.
+Normally, HAPI is installed with a simple command (`npx @twsxtd/hapi`). But sometimes you need to build it yourself from source code — for example, to make changes, test a new feature, or build a version for your platform.
 
-> **Исходный код (source code)** — это текстовые файлы, написанные программистами. **Сборка (build)** — процесс превращения этих файлов в готовую программу.
+> **Source code** is the text files written by programmers. **Building** is the process of turning these files into a ready-to-run program.
 
-## Структура проекта
+## Project Structure
 
-HAPI организован как **монорепо** (mono-repo) — один репозиторий, в котором живут несколько связанных проектов:
+HAPI is organized as a **monorepo** — a single repository containing several related projects:
 
 ```
 hapi/
-├── cli/          — Командная строка (то, что вы запускаете как `hapi`)
-├── hub/          — Сервер-хаб (управляет сессиями и подключениями)
-├── web/          — Веб-приложение (интерфейс в браузере / PWA)
-├── shared/       — Общий код, используемый другими частями
-├── website/      — Сайт проекта (документация)
-├── docs/         — Документация
-└── package.json  — Главный файл конфигурации проекта
+├── cli/          — Command line (what you run as `hapi`)
+├── hub/          — Hub server (manages sessions and connections)
+├── web/          — Web application (browser interface / PWA)
+├── shared/       — Shared code used by other parts
+├── website/      — Project website (documentation)
+├── docs/         — Documentation
+└── package.json  — Main project configuration file
 ```
 
-### Что делает каждая часть
+### What Each Part Does
 
-| Папка | Назначение | Аналогия |
+| Directory | Purpose | Analogy |
 |-------|-----------|----------|
-| `cli/` | Программа для терминала | Пульт управления |
-| `hub/` | Серверная часть | Диспетчерская |
-| `web/` | Браузерный интерфейс | Экран на стене |
-| `shared/` | Общие функции | Общая библиотека |
-| `website/` | Сайт с документацией | Справочник |
+| `cli/` | Terminal program | Remote control |
+| `hub/` | Server side | Dispatch center |
+| `web/` | Browser interface | Screen on the wall |
+| `shared/` | Common functions | Shared library |
+| `website/` | Documentation site | Reference manual |
 
-## Что нужно для сборки
+## What You Need to Build
 
-**Bun** — быстрый инструмент для запуска JavaScript/TypeScript. Это альтернатива Node.js, которую использует HAPI.
+**Bun** — a fast tool for running JavaScript/TypeScript. It's an alternative to Node.js that HAPI uses.
 
-Установите Bun, если его ещё нет:
+Install Bun if you don't have it yet:
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
 ```
 
-## Пошаговая сборка
+## Step-by-Step Build
 
-### Шаг 1. Скачайте исходный код
+### Step 1. Download the Source Code
 
 ```bash
 git clone https://github.com/anthropics/hapi.git
 cd hapi
 ```
 
-### Шаг 2. Установите зависимости
+### Step 2. Install Dependencies
 
-> **Зависимости (dependencies)** — внешние библиотеки, которые нужны проекту для работы.
+> **Dependencies** are external libraries that the project needs to work.
 
 ```bash
 bun install
 ```
 
-Эта команда прочитает `package.json` и скачает все необходимые библиотеки. Поскольку HAPI — монорепо, `bun install` установит зависимости сразу для всех частей (cli, hub, web и т.д.).
+This command reads `package.json` and downloads all required libraries. Since HAPI is a monorepo, `bun install` installs dependencies for all parts at once (cli, hub, web, etc.).
 
-### Шаг 3. Соберите всё
+### Step 3. Build Everything
 
-Есть несколько вариантов сборки:
+There are several build options:
 
-#### Вариант А: Собрать отдельные компоненты
-
-```bash
-bun run build          # собрать cli + hub + web
-```
-
-Или по отдельности:
+#### Option A: Build Individual Components
 
 ```bash
-bun run build:cli      # только CLI
-bun run build:hub      # только Hub
-bun run build:web      # только Web-приложение
+bun run build          # build cli + hub + web
 ```
 
-#### Вариант Б: Собрать единый исполняемый файл
+Or individually:
 
-> **Исполняемый файл (executable)** — готовая программа, которую можно запустить без дополнительных инструментов.
+```bash
+bun run build:cli      # CLI only
+bun run build:hub      # Hub only
+bun run build:web      # Web app only
+```
+
+#### Option B: Build a Single Executable
+
+> An **executable** is a ready-to-run program that doesn't need additional tools.
 
 ```bash
 bun run build:single-exe
 ```
 
-Эта команда:
-1. Скачивает tunwg (компонент для WireGuard-туннеля)
-2. Собирает веб-приложение
-3. Встраивает веб-ресурсы в хаб
-4. Компилирует всё в один файл
+This command:
+1. Downloads tunwg (the WireGuard tunnel component)
+2. Builds the web application
+3. Embeds web resources into the hub
+4. Compiles everything into a single file
 
-Результат — единый бинарный файл `hapi`, который содержит в себе CLI + Hub + Web-приложение + базу данных SQLite.
+The result is a single binary file `hapi` that contains CLI + Hub + Web App + SQLite database.
 
-### Шаг 4. Режим разработки
+### Step 4. Development Mode
 
-Для разработки (когда вы вносите изменения и хотите сразу видеть результат):
+For development (when you make changes and want to see results immediately):
 
 ```bash
 bun run dev
 ```
 
-Эта команда одновременно запускает hub и web в режиме разработки с автоматической перезагрузкой при изменениях.
+This command simultaneously runs the hub and web in development mode with automatic reloading on changes.
 
-## Сборка для всех платформ
+## Building for All Platforms
 
-Для создания релизных файлов под все платформы:
+To create release files for all platforms:
 
 ```bash
 bun run build:single-exe:all
 ```
 
-Результат появится в `cli/dist-exe/` — отдельные файлы для macOS (ARM и x64), Linux и Windows.
+The result will appear in `cli/dist-exe/` — separate files for macOS (ARM and x64), Linux, and Windows.
 
-## Проверка кода
+## Code Verification
 
-Перед отправкой изменений полезно запустить проверки:
+Before submitting changes, it's useful to run checks:
 
 ```bash
-bun run typecheck    # проверка типов (TypeScript)
-bun run test         # запуск тестов
+bun run typecheck    # type checking (TypeScript)
+bun run test         # run tests
 ```
 
-## Итоги урока
+## Lesson Summary
 
-- HAPI — **монорепо** из 5 частей: cli, hub, web, shared, website
-- Для сборки нужен только **Bun** (`bun install` → `bun run build`)
-- `bun run build:single-exe` создаёт единый файл со всем встроенным
-- `bun run dev` — удобный режим для разработки с автоперезагрузкой
-- Вся сборка занимает буквально 2-3 команды
+- HAPI is a **monorepo** of 5 parts: cli, hub, web, shared, website
+- Building requires only **Bun** (`bun install` → `bun run build`)
+- `bun run build:single-exe` creates a single file with everything built in
+- `bun run dev` — convenient development mode with auto-reloading
+- The entire build takes just 2-3 commands
